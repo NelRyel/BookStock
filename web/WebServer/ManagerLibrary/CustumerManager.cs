@@ -89,7 +89,6 @@ namespace ManagerLibrary
         public void EditCustumer(int id, string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse,
             string FullName, string Address, string Phone, string Email)
         {
-          
                 Custumer custumer = stockDBcontext.Custumers.Find(id);
                 CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(custumer.Id);
 
