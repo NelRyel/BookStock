@@ -46,22 +46,22 @@ namespace WpfApp1
             //custumer.BuyerTrue_SuplierFalse = true;
             //custumer.Balance = 0;
 
-            var responceById = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() +"/"+"5").Result;
-            var jsonFromResponceById = responceById.Content.ReadAsStringAsync().Result;
-               Custumer custumerById = JsonConvert.DeserializeObject<Custumer>(jsonFromResponceById);
-            custumerById.CustumerTitle = "New Shit";
+            //var responceById = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() +"/"+"5").Result;//конектимся и получаем по ид кастомера
+            //var jsonFromResponceById = responceById.Content.ReadAsStringAsync().Result;//здесь полеченное делается JSON-ом 
+            //   Custumer custumerById = JsonConvert.DeserializeObject<Custumer>(jsonFromResponceById);//здесь JSON превращается непосредственно в Кастомера
+            //custumerById.CustumerTitle = "New Shit 33";
 
-            var respCustDesc = client.GetAsync(APP_CONNECT + API_CON_TYPE.CustumerDesription.ToString()+custumerById.Id.ToString()).Result;
-            var jsonFromRespCustDesc = respCustDesc.Content.ReadAsStringAsync().Result;
-            CustumerDescription cd = JsonConvert.DeserializeObject<CustumerDescription>(jsonFromRespCustDesc);
-
-
+            //var respCustDesc = client.GetAsync(APP_CONNECT + API_CON_TYPE.CustumerDesription.ToString()+custumerById.Id.ToString()).Result;
+            //var jsonFromRespCustDesc = respCustDesc.Content.ReadAsStringAsync().Result;
+            //CustumerDescription cd = JsonConvert.DeserializeObject<CustumerDescription>(jsonFromRespCustDesc);
 
 
-            var jjson = JsonConvert.SerializeObject(custumerById);
-            var jjsonDesc = JsonConvert.SerializeObject(cd);
-            //var resp = client.PostAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString(), jjson);
-            var resp = client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString(), jjson);
+            //// UpdateCust(custumerById); 
+
+            //var jjson = JsonConvert.SerializeObject(custumerById);//здесь Кастумер перегоняется в JSON 
+            //var jjsonDesc = JsonConvert.SerializeObject(cd);
+            ////var resp = client.PostAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString(), jjson);
+            //client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
 
 
             // var responce2 = client.GetAsync(APP_CONNECT+API_CUSTUMER).Result;
@@ -74,6 +74,14 @@ namespace WpfApp1
             dataGrid1.ItemsSource = p;
             //var jj = JsonConvert.SerializeObject(p);
            
+        }
+
+         static async void UpdateCust(Custumer custumerById)
+        {
+            string APP_CONNECT = "http://localhost:47914/api/";
+            var client = new HttpClient();
+            var jjson = JsonConvert.SerializeObject(custumerById);
+            var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
         }
     }
 

@@ -43,8 +43,6 @@ namespace ManagerLibrary
           
                 stockDBcontext.CustumerDescriptions.Add(custumerDescription);
                 stockDBcontext.SaveChanges();
-           
-            
         }
 
 
@@ -86,24 +84,44 @@ namespace ManagerLibrary
            
         }
 
-        public void EditCustumer(int id, string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse,
-            string FullName, string Address, string Phone, string Email)
+        public void EditCustumer(int id, string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse)
         {
-                Custumer custumer = stockDBcontext.Custumers.Find(id);
-                CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(custumer.Id);
+            Custumer custumer = stockDBcontext.Custumers.Find(id);
 
-                custumer.CustumerTitle = CustumerTitle;
-                custumer.BuyerTrue_SuplierFalse = BuyeBuyerTrue_SuplierFalse;
-                custumer.Balance = 0;
-                custumerDescription.FullName = FullName;
-                custumerDescription.Address = Address;
-                custumerDescription.Phone = Phone;
-                custumerDescription.Email = Email;
-
-
-                stockDBcontext.SaveChanges();
-            
+            custumer.CustumerTitle = CustumerTitle;
+            custumer.BuyerTrue_SuplierFalse = BuyeBuyerTrue_SuplierFalse;
+            stockDBcontext.SaveChanges();
         }
+
+        public void EditCustumerDesc(int id, string FullName, string address, string phone, string Email)
+        {
+            CustumerDescription cd = stockDBcontext.CustumerDescriptions.Find(id);
+            cd.FullName = FullName;
+            cd.Address = address;
+            cd.Phone = phone;
+            cd.Email = Email;
+            stockDBcontext.SaveChanges();
+
+        }
+
+        //public void EditCustumer(int id, string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse,
+        //    string FullName, string Address, string Phone, string Email)
+        //{
+        //        Custumer custumer = stockDBcontext.Custumers.Find(id);
+        //        CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(custumer.Id);
+
+        //        custumer.CustumerTitle = CustumerTitle;
+        //        custumer.BuyerTrue_SuplierFalse = BuyeBuyerTrue_SuplierFalse;
+        //        custumer.Balance = 0;
+        //        custumerDescription.FullName = FullName;
+        //        custumerDescription.Address = Address;
+        //        custumerDescription.Phone = Phone;
+        //        custumerDescription.Email = Email;
+
+
+        //        stockDBcontext.SaveChanges();
+
+        //}
 
         public void ChangeIsDelete(int id, bool IsDelete)
         {
