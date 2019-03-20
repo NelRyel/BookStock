@@ -41,6 +41,12 @@ namespace WebServer.Controllers
             manager.EditCustumer(c.Id, c.CustumerTitle, c.BuyerTrue_SuplierFalse);
         }
 
+        [HttpDelete]
+        public void DeleteCustumer(int id)
+        {
+            Custumer custumer = manager.GetCustumerById(id);
+            manager.ChangeIsDelete(id, custumer.IsDelete);
+        }
 
     }
 

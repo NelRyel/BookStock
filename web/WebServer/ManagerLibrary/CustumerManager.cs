@@ -62,24 +62,24 @@ namespace ManagerLibrary
             
         }
 
-        public IQueryable<Custumer> GetAllCustumers()//получить всех клиентов
+        public IEnumerable<Custumer> GetAllCustumers()//получить всех клиентов
         {
-                IQueryable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
+            IEnumerable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
                 return custumers;
              
         }
 
-        public IQueryable<Custumer> GetAllCustumerBuyers()//получить Покупателей
+        public IEnumerable<Custumer> GetAllCustumerBuyers()//получить Покупателей
         {
-           
-                IQueryable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == true);
+
+            IEnumerable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == true);
                 return custumers;
            
         }
-        public IQueryable<Custumer> GetAllCustumerSupliers()//получить Поставщиков
+        public IEnumerable<Custumer> GetAllCustumerSupliers()//получить Поставщиков
         {
-           
-                IQueryable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == false);
+
+            IEnumerable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == false);
                 return custumers;
            
         }

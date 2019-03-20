@@ -15,10 +15,10 @@ namespace ManagerLibrary
     {
         private static StockDBcontext stockDBcontext = new StockDBcontext();
         
-        public IQueryable<PurchaseDoc> GetAllPurchaseDocs()
+        public IEnumerable<PurchaseDoc> GetAllPurchaseDocs()
         {
-          
-                IQueryable<PurchaseDoc> purchaseDocs = stockDBcontext.PurchaseDocs.Include("Custumers").Where(u => u.IsDelete == false);
+
+            IEnumerable<PurchaseDoc> purchaseDocs = stockDBcontext.PurchaseDocs.Include("Custumers").Where(u => u.IsDelete == false);
                 return purchaseDocs;
            
         }
@@ -31,10 +31,10 @@ namespace ManagerLibrary
                 return purchaseDoc;
             
         }
-        public IQueryable<PurchaseDocRec> GetPurchaseDocRecs(int PurchaseDocId)
+        public IEnumerable<PurchaseDocRec> GetPurchaseDocRecs(int PurchaseDocId)
         {
-           
-                IQueryable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == PurchaseDocId);
+
+            IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == PurchaseDocId);
                 return purchaseDocRecs;
             
         }

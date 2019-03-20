@@ -28,15 +28,18 @@ namespace WpfApp1
         public enum API_CON_TYPE
         {
             Custumer,
-            CustumerDesription
-            
+            CustumerDesription,
+            Book,
+            BookDescription
+
         }
         public MainWindow()
         {
+           
             InitializeComponent();
             string APP_CONNECT = "http://localhost:47914/api/";
             string API_CUSTUMER = "Custumer";
-            string API_CUST_DESC = "CustumerDesription";
+        
             var client = new HttpClient();
 
             //StockDBcontext ctx = new StockDBcontext();
@@ -62,13 +65,14 @@ namespace WpfApp1
             //var jjsonDesc = JsonConvert.SerializeObject(cd);
             ////var resp = client.PostAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString(), jjson);
             //client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
+            
 
 
             // var responce2 = client.GetAsync(APP_CONNECT+API_CUSTUMER).Result;
 
 
 
-            var responce = client.GetAsync(APP_CONNECT + API_CUSTUMER).Result;
+            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
             var json = responce.Content.ReadAsStringAsync().Result;
             List<Custumer> p = JsonConvert.DeserializeObject<List<Custumer>>(json);
             dataGrid1.ItemsSource = p;

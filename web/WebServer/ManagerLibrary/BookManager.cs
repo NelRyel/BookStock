@@ -64,45 +64,48 @@ namespace ManagerLibrary
                 return book;
             
         }
-        public IQueryable<Book> GetAllBook()
+        public BookFullDescription GetBookFullDescriptionById(int id)
+        {
+            BookFullDescription bookFull = stockDBcontext.BookFullDescriptions.Find(id);
+            return bookFull;
+        }
+
+        public IEnumerable<Book> GetAllBook()
         {
             
                 IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
                 return AllBooksModel;
             
         }
-
         
 
-
-
-        public void EditBook(int id, string BookTitle, string BarcodeISBN, decimal PurchasePrice, decimal RetailPrice, string Section,
-            string YearBookPublishing, string FirstYearBookPublishing, string Serie, string Description, string Author, string Publisher,
-            string ImageUrl)
+        public void EditBook(int id, string BookTitle, string BarcodeISBN, decimal PurchasePrice, decimal RetailPrice)
         {
            
                 Book book = stockDBcontext.Books.Find(id);
-                BookFullDescription bookFullDescription = stockDBcontext.BookFullDescriptions.Find(book.Id);
-
+              
                 book.BookTitle = BookTitle;
                 book.BarcodeISBN = BarcodeISBN;
                 book.PurchasePrice = PurchasePrice;
                 book.RetailPrice = RetailPrice;
-
-
-                //book.BookGenres.Add(bookGenre);
-
-                bookFullDescription.YearBookPublishing = YearBookPublishing;
-                bookFullDescription.FirstYearBookPublishing = FirstYearBookPublishing;
-                bookFullDescription.Serie = Serie;
-                bookFullDescription.Description = Description;
-                bookFullDescription.Author = Author;
-                bookFullDescription.Publisher = Publisher;
-                bookFullDescription.ImageUrl = ImageUrl;
-                bookFullDescription.Section = Section;
-
                 stockDBcontext.SaveChanges();
-            
+        }
+
+        public void EditBookDesc(int id, string Section,
+            string YearBookPublishing, string FirstYearBookPublishing, string Serie, string Description, string Author, string Publisher,
+            string ImageUrl)
+        {
+            BookFullDescription bookFullDescription = stockDBcontext.BookFullDescriptions.Find(id);
+
+            bookFullDescription.YearBookPublishing = YearBookPublishing;
+            bookFullDescription.FirstYearBookPublishing = FirstYearBookPublishing;
+            bookFullDescription.Serie = Serie;
+            bookFullDescription.Description = Description;
+            bookFullDescription.Author = Author;
+            bookFullDescription.Publisher = Publisher;
+            bookFullDescription.ImageUrl = ImageUrl;
+            bookFullDescription.Section = Section;
+            stockDBcontext.SaveChanges();
         }
 
         public void ChangeIsDelete(int id, bool IsDelete)
