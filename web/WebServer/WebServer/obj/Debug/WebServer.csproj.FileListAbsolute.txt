@@ -142,3 +142,4 @@ E:\BookStock\web\WebServer\WebServer\bin\StockEntModelLibrary.pdb
 E:\BookStock\web\WebServer\WebServer\bin\StockEntModelLibrary.dll.config
 E:\BookStock\web\WebServer\WebServer\bin\BookDB.mdf
 E:\BookStock\web\WebServer\WebServer\bin\BookDB_log.ldf
+E:\BookStock\web\WebServer\WebServer\obj\Debug\WebServer.Migrations.changeDocs.resources

@@ -215,6 +215,8 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CustumerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PurchaseDocController.cs" />
+    <Compile Include="Controllers\SaleDocController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -226,6 +228,10 @@
     <Compile Include="Migrations\201903071713146_new1.cs" />
     <Compile Include="Migrations\201903071713146_new1.Designer.cs">
       <DependentUpon>201903071713146_new1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903211605061_changeDocs.cs" />
+    <Compile Include="Migrations\201903211605061_changeDocs.Designer.cs">
+      <DependentUpon>201903211605061_changeDocs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -332,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903071713146_new1.resx">
       <DependentUpon>201903071713146_new1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903211605061_changeDocs.resx">
+      <DependentUpon>201903211605061_changeDocs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

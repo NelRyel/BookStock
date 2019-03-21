@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201903171729070_neMudak.Designer.cs">
       <DependentUpon>201903171729070_neMudak.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903211605499_changeDocs.cs" />
+    <Compile Include="Migrations\201903211605499_changeDocs.Designer.cs">
+      <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StaticDatas.cs" />
     <Compile Include="StockDBcontext.cs" />
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903171729070_neMudak.resx">
       <DependentUpon>201903171729070_neMudak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903211605499_changeDocs.resx">
+      <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

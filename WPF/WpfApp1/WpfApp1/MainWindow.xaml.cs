@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.CustumerEnt;
+using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,7 +31,8 @@ namespace WpfApp1
             Custumer,
             CustumerDesription,
             Book,
-            BookDescription
+            BookDescription,
+            SaleDoc
 
         }
         public MainWindow()
@@ -38,7 +40,7 @@ namespace WpfApp1
            
             InitializeComponent();
             string APP_CONNECT = "http://localhost:47914/api/";
-            string API_CUSTUMER = "Custumer";
+            //string API_CUSTUMER = "Custumer";
         
             var client = new HttpClient();
 
@@ -65,12 +67,12 @@ namespace WpfApp1
             //var jjsonDesc = JsonConvert.SerializeObject(cd);
             ////var resp = client.PostAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString(), jjson);
             //client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
-            
 
 
+            StockDBcontext stockDBcontext = new StockDBcontext();
             // var responce2 = client.GetAsync(APP_CONNECT+API_CUSTUMER).Result;
-
-
+            IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs;
+            string jjj = JsonConvert.SerializeObject(saleDocRecs);
 
             var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
             var json = responce.Content.ReadAsStringAsync().Result;

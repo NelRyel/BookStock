@@ -12,6 +12,7 @@ namespace StockEntModelLibrary.Document
     {
         public int Id { get; set; }
         public DateTime DateCreate { get; set; }
+        public DateTime DateOfLastChangeStatus { get; set; }
         public string Status { get; set; }
         public string Comment { get; set; }
         public decimal FullSum { get; set; }//рассчитывается из суммы всех  PurchaseDocRecs.SumPrice в накладной

@@ -18,3 +18,4 @@ E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.M
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.csproj.GenerateResource.cache
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.mudakl11.resources
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.neMudak.resources
+E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.changeDocs.resources
