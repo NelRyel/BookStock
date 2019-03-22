@@ -26,23 +26,27 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        string APP_CONNECT = "http://localhost:47914/api/";
+        HttpClient client = new HttpClient();
         public enum API_CON_TYPE
         {
             Custumer,
             CustumerDesription,
             Book,
             BookDescription,
-            SaleDoc
-
+            SaleDoc,
+            PurchaseDoc,
+            PurchaseDocRec,
+            SaleDocRec
         }
         public MainWindow()
         {
            
             InitializeComponent();
-            string APP_CONNECT = "http://localhost:47914/api/";
+           
             //string API_CUSTUMER = "Custumer";
         
-            var client = new HttpClient();
+            
 
             //StockDBcontext ctx = new StockDBcontext();
             //ctx.Custumers.Load();
@@ -69,10 +73,10 @@ namespace WpfApp1
             //client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
 
 
-            StockDBcontext stockDBcontext = new StockDBcontext();
-            // var responce2 = client.GetAsync(APP_CONNECT+API_CUSTUMER).Result;
-            IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs;
-            string jjj = JsonConvert.SerializeObject(saleDocRecs);
+            //StockDBcontext stockDBcontext = new StockDBcontext();
+            //// var responce2 = client.GetAsync(APP_CONNECT+API_CUSTUMER).Result;
+            //IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs;
+            //string jjj = JsonConvert.SerializeObject(saleDocRecs);
 
             var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
             var json = responce.Content.ReadAsStringAsync().Result;
