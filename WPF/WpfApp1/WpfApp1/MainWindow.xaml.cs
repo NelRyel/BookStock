@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using StockEntModelLibrary;
+using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
 using StockEntModelLibrary.Document;
 using System;
@@ -26,6 +27,8 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Book> books;
+        List<Custumer> custumers;
         string APP_CONNECT = "http://localhost:47914/api/";
         HttpClient client = new HttpClient();
         public enum API_CON_TYPE
@@ -39,14 +42,15 @@ namespace WpfApp1
             PurchaseDocRec,
             SaleDocRec
         }
+
         public MainWindow()
         {
-           
+            LoadDatas();
             InitializeComponent();
-           
+
             //string API_CUSTUMER = "Custumer";
-        
-            
+
+
 
             //StockDBcontext ctx = new StockDBcontext();
             //ctx.Custumers.Load();
@@ -78,20 +82,68 @@ namespace WpfApp1
             //IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs;
             //string jjj = JsonConvert.SerializeObject(saleDocRecs);
 
-            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
-            var json = responce.Content.ReadAsStringAsync().Result;
-            List<Custumer> p = JsonConvert.DeserializeObject<List<Custumer>>(json);
-            dataGrid1.ItemsSource = p;
+            //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
+            //var json = responce.Content.ReadAsStringAsync().Result;
+            //List<Custumer> p = JsonConvert.DeserializeObject<List<Custumer>>(json);
+            //dataGrid1.ItemsSource = p;
             //var jj = JsonConvert.SerializeObject(p);
-           
+
         }
 
-         static async void UpdateCust(Custumer custumerById)
+        static async void UpdateCust(Custumer custumerById)
         {
             string APP_CONNECT = "http://localhost:47914/api/";
             var client = new HttpClient();
             var jjson = JsonConvert.SerializeObject(custumerById);
             var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
+        }
+        class s{ //не ну это хрень какаято
+            public int id { get; set; }
+            public string name { get; set; }
+            public decimal price { get; set; }
+
+            }
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            //dataGrid1.Columns.Clear();
+            //dataGrid1.ItemsSource = null;
+            //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
+            //var jsonResp = responce.Content.ReadAsStringAsync().Result;
+            //books = JsonConvert.DeserializeObject<List<Book>>(jsonResp);
+            List<s> listS = new List<s>();
+            s ss = new s();
+            foreach (var item in books)
+            {
+                ss.id = item.Id;
+                ss.name = item.BookTitle;
+                ss.price = item.RetailPrice;
+                listS.Add(ss);
+            }
+
+            dataGrid1.ItemsSource = listS;
+
+        }
+        public void LoadDatas()
+        {
+            var responceBook = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
+            var jsonRespBook = responceBook.Content.ReadAsStringAsync().Result;
+            books = JsonConvert.DeserializeObject<List<Book>>(jsonRespBook);
+
+            var responceCust = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
+            var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
+            custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
+
+        }
+
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+            //dataGrid1.Columns.Clear();
+            //dataGrid1.ItemsSource = null;
+            //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
+            //var jsonResp = responce.Content.ReadAsStringAsync().Result;
+            //custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonResp);
+            dataGrid1.ItemsSource = custumers;
+
         }
     }
 
