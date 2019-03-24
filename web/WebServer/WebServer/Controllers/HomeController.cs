@@ -14,7 +14,12 @@ namespace WebServer.Controllers
             ViewBag.Title = "Home Page";
             using (StockDBcontext stockDBcontext = new StockDBcontext())
             {
-                var s = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
+                var s = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
+                foreach (var item in s)
+                {
+                   string aa =  item.fullDescription.Author;
+                }
+                //var s = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
                 ViewBag.SomeShit = s.ToList();
             }
             return View();

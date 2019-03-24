@@ -54,6 +54,13 @@ namespace WebServer.Controllers
     public class BookDescriptionController: ApiController
     {
         BookManager manager = new BookManager();
+
+        [HttpGet]
+        public IEnumerable<BookFullDescription> GetBookFullDescriptions()
+        {
+            return manager.GetAllBookDesc();
+        }
+
         [HttpGet]
         public BookFullDescription GetBookFullDescription(int id)
         {

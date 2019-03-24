@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using ManagerWpfLibrary;
+using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
 using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
@@ -28,9 +30,16 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         List<Book> books;
+        List<BookFullDescription> bookFullDescriptions;
         List<Custumer> custumers;
+        List<SaleDoc> saleDocs;
+        List<PurchaseDoc> purchaseDocs;
+        List<SaleDocRec> saleDocRecs;
+        List<PurchaseDocRec> purchaseDocRecs;
         string APP_CONNECT = "http://localhost:47914/api/";
         HttpClient client = new HttpClient();
+        CustumerManager CustManager = new CustumerManager();
+        BookManager BookManager = new BookManager();
         public enum API_CON_TYPE
         {
             Custumer,
@@ -97,12 +106,7 @@ namespace WpfApp1
             var jjson = JsonConvert.SerializeObject(custumerById);
             var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
         }
-        class s{ //не ну это хрень какаято
-            public int id { get; set; }
-            public string name { get; set; }
-            public decimal price { get; set; }
-
-            }
+     
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             //dataGrid1.Columns.Clear();
@@ -110,40 +114,138 @@ namespace WpfApp1
             //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
             //var jsonResp = responce.Content.ReadAsStringAsync().Result;
             //books = JsonConvert.DeserializeObject<List<Book>>(jsonResp);
-            List<s> listS = new List<s>();
-            s ss = new s();
-            foreach (var item in books)
-            {
-                ss.id = item.Id;
-                ss.name = item.BookTitle;
-                ss.price = item.RetailPrice;
-                listS.Add(ss);
-            }
 
-            dataGrid1.ItemsSource = listS;
+            var dt = BookManager.LoadBook(books, bookFullDescriptions);
+            dataGrid1.ItemsSource = dt.DefaultView;
 
         }
         public void LoadDatas()
         {
-            var responceBook = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
-            var jsonRespBook = responceBook.Content.ReadAsStringAsync().Result;
-            books = JsonConvert.DeserializeObject<List<Book>>(jsonRespBook);
+            try
+            {
+                var responceBook = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
+                var jsonRespBook = responceBook.Content.ReadAsStringAsync().Result;
+                books = JsonConvert.DeserializeObject<List<Book>>(jsonRespBook);
+            }
+            catch
+                { }
 
-            var responceCust = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
-            var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
-            custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
+            try
+            {
+                var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
+                var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
+                bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
+            }
+            catch
+            {
 
+            }
+
+            try
+            {
+                var responceCust = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
+                var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
+                custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                var respSaleDoc = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDoc.ToString()).Result;
+                var jsonRespSaleDoc = respSaleDoc.Content.ReadAsStringAsync().Result;
+                saleDocs = JsonConvert.DeserializeObject<List<SaleDoc>>(jsonRespSaleDoc);
+            }
+            catch (Exception e)
+            {
+                saleDocs = new List<SaleDoc>();
+                SaleDoc c = new SaleDoc();
+                c.Id = 0;
+                saleDocs.Add(c);
+            }
+            try { 
+            var respPurchaseDoc = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDoc.ToString()).Result;
+                var jsonRespPurchaseDoc = respPurchaseDoc.Content.ReadAsStringAsync().Result;
+                purchaseDocs = JsonConvert.DeserializeObject<List<PurchaseDoc>>(jsonRespPurchaseDoc);
+            }
+            catch
+            {
+
+            }
+           
         }
 
         private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
         {
-            //dataGrid1.Columns.Clear();
-            //dataGrid1.ItemsSource = null;
-            //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
-            //var jsonResp = responce.Content.ReadAsStringAsync().Result;
-            //custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonResp);
-            dataGrid1.ItemsSource = custumers;
+            DataTable dt = CustManager.LoadCustemer(custumers);
+            dataGrid1.ItemsSource = dt.DefaultView;
+        }
 
+        private void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tbBookTitle.Text ="";
+            tbBarcode.Text = "";
+            tbFirstYear.Text = "";
+            tbLastYear.Text = "";
+            tbSeria.Text = "";
+            tbSection.Text = "";
+            tbAuthor.Text = "";
+            tbPublisher.Text = "";
+            tbPurchasePrice.Text = "";
+            tbRetailPrice.Text = "";
+            tbDescription.Text = "";
+            imgDesc.Background = null;
+            string s="";
+            Book book = null;
+            BookFullDescription bookFull = null;
+            try
+            {
+
+                int selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGrid1.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                if (cellContent is TextBlock)
+                {
+                    s = (cellContent as TextBlock).Text;
+                }
+                int ass = Convert.ToInt32(s);
+             
+                foreach (var item in books)
+                {
+                    if (item.Id == ass)
+                    {
+                        book = item;
+                        
+
+                    }
+                }
+                foreach (var item in bookFullDescriptions)
+                {
+                    if (item.Id == ass)
+                        bookFull = item;
+                }
+                tbBookTitle.Text = book.BookTitle;
+                tbBarcode.Text = book.BarcodeISBN;
+                tbFirstYear.Text = bookFull.FirstYearBookPublishing;
+                tbLastYear.Text = bookFull.YearBookPublishing;
+                tbSeria.Text = bookFull.Serie;
+                tbSection.Text = bookFull.Section;
+                tbAuthor.Text = bookFull.Author;
+                tbPublisher.Text = bookFull.Publisher;
+                tbPurchasePrice.Text = book.PurchasePrice.ToString();
+                tbRetailPrice.Text = book.RetailPrice.ToString();
+                tbDescription.Text = bookFull.Description;
+
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = new BitmapImage(new Uri(bookFull.ImageUrl, UriKind.RelativeOrAbsolute));
+                imgDesc.Background = ib;
+
+            }
+            catch
+            {
+
+            }
         }
     }
 

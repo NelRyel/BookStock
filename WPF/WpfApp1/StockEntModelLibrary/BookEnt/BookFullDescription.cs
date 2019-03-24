@@ -13,7 +13,7 @@ namespace StockEntModelLibrary.BookEnt
         [Key]
         [ForeignKey("Book")]
         public int Id { get; set; }
-      
+
         public string YearBookPublishing { get; set; }
         public string FirstYearBookPublishing { get; set; }
         public string Serie { get; set; }
@@ -28,7 +28,6 @@ namespace StockEntModelLibrary.BookEnt
         //    BookGenres = new List<BookGenre>();
         //}
         public Book Book { get; set; }
-
 
     }
 }

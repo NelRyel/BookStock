@@ -25,14 +25,15 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="4" Visibility="Visible">
-            <DataGrid.Columns>
+        <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Visible" IsReadOnly="True" SelectionChanged="DataGrid1_SelectionChanged">
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header="ID"></DataGridTextColumn>
                 <DataGridTextColumn Header="BarCode"></DataGridTextColumn>
                 <DataGridTextColumn Header="Book Title"></DataGridTextColumn>
                 <DataGridTextColumn Header="Price"> </DataGridTextColumn>
-            </DataGrid.Columns>
+            </DataGrid.Columns>-->
         </DataGrid>
 
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="0" Margin="10 5 10 80" Content="Журнал Расходных"/>
@@ -40,19 +41,45 @@
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="2" Margin="10 5 10 80" Content="Номенклатура" Checked="RadioButton_Checked"></RadioButton>
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="3" Margin="10 5 10 80" Content="Контрагенты" Checked="RadioButton_Checked_1"></RadioButton>
 
-        <Button x:Name="AddSelDocBtn" Grid.Row="0" Grid.Column="0" Margin="10,65,184,25" Width="60" Height="20" >add sell</Button>
-        <Button x:Name="AddPurDocBtn" Grid.Row="0" Grid.Column="0" Margin="75,65,119,25" Width="60" Height="20" >add pur</Button>
+        <Button x:Name="AddSelDocBtn" Grid.Row="0" Grid.Column="0" Margin="10,55,133,35" Width="60" Height="20" >add sell</Button>
+        <Button x:Name="AddPurDocBtn" Grid.Row="0" Grid.Column="0" Margin="95,55,45,35" Height="20" >add pur</Button>
         <Button x:Name="DelDocBtn" Grid.Row="0" Grid.Column="0" Margin="209,65,10,25" Width="35" Height="20" >del</Button>
 
-        <Button x:Name="AddBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="10,80,184,10" >Add Book</Button>
-        <Button x:Name="EditBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="75,80,119,10" >Edit Book</Button>
-        <Button x:Name="DelBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="184,80,10,10" >Del Book</Button>
+        <Label x:Name="labelTest" Grid.Column="1" Margin="0 60 0 0">1</Label>
+        
+        <Button x:Name="AddBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="52,65,91,25" >Add Book</Button>
+        <Button x:Name="EditBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,55,10,35" >Edit Book</Button>
+        <Button x:Name="DelBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,80,10,10" >Del Book</Button>
 
-        <Button x:Name="AddCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="10,80,184,10" >Add Cust</Button>
-        <Button x:Name="EditCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="75,80,119,10" >Edit Cust</Button>
-        <Button x:Name="DelCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="184,80,10,10" >Del Cust</Button>
+        <Button x:Name="AddCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="58,70,86,20" >Add Cust</Button>
+        <Button x:Name="EditCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="134,60,10,30" >Edit Cust</Button>
+        <Button x:Name="DelCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="140,85,4,5" >Del Cust</Button>
 
-
+        <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>
+        <StackPanel x:Name="descStackPanel" Visibility="Visible" Grid.Row="1" Grid.Column="3">
+            <Label>Book Title</Label>
+            <TextBox x:Name="tbBookTitle" IsReadOnly="True"></TextBox>
+            <Label>Barcode</Label>
+            <TextBox x:Name="tbBarcode" IsReadOnly="True"></TextBox>
+            <Label>First Publishing</Label>
+            <TextBox x:Name="tbFirstYear" IsReadOnly="True"></TextBox>
+            <Label>Last Publishing</Label>
+            <TextBox x:Name="tbLastYear" IsReadOnly="True"></TextBox>
+            <Label>Seria</Label>
+            <TextBox x:Name="tbSeria" IsReadOnly="True"></TextBox>
+            <Label>Section</Label>
+            <TextBox x:Name="tbSection" IsReadOnly="True"></TextBox>
+            <Label>Author</Label>
+            <TextBox x:Name="tbAuthor" IsReadOnly="True"></TextBox>
+            <Label>Publisher</Label>
+            <TextBox x:Name="tbPublisher" IsReadOnly="True"></TextBox>
+            <Label>PurchasePrice</Label>
+            <TextBox x:Name="tbPurchasePrice" IsReadOnly="True"></TextBox>
+            <Label>RetailPrice</Label>
+            <TextBox x:Name="tbRetailPrice" IsReadOnly="True"></TextBox>
+            <Label>Description</Label>
+            <TextBox x:Name="tbDescription" IsReadOnly="True"></TextBox>
+        </StackPanel>
     </Grid>
 
 </Window>

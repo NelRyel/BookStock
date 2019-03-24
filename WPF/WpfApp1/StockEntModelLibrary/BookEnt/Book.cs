@@ -15,8 +15,9 @@ namespace StockEntModelLibrary.BookEnt
         public int Count { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal RetailPrice { get; set; }
+        public int? fullDescriptionId { get; set; }
         public BookFullDescription fullDescription { get; set; }
-        
+
         public List<PurchaseDocRec> PurchaseDocRecs { get; set; }
 
         //public List<BookGenre> BookGenres { get; set; }

@@ -44,6 +44,7 @@ namespace StockEntModelLibrary
                 CustumerTitle = "Основной Покупатель",
                 Balance = 0,
                 BuyerTrue_SuplierFalse = true,
+                CustumerDescriptionId=1
 
             };
             context.Custumers.Add(custumerDefaultBuyer);
@@ -64,7 +65,9 @@ namespace StockEntModelLibrary
                 BarcodeISBN = "9785171064006",
                 Count = 1,
                 PurchasePrice = 535,
-                RetailPrice = 535*2
+                RetailPrice = 535*2,
+                fullDescriptionId=1
+                
             };
             context.Books.Add(book1);
             BookFullDescription bookFullDescription1 = new BookFullDescription()

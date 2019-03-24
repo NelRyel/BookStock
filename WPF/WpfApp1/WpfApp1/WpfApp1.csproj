@@ -109,6 +109,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ManagerWpfLibrary\ManagerWpfLibrary.csproj">
+      <Project>{1d133ccd-e2de-4887-89a2-aaded9518f5b}</Project>
+      <Name>ManagerWpfLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StockEntModelLibrary\StockEntModelLibrary.csproj">
       <Project>{c8c74fb9-de50-486b-b42c-8b1bb9f3c8bc}</Project>
       <Name>StockEntModelLibrary</Name>

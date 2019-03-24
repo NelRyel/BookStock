@@ -27,3 +27,5 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\StockEntModelLibrary.pdb
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\StockEntModelLibrary.dll.config
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\BookDB.mdf
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\BookDB_log.ldf
+E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.dll
+E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.pdb

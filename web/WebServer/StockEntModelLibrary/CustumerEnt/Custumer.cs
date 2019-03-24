@@ -14,8 +14,7 @@ namespace StockEntModelLibrary.CustumerEnt
         public string CustumerTitle { get; set; }
         public decimal Balance { get; set; }
         public bool BuyerTrue_SuplierFalse { get; set; }
-
-
+        public int? CustumerDescriptionId { get; set; }
         public CustumerDescription CustumerDescription { get; set; }
         public List<PurchaseDoc> PurchaseDocs { get; set; }
         public List<SaleDoc> SaleDocs { get; set; }

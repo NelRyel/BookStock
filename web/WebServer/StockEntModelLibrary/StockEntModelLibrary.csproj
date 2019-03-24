@@ -83,6 +83,14 @@
     <Compile Include="Migrations\201903211605499_changeDocs.Designer.cs">
       <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903241408269_fullID.cs" />
+    <Compile Include="Migrations\201903241408269_fullID.Designer.cs">
+      <DependentUpon>201903241408269_fullID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903241420154_fullID1.cs" />
+    <Compile Include="Migrations\201903241420154_fullID1.Designer.cs">
+      <DependentUpon>201903241420154_fullID1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StaticDatas.cs" />
     <Compile Include="StockDBcontext.cs" />
@@ -133,6 +141,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903211605499_changeDocs.resx">
       <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241408269_fullID.resx">
+      <DependentUpon>201903241408269_fullID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241420154_fullID1.resx">
+      <DependentUpon>201903241420154_fullID1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

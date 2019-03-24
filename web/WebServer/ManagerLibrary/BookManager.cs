@@ -72,12 +72,18 @@ namespace ManagerLibrary
 
         public IEnumerable<Book> GetAllBook()
         {
-            
-                IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
+                //IQueryable<Book> model = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
+               IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
                 return AllBooksModel;
             
         }
-        
+        public IEnumerable<BookFullDescription> GetAllBookDesc()
+        {
+            IQueryable<BookFullDescription> model = stockDBcontext.BookFullDescriptions;
+            // IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
+            return model;
+
+        }
 
         public void EditBook(int id, string BookTitle, string BarcodeISBN, decimal PurchasePrice, decimal RetailPrice)
         {

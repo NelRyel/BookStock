@@ -1,0 +1,15 @@
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\BookDB.mdf
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\BookDB_log.ldf
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\ManagerWpfLibrary.dll
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\ManagerWpfLibrary.pdb
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\StockEntModelLibrary.dll
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\EntityFramework.dll
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\StockEntModelLibrary.pdb
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\StockEntModelLibrary.dll.config
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\EntityFramework.xml
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\bin\Debug\ru\EntityFramework.resources.dll
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\obj\Debug\ManagerWpfLibrary.csprojAssemblyReference.cache
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\obj\Debug\ManagerWpfLibrary.csproj.CoreCompileInputs.cache
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\obj\Debug\ManagerWpfLibrary.csproj.CopyComplete
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\obj\Debug\ManagerWpfLibrary.dll
+E:\BookStock\WPF\WpfApp1\ManagerWpfLibrary\obj\Debug\ManagerWpfLibrary.pdb

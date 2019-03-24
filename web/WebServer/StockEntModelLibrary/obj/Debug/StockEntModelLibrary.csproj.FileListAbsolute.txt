@@ -19,3 +19,5 @@ E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.c
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.mudakl11.resources
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.neMudak.resources
 E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.changeDocs.resources
+E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.fullID.resources
+E:\BookStock\web\WebServer\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.Migrations.fullID1.resources
