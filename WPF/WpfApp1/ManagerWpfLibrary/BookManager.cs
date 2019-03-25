@@ -12,6 +12,7 @@ namespace ManagerWpfLibrary
     {
         public DataTable LoadBook(List<Book> books, List<BookFullDescription> bookFulls)
         {
+            
             var dt = new DataTable();
             dt.Columns.Add("ID");
             dt.Columns.Add("Barcode");
@@ -36,5 +37,6 @@ namespace ManagerWpfLibrary
             }
             return dt;
         }
+
     }
 }

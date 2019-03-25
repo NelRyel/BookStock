@@ -32,6 +32,7 @@ namespace WpfApp1
         List<Book> books;
         List<BookFullDescription> bookFullDescriptions;
         List<Custumer> custumers;
+        List<CustumerDescription> custumerDescriptions;
         List<SaleDoc> saleDocs;
         List<PurchaseDoc> purchaseDocs;
         List<SaleDocRec> saleDocRecs;
@@ -40,7 +41,10 @@ namespace WpfApp1
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
         BookManager BookManager = new BookManager();
-        public enum API_CON_TYPE
+
+        string rbChose=""; //нужен для проверки какой РадиоБаттон выбран 
+
+        public enum API_CON_TYPE //выбор АпиКонтроллера
         {
             Custumer,
             CustumerDesription,
@@ -107,18 +111,7 @@ namespace WpfApp1
             var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
         }
      
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            //dataGrid1.Columns.Clear();
-            //dataGrid1.ItemsSource = null;
-            //var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
-            //var jsonResp = responce.Content.ReadAsStringAsync().Result;
-            //books = JsonConvert.DeserializeObject<List<Book>>(jsonResp);
-
-            var dt = BookManager.LoadBook(books, bookFullDescriptions);
-            dataGrid1.ItemsSource = dt.DefaultView;
-
-        }
+        
         public void LoadDatas()
         {
             try
@@ -153,6 +146,16 @@ namespace WpfApp1
             }
             try
             {
+                var respCustDesc = client.GetAsync(APP_CONNECT + API_CON_TYPE.CustumerDesription.ToString()).Result;
+                var jsonRespCustDesc = respCustDesc.Content.ReadAsStringAsync().Result;
+                custumerDescriptions = JsonConvert.DeserializeObject<List<CustumerDescription>>(jsonRespCustDesc);
+            }
+            catch
+            {
+
+            }
+            try
+            {
                 var respSaleDoc = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDoc.ToString()).Result;
                 var jsonRespSaleDoc = respSaleDoc.Content.ReadAsStringAsync().Result;
                 saleDocs = JsonConvert.DeserializeObject<List<SaleDoc>>(jsonRespSaleDoc);
@@ -175,16 +178,47 @@ namespace WpfApp1
             }
            
         }
-
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            DataTable dt = CustManager.LoadCustemer(custumers);
-            dataGrid1.ItemsSource = dt.DefaultView;
+           
+            RadioButton pressed = (RadioButton)sender;
+            string check = pressed.Content.ToString();
+            DataTable dt;
+            //MessageBox.Show(pressed.Content.ToString());
+            switch (check)
+            {
+                case "Номенклатура":
+                    rbChose = check;
+                    descStackPanel.Visibility = Visibility.Visible;
+                    dt = BookManager.LoadBook(books, bookFullDescriptions);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    break;
+
+                case "Контрагенты":
+                    rbChose = check;
+                    descStackPanel.Visibility = Visibility.Hidden;
+                    dt = CustManager.LoadCustemer(custumers);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    break;
+
+                default: MessageBox.Show("wrong select");
+                    break;
+
+            }
+
+
+        }
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e) //нашел вывод в ДатаГрид симпотичней моего... может позже переделаю на него. А пока не вызываемый метод.
+        {
+            var s = books.Select(x => new { x.Id, x.BarcodeISBN, x.BookTitle });
+            dataGrid1.ItemsSource = s.ToList();
         }
 
-        private void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void DGLoadBookDesc(List<Book> books, List<BookFullDescription> bookFullDescriptions, int BookId)
         {
-            tbBookTitle.Text ="";
+            descStackPanel.Visibility = Visibility.Visible;
+
+            tbBookTitle.Text = "";
             tbBarcode.Text = "";
             tbFirstYear.Text = "";
             tbLastYear.Text = "";
@@ -196,33 +230,32 @@ namespace WpfApp1
             tbRetailPrice.Text = "";
             tbDescription.Text = "";
             imgDesc.Background = null;
-            string s="";
             Book book = null;
             BookFullDescription bookFull = null;
             try
             {
 
-                int selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
-                var selectedCell = dataGrid1.SelectedCells[0];
-                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                if (cellContent is TextBlock)
-                {
-                    s = (cellContent as TextBlock).Text;
-                }
-                int ass = Convert.ToInt32(s);
-             
+                //int selectedColumn = md.dataGrid1.CurrentCell.Column.DisplayIndex;
+                //var selectedCell = md.dataGrid1.SelectedCells[0];
+                //var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                //if (cellContent is TextBlock)
+                //{
+                //    StringBookId = (cellContent as TextBlock).Text;
+                //}
+                //int BookId = Convert.ToInt32(StringBookId);
+
                 foreach (var item in books)
                 {
-                    if (item.Id == ass)
+                    if (item.Id == BookId)
                     {
                         book = item;
-                        
+
 
                     }
                 }
                 foreach (var item in bookFullDescriptions)
                 {
-                    if (item.Id == ass)
+                    if (item.Id == BookId)
                         bookFull = item;
                 }
                 tbBookTitle.Text = book.BookTitle;
@@ -241,6 +274,49 @@ namespace WpfApp1
                 ib.ImageSource = new BitmapImage(new Uri(bookFull.ImageUrl, UriKind.RelativeOrAbsolute));
                 imgDesc.Background = ib;
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("LoadBookDesc Error: " + e.ToString());
+            }
+        }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
+
+
+        public void DGLoadCustDesc(List<Custumer> custumers, List<CustumerDescription> custumerDescriptions, int CustId)
+        {
+            
+        }
+        public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //--------------------------------------------------------------------------------------------------------------------------------------
+            string StringBookId = "";
+            int? selectedColumn = null;
+            try
+            {
+
+
+                selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGrid1.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                int BookId = Convert.ToInt32(StringBookId);
+                //---------------------------------------------------------------------------------------------------------------------------------------
+                switch (rbChose)
+                {
+                    case "Номенклатура":
+                        DGLoadBookDesc(books, bookFullDescriptions, BookId);
+                        break;
+                    case "Контрагенты":
+                        DGLoadCustDesc(custumers, custumerDescriptions, BookId);
+                        break;
+
+                    default:
+                        MessageBox.Show("wrong Chose DataGrid1_SelectionChanged");
+                        break;
+                }
             }
             catch
             {
