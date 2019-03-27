@@ -32,10 +32,10 @@ namespace StockEntModelLibrary
             CustumerDescription custumerDescriptionDefaultSuplier = new CustumerDescription()
             {
                 Id=custumerDefaultSuplier.Id,
-                FullName="",
-                Address="",
-                Phone="",
-                Email=""
+                FullName="Полное имя поставщика",
+                Address="какойто адресс поставщика",
+                Phone="21321412",
+                Email="suplier@mail.ru"
             };
             context.CustumerDescriptions.Add(custumerDescriptionDefaultSuplier);
             context.SaveChanges();
@@ -51,10 +51,10 @@ namespace StockEntModelLibrary
             CustumerDescription custumerDescriptionDefaultBuyer = new CustumerDescription()
             {
                 Id = custumerDefaultBuyer.Id,
-                FullName = "",
-                Address = "",
-                Phone = "",
-                Email = ""
+                FullName = "Полное имя покупателя",
+                Address = "какойто адресс",
+                Phone = "6547546546",
+                Email = "hell@mail.ru"
             };
             context.CustumerDescriptions.Add(custumerDescriptionDefaultBuyer);
             #endregion

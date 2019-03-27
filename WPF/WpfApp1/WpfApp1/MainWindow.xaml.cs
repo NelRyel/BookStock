@@ -152,7 +152,7 @@ namespace WpfApp1
             }
             catch
             {
-
+               // LoadDatas();
             }
             try
             {
@@ -190,6 +190,9 @@ namespace WpfApp1
                 case "Номенклатура":
                     rbChose = check;
                     descStackPanel.Visibility = Visibility.Visible;
+                    tbDescription.Visibility = Visibility.Visible;
+                    imgDesc.Visibility = Visibility.Visible;
+                    CustDescStackPanel.Visibility = Visibility.Hidden;
                     dt = BookManager.LoadBook(books, bookFullDescriptions);
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
@@ -197,6 +200,9 @@ namespace WpfApp1
                 case "Контрагенты":
                     rbChose = check;
                     descStackPanel.Visibility = Visibility.Hidden;
+                    tbDescription.Visibility = Visibility.Hidden;
+                    imgDesc.Visibility = Visibility.Hidden;
+                    CustDescStackPanel.Visibility = Visibility.Visible;
                     dt = CustManager.LoadCustemer(custumers);
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
@@ -284,7 +290,41 @@ namespace WpfApp1
 
         public void DGLoadCustDesc(List<Custumer> custumers, List<CustumerDescription> custumerDescriptions, int CustId)
         {
-            
+            tbCustTitle.Text = "";
+            tbCustFullName.Text = "";
+            tbCustAddress.Text = "";
+            tbCustPhone.Text = "";
+            tbCustEmail.Text = "";
+            tbCustBalance.Text = "";
+            labelCustType.Content = "";
+            Custumer custumer = null;
+            CustumerDescription custumerDescription = null;
+            try
+            {
+                foreach (var item in custumers)
+                {
+                    if (item.Id == CustId)
+                        custumer = item;
+                }
+                foreach (var item in custumerDescriptions)
+                {
+                    if (item.Id == CustId)
+                        custumerDescription = item;
+                }
+                tbCustTitle.Text = custumer.CustumerTitle;
+                tbCustFullName.Text = custumerDescription.FullName;
+                tbCustAddress.Text = custumerDescription.Address;
+                tbCustPhone.Text = custumerDescription.Phone;
+                tbCustEmail.Text = custumerDescription.Email;
+                tbCustBalance.Text = custumer.Balance.ToString();
+                labelCustType.Content = (custumer.BuyerTrue_SuplierFalse)?"Покупатель":"Поставщик";
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("DGLoadCustDesc Error: " + e.ToString());
+            }
+
+
         }
         public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -302,15 +342,15 @@ namespace WpfApp1
                 {
                     StringBookId = (cellContent as TextBlock).Text;
                 }
-                int BookId = Convert.ToInt32(StringBookId);
+                int selectedId = Convert.ToInt32(StringBookId);
                 //---------------------------------------------------------------------------------------------------------------------------------------
                 switch (rbChose)
                 {
                     case "Номенклатура":
-                        DGLoadBookDesc(books, bookFullDescriptions, BookId);
+                        DGLoadBookDesc(books, bookFullDescriptions, selectedId);
                         break;
                     case "Контрагенты":
-                        DGLoadCustDesc(custumers, custumerDescriptions, BookId);
+                        DGLoadCustDesc(custumers, custumerDescriptions, selectedId);
                         break;
 
                     default:
@@ -322,6 +362,19 @@ namespace WpfApp1
             {
 
             }
+        }
+
+        private void AddCustBtn_Click(object sender, RoutedEventArgs e)
+        {
+            tbCustTitle.Text = "";
+            tbCustFullName.Text = "";
+            tbCustAddress.Text = "";
+            tbCustPhone.Text = "";
+            tbCustEmail.Text = "";
+            tbCustBalance.Text = "";
+            labelCustType.Content = "";
+
+
         }
     }
 

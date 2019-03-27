@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using ManagerLibrary;
+using StockEntModelLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,22 @@ namespace WebServer.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            using (StockDBcontext stockDBcontext = new StockDBcontext())
-            {
-                var s = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
-                foreach (var item in s)
-                {
-                   string aa =  item.fullDescription.Author;
-                }
-                //var s = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
-                ViewBag.SomeShit = s.ToList();
-            }
+            //using (StockDBcontext stockDBcontext = new StockDBcontext())
+            //{
+            //    //var s = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
+            //    //foreach (var item in s)
+            //    //{
+            //    //   string aa =  item.fullDescription.Author;
+            //    //}
+            //    var s = stockDBcontext.CustumerDescriptions;
+            //    //var s = stockDBcontext.Custumers.Where(i => i.IsDelete == false);
+            //    ViewBag.SomeShit = s.ToList();
+            //}
+
+            CustumerManager manager = new CustumerManager();
+            var mod = manager.GetCustumerDescriptions();
+            ViewBag.SomeShit = mod.ToList();
+
             return View();
         }
     }

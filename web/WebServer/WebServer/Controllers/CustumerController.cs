@@ -74,6 +74,13 @@ namespace WebServer.Controllers
         CustumerManager manager = new CustumerManager();
 
         [HttpGet]
+        public IEnumerable<CustumerDescription> GetAllCustumerDescriptions()
+        {
+            var c = manager.GetCustumerDescriptions();
+            return c;
+        }
+
+        [HttpGet]
         public CustumerDescription GetCustumerDescription(int id) //это для получения Описания Кастумера по ИД
         {
            return manager.GetCustumerDescriptionById(id);

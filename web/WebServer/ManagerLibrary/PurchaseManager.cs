@@ -13,7 +13,7 @@ namespace ManagerLibrary
 {
     public class PurchaseManager
     {
-        private static StockDBcontext stockDBcontext = new StockDBcontext();
+        private  StockDBcontext stockDBcontext = new StockDBcontext();
         
         public IEnumerable<PurchaseDoc> GetAllPurchaseDocs()
         {

@@ -59,8 +59,7 @@ namespace ManagerLibrary
 
         public  Book GetBookById(int id)
         {
-           
-                Book book = stockDBcontext.Books.Find(id);
+            Book book = stockDBcontext.Books.Find(id);
                 return book;
             
         }
@@ -72,14 +71,15 @@ namespace ManagerLibrary
 
         public IEnumerable<Book> GetAllBook()
         {
-                //IQueryable<Book> model = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
-               IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
+            //IQueryable<Book> model = stockDBcontext.Books.Include("fullDescription").Where(i => i.IsDelete == false);
+            IEnumerable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
+            //stockDBcontext.Dispose();
                 return AllBooksModel;
             
         }
         public IEnumerable<BookFullDescription> GetAllBookDesc()
         {
-            IQueryable<BookFullDescription> model = stockDBcontext.BookFullDescriptions;
+            IEnumerable<BookFullDescription> model = stockDBcontext.BookFullDescriptions;
             // IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
             return model;
 
@@ -87,8 +87,7 @@ namespace ManagerLibrary
 
         public void EditBook(int id, string BookTitle, string BarcodeISBN, decimal PurchasePrice, decimal RetailPrice)
         {
-           
-                Book book = stockDBcontext.Books.Find(id);
+            Book book = stockDBcontext.Books.Find(id);
               
                 book.BookTitle = BookTitle;
                 book.BarcodeISBN = BarcodeISBN;
@@ -116,8 +115,7 @@ namespace ManagerLibrary
 
         public void ChangeIsDelete(int id, bool IsDelete)
         {
-          
-                Book book = stockDBcontext.Books.Find(id);
+            Book book = stockDBcontext.Books.Find(id);
 
                 book.IsDelete = (IsDelete == true) ? book.IsDelete = false : book.IsDelete = true;
                 //switch(IsDelete)

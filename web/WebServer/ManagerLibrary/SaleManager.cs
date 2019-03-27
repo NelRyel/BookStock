@@ -13,7 +13,7 @@ namespace ManagerLibrary
 {
    public class SaleManager
     {
-        private static StockDBcontext stockDBcontext = new StockDBcontext();
+        private  StockDBcontext stockDBcontext = new StockDBcontext();
         
         public IEnumerable<SaleDoc> GetAllSaleDocs()
         {

@@ -10,7 +10,7 @@ namespace ManagerLibrary
 {
   public  class CustumerManager
     {
-      private static StockDBcontext stockDBcontext = new StockDBcontext();
+      private StockDBcontext stockDBcontext = new StockDBcontext();
 
         //public void CreateCustumer(string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse,
         //    string FullName, string Address, string Phone, string Email
@@ -35,13 +35,12 @@ namespace ManagerLibrary
         //}
         public void CreateCustumer(Custumer custumer)
         {
-                stockDBcontext.Custumers.Add(custumer);
+            stockDBcontext.Custumers.Add(custumer);
                 stockDBcontext.SaveChanges();
         }
         public void CreateCustumerDescription(CustumerDescription custumerDescription)
         {
-          
-                stockDBcontext.CustumerDescriptions.Add(custumerDescription);
+            stockDBcontext.CustumerDescriptions.Add(custumerDescription);
                 stockDBcontext.SaveChanges();
         }
 
@@ -49,15 +48,13 @@ namespace ManagerLibrary
 
         public Custumer GetCustumerById(int id)
         {
-          
-                Custumer custumer = stockDBcontext.Custumers.Find(id);
+            Custumer custumer = stockDBcontext.Custumers.Find(id);
                 return custumer;
            
         }
         public CustumerDescription GetCustumerDescriptionById(int id)
         {
-          
-                CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(id);
+            CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(id);
                 return custumerDescription;
             
         }
@@ -68,39 +65,54 @@ namespace ManagerLibrary
                 return custumers;
              
         }
+        public IEnumerable<CustumerDescription> GetCustumerDescriptions()
+        {
+            StockDBcontext stockDBcontext = new StockDBcontext();
+                IEnumerable<CustumerDescription> model = stockDBcontext.CustumerDescriptions;
+                // IQueryable<Book> AllBooksModel = stockDBcontext.Books.Where(i => i.IsDelete == false);
+                //stockDBcontext.Dispose();
+                return model;
+            
+        }
 
         public IEnumerable<Custumer> GetAllCustumerBuyers()//получить Покупателей
         {
-
+           
             IEnumerable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == true);
+            
                 return custumers;
            
         }
         public IEnumerable<Custumer> GetAllCustumerSupliers()//получить Поставщиков
         {
-
+           
             IEnumerable<Custumer> custumers = stockDBcontext.Custumers.Where(i => i.IsDelete == false).Where(s => s.BuyerTrue_SuplierFalse == false);
+            
                 return custumers;
            
         }
 
         public void EditCustumer(int id, string CustumerTitle, bool BuyeBuyerTrue_SuplierFalse)
         {
+           
             Custumer custumer = stockDBcontext.Custumers.Find(id);
 
             custumer.CustumerTitle = CustumerTitle;
             custumer.BuyerTrue_SuplierFalse = BuyeBuyerTrue_SuplierFalse;
             stockDBcontext.SaveChanges();
+            
         }
 
         public void EditCustumerDesc(int id, string FullName, string address, string phone, string Email)
         {
+           
             CustumerDescription cd = stockDBcontext.CustumerDescriptions.Find(id);
             cd.FullName = FullName;
             cd.Address = address;
             cd.Phone = phone;
             cd.Email = Email;
             stockDBcontext.SaveChanges();
+            
 
         }
 
@@ -125,8 +137,7 @@ namespace ManagerLibrary
 
         public void ChangeIsDelete(int id, bool IsDelete)
         {
-           
-                Custumer custumer = stockDBcontext.Custumers.Find(id);
+            Custumer custumer = stockDBcontext.Custumers.Find(id);
                 custumer.IsDelete = (IsDelete == true) ? custumer.IsDelete = false : custumer.IsDelete = true;
                 //switch(IsDelete)
                 // {

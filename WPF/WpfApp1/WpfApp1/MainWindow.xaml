@@ -51,14 +51,15 @@
         <Button x:Name="EditBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,55,10,35" >Edit Book</Button>
         <Button x:Name="DelBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,80,10,10" >Del Book</Button>
 
-        <Button x:Name="AddCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="58,70,86,20" >Add Cust</Button>
-        <Button x:Name="EditCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="134,60,10,30" >Edit Cust</Button>
-        <Button x:Name="DelCustBtn" Grid.Row="0" Grid.Column="3" Width="60" Height="20" Margin="140,85,4,5" >Del Cust</Button>
-
+        <StackPanel Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0 30 0 0">
+        <Button x:Name="AddCustBtn"  Width="60" Height="20" Margin="5" Click="AddCustBtn_Click">Add Cust</Button>
+            <Button x:Name="EditCustBtn"  Width="60" Height="20" Margin="5" >Edit Cust</Button>
+            <Button x:Name="DelCustBtn"  Width="60" Height="20" Margin="5" >Del Cust</Button>
+        </StackPanel>
         <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>
-        <StackPanel x:Name="descStackPanel" Visibility="Hidden" Grid.Row="1" Grid.Column="3" Margin="5">
+        <StackPanel x:Name="descStackPanel" Visibility="Visible" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Margin="5">
             <Label>Book Title</Label>
-            <TextBox x:Name="tbBookTitle" IsReadOnly="True" Margin="2"></TextBox>
+            <TextBox x:Name="tbBookTitle" IsReadOnly="True" Margin="2" ></TextBox>
             <Label>Barcode</Label>
             <TextBox x:Name="tbBarcode" IsReadOnly="True" Margin="2"></TextBox>
             <Label>First Publishing</Label>
@@ -78,10 +79,26 @@
             <Label>RetailPrice</Label>
             <TextBox x:Name="tbRetailPrice" IsReadOnly="True" Margin="2"></TextBox>
             <Label>Description</Label>
+            <TextBox x:Name="tbDescription" TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True" Width="auto" ></TextBox>
+
             <!--<TextBox x:Name="tbDescription" IsReadOnly="True" Width="auto" Height="auto"></TextBox>-->
         </StackPanel>
+        <StackPanel x:Name="CustDescStackPanel" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Hidden">
+            <Label>Customer Title</Label>
+            <TextBox x:Name="tbCustTitle" IsReadOnly="True"></TextBox>
+            <Label>Full name</Label>
+            <TextBox x:Name="tbCustFullName" IsReadOnly="True"></TextBox>
+            <Label>Addres</Label>
+            <TextBox x:Name="tbCustAddress" IsReadOnly="True"></TextBox>
+            <Label>Phone</Label>
+            <TextBox x:Name="tbCustPhone" IsReadOnly="True"></TextBox>
+            <Label>Email</Label>
+            <TextBox x:Name="tbCustEmail" IsReadOnly="True"></TextBox>
+            <Label x:Name="labelCustType"></Label>
+            <Label>Balance</Label>
+            <TextBox x:Name="tbCustBalance" IsReadOnly="True"> </TextBox>
+        </StackPanel>
         <!--<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Margin="0,450,0,151">Description</Label>-->
-        <TextBox x:Name="tbDescription" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" IsReadOnly="True" Width="auto" Height="146" Margin="5,481,10,0"></TextBox>
     </Grid>
 
 </Window>
