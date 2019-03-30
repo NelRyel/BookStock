@@ -33,6 +33,11 @@ namespace ManagerLibrary
         //    stockDBcontext.SaveChanges();
 
         //}
+        public Custumer GetCustumerByName(string name)
+        {
+            Custumer c = stockDBcontext.Custumers.Where(p => p.CustumerTitle == name).First();
+            return c;
+        }
         public void CreateCustumer(Custumer custumer)
         {
             stockDBcontext.Custumers.Add(custumer);

@@ -37,7 +37,7 @@ namespace WpfApp1
         List<PurchaseDoc> purchaseDocs;
         List<SaleDocRec> saleDocRecs;
         List<PurchaseDocRec> purchaseDocRecs;
-        string APP_CONNECT = "http://localhost:47914/api/";
+       public string APP_CONNECT = "http://localhost:47914/api/";
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
         BookManager BookManager = new BookManager();
@@ -53,7 +53,8 @@ namespace WpfApp1
             SaleDoc,
             PurchaseDoc,
             PurchaseDocRec,
-            SaleDocRec
+            SaleDocRec,
+            CustumerForGetByName
         }
 
         public MainWindow()
@@ -112,6 +113,31 @@ namespace WpfApp1
         }
      
         
+        public void LoadCustumers()
+        {
+            try
+            {
+                var responceCust = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
+                var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
+                custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
+
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                var respCustDesc = client.GetAsync(APP_CONNECT + API_CON_TYPE.CustumerDesription.ToString()).Result;
+                var jsonRespCustDesc = respCustDesc.Content.ReadAsStringAsync().Result;
+                custumerDescriptions = JsonConvert.DeserializeObject<List<CustumerDescription>>(jsonRespCustDesc);
+            }
+            catch
+            {
+
+            }
+        }
+
         public void LoadDatas()
         {
             try
@@ -139,6 +165,7 @@ namespace WpfApp1
                 var responceCust = client.GetAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString()).Result;
                 var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
                 custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
+              
             }
             catch
             {
@@ -152,7 +179,7 @@ namespace WpfApp1
             }
             catch
             {
-               // LoadDatas();
+              
             }
             try
             {
@@ -198,6 +225,7 @@ namespace WpfApp1
                     break;
 
                 case "Контрагенты":
+                    LoadCustumers();
                     rbChose = check;
                     descStackPanel.Visibility = Visibility.Hidden;
                     tbDescription.Visibility = Visibility.Hidden;
@@ -373,6 +401,14 @@ namespace WpfApp1
             tbCustEmail.Text = "";
             tbCustBalance.Text = "";
             labelCustType.Content = "";
+            DialogCreateCustomer createCustomer = new DialogCreateCustomer();
+            
+            createCustomer.Owner = this;
+            // createCustomer.Show();
+            if (createCustomer.ShowDialog() == true)
+            {
+                MessageBox.Show("if ");
+            }
 
 
         }

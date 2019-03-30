@@ -50,6 +50,17 @@ namespace WebServer.Controllers
 
     }
 
+    public class CustumerForGetByNameController : ApiController
+    {
+        CustumerManager manager = new CustumerManager();
+        [HttpGet]
+        public Custumer GetCustumerByName(string name)
+        {
+            var c = manager.GetCustumerByName(name);
+            return c;
+        } 
+    }
+
     public class CustumerBuyerController: ApiController
     {
         CustumerManager manager = new CustumerManager();
