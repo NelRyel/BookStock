@@ -25,8 +25,10 @@ namespace WpfApp1
     {
         MainWindow mw = new MainWindow();
         HttpClient client = new HttpClient();
-        public DialogCreateCustomer()
+        int IdFromMain;
+        public DialogCreateCustomer(int id)
         {
+            IdFromMain = id+1;
             InitializeComponent();
         }
 
@@ -36,39 +38,28 @@ namespace WpfApp1
             {
                 Custumer custumer = new Custumer();
                 CustumerDescription custumerDescription = new CustumerDescription();
-
+                custumer.Id = IdFromMain;
                 custumer.CustumerTitle = tbCustTitle.Text;
                 custumer.BuyerTrue_SuplierFalse = (rbBuyer.IsChecked == true) ? true : false;
 
                 var jjson = JsonConvert.SerializeObject(custumer);//здесь Кастумер перегоняется в JSON 
 
-                //var resp = client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Custumer.ToString(), jjson);
                 client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Custumer.ToString(), jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
 
-                Thread.Sleep(1000);
+                Thread.Sleep(1000); //как то не очень надежно, но пусть пока как заглушка
 
-                var responceCust = client.GetAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Custumer.ToString()).Result;
-                var jsonRespCust = responceCust.Content.ReadAsStringAsync().Result;
-                var custumers = JsonConvert.DeserializeObject<List<Custumer>>(jsonRespCust);
-                var cc = custumers.Select(p => p.Id).Max();
-                //int custID = custumers.Select(p => p.Id).Max();
+               
+                custumerDescription.Id = IdFromMain;
+                custumerDescription.FullName = tbCustFullName.Text;
+                custumerDescription.Address = tbCustAddress.Text;
+                custumerDescription.Phone = tbCustPhone.Text;
+                custumerDescription.Email = tbCustEmail.Text;
 
-                //var responceCust = client.GetAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.CustumerForGetByName.ToString() + "/" + custumer.CustumerTitle).Result;
-                //var jsonResponceCust = responceCust.Content.ReadAsStringAsync().Result;
-                //var c = JsonConvert.DeserializeObject<Custumer>(jsonResponceCust);
-                
-                //MessageBox.Show(c.CustumerTitle + " "+ c.Id);
-
-                //custumerDescription.Id = custID+1;
-                //custumerDescription.FullName = tbCustFullName.Text;
-                //custumerDescription.Address = tbCustAddress.Text;
-                //custumerDescription.Phone = tbCustPhone.Text;
-                //custumerDescription.Email = tbCustEmail.Text;
-
-                //var jjsonDesc = JsonConvert.SerializeObject(custumerDescription);
-                ////var respDesc = client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.CustumerDesription.ToString(), jjsonDesc);
-                //client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.CustumerDesription.ToString(), jjsonDesc); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
+                var jjsonDesc = JsonConvert.SerializeObject(custumerDescription);
+                client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.CustumerDesription.ToString(), jjsonDesc); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
+            
                 DialogResult = true;
+                Close();
             }
             catch(Exception ex)
             {

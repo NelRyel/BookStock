@@ -47,13 +47,13 @@
 
         <Label x:Name="labelTest" Grid.Column="1" Margin="0 60 0 0">1</Label>
 
-        <Button x:Name="AddBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="52,65,91,25" >Add Book</Button>
+        <Button x:Name="AddBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="52,65,91,25" Click="AddBookBtn_Click" >Add Book</Button>
         <Button x:Name="EditBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,55,10,35" >Edit Book</Button>
         <Button x:Name="DelBookBtn" Grid.Row="0" Grid.Column="2" Width="60" Height="20" Margin="133,80,10,10" >Del Book</Button>
 
         <StackPanel Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0 30 0 0">
         <Button x:Name="AddCustBtn"  Width="60" Height="20" Margin="5" Click="AddCustBtn_Click">Add Cust</Button>
-            <Button x:Name="EditCustBtn"  Width="60" Height="20" Margin="5" >Edit Cust</Button>
+            <Button x:Name="EditCustBtn"  Width="60" Height="20" Margin="5" Click="EditCustBtn_Click" >Edit Cust</Button>
             <Button x:Name="DelCustBtn"  Width="60" Height="20" Margin="5" >Del Cust</Button>
         </StackPanel>
         <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>

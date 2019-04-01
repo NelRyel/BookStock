@@ -31,3 +31,7 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.dll
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.pdb
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogCreateCustomer.g.cs
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogCreateCustomer.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogEditCust.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogEditCust.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialCreateBook.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialCreateBook.baml

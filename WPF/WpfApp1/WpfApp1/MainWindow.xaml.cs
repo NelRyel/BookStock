@@ -138,6 +138,29 @@ namespace WpfApp1
             }
         }
 
+        public void LoadBooks()
+        {
+            try
+            {
+                var responceBook = client.GetAsync(APP_CONNECT + API_CON_TYPE.Book.ToString()).Result;
+                var jsonRespBook = responceBook.Content.ReadAsStringAsync().Result;
+                books = JsonConvert.DeserializeObject<List<Book>>(jsonRespBook);
+            }
+            catch
+            { }
+
+            try
+            {
+                var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
+                var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
+                bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
+            }
+            catch
+            {
+
+            }
+        }
+
         public void LoadDatas()
         {
             try
@@ -215,6 +238,7 @@ namespace WpfApp1
             switch (check)
             {
                 case "Номенклатура":
+                    LoadBooks();
                     rbChose = check;
                     descStackPanel.Visibility = Visibility.Visible;
                     tbDescription.Visibility = Visibility.Visible;
@@ -401,13 +425,63 @@ namespace WpfApp1
             tbCustEmail.Text = "";
             tbCustBalance.Text = "";
             labelCustType.Content = "";
-            DialogCreateCustomer createCustomer = new DialogCreateCustomer();
+            LoadCustumers();
+            int id = custumers.Select(p => p.Id).Max();
+
+
+            DialogCreateCustomer createCustomer = new DialogCreateCustomer(id);
             
-            createCustomer.Owner = this;
+            //createCustomer.Owner = this;
             // createCustomer.Show();
             if (createCustomer.ShowDialog() == true)
             {
-                MessageBox.Show("if ");
+                LoadCustumers();
+                DataTable dt;
+                dt = CustManager.LoadCustemer(custumers);
+                dataGrid1.ItemsSource = dt.DefaultView;
+                //MessageBox.Show("if ");
+            }
+
+
+        }
+
+        public void EditCust(int idCust)
+        {
+            DialogEditCust dialogEditCust = new DialogEditCust(idCust);
+            if (dialogEditCust.ShowDialog() == true)
+            {
+                MessageBox.Show("edit done");
+            }
+        }
+
+
+        private void EditCustBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string StringSelectedId = "";
+            int? selectedColumn = null;
+         
+                selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGrid1.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                     StringSelectedId = (cellContent as TextBlock).Text;
+                }
+                int selectedId = Convert.ToInt32(StringSelectedId);
+            EditCust(selectedId);
+        }
+
+        private void AddBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int id = books.Select(p => p.Id).Max();
+            DialCreateBook createBook = new DialCreateBook(id);
+            if (createBook.ShowDialog() == true)
+            {
+                LoadBooks();
+                DataTable dt;
+                dt = BookManager.LoadBook(books,bookFullDescriptions);
+                dataGrid1.ItemsSource = dt.DefaultView;
+               // MessageBox.Show("if ");
             }
 
 
