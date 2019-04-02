@@ -50,6 +50,18 @@ namespace WebServer.Controllers
 
     }
 
+    public class SpecialCustumerController : ApiController
+    {
+        CustumerManager manager = new CustumerManager();
+        [HttpPost]
+        public void SpecialCreate([FromBody] string specialJson)
+        {
+            CustAndDesc custAndDesc = JsonConvert.DeserializeObject<CustAndDesc>(specialJson);
+            manager.SpecialCreateCustumer(custAndDesc);
+        }
+    }
+
+
     public class CustumerForGetByNameController : ApiController
     {
         CustumerManager manager = new CustumerManager();
@@ -59,6 +71,8 @@ namespace WebServer.Controllers
             var c = manager.GetCustumerByName(name);
             return c;
         } 
+
+     
     }
 
     public class CustumerBuyerController: ApiController

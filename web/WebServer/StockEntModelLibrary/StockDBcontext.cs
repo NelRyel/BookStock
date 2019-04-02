@@ -27,6 +27,8 @@ namespace StockEntModelLibrary
         public DbSet<PurchaseDocRec> PurchaseDocRecs { get; set; }
         public DbSet<SaleDoc> SaleDocs { get; set; }
         public DbSet<SaleDocRec> SaleDocRecs { get; set; }
+        //public DbSet<CustAndDesc> CustAndDescs { get; set; }
+
 
 
         public static StockDBcontext Create()

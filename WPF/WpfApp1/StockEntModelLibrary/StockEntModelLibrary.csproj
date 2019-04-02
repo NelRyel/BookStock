@@ -64,8 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookEnt\Book.cs" />
+    <Compile Include="BookEnt\BookAndDesc.cs" />
     <Compile Include="BookEnt\BookFullDescription.cs" />
     <Compile Include="BookEnt\BookGenre.cs" />
+    <Compile Include="CustumerEnt\custAndDesc.cs" />
     <Compile Include="DefaultInit.cs" />
     <Compile Include="StaticDatas.cs" />
     <Compile Include="StockDBcontext.cs" />

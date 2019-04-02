@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using ManagerLibrary.UnitedModels;
+using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,17 @@ namespace ManagerLibrary
         {
             stockDBcontext.BookFullDescriptions.Add(fullDescription);
             stockDBcontext.SaveChanges();
+        }
+
+        public void SpecialCreateBook(BookAndDesc bookAndDesc)
+        {
+            Book book = bookAndDesc.book;
+            BookFullDescription bookFullDescription = bookAndDesc.bookFullDescription;
+            stockDBcontext.Books.Add(book);
+            stockDBcontext.SaveChanges();
+            stockDBcontext.BookFullDescriptions.Add(bookFullDescription);
+            stockDBcontext.SaveChanges();
+
         }
 
         //public void CreateBook(string BookTitle, string BarcodeISBN, int count, decimal PurchasePrice, decimal RetailPrice, string Section,

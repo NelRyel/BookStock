@@ -1,4 +1,5 @@
 ﻿using ManagerLibrary;
+using ManagerLibrary.UnitedModels;
 using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
@@ -29,10 +30,13 @@ namespace WebServer.Controllers
         }
 
         [HttpPost]
-        public void CreateBook([FromBody] string JsonBook)
+        public void CreateBook([FromBody] string JsonBookSpecial)
         {
-            Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
-            manager.CreateBook(book);
+            BookAndDesc bookAndDesc = JsonConvert.DeserializeObject<BookAndDesc>(JsonBookSpecial);
+            manager.SpecialCreateBook(bookAndDesc);
+
+            //Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
+            //manager.CreateBook(book);
         }
 
         [HttpPut]

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookManager.cs" />
+    <Compile Include="UnitedModels\BookAndDesc.cs" />
+    <Compile Include="UnitedModels\CustAndDesc.cs" />
     <Compile Include="PurchaseManager.cs" />
     <Compile Include="CustumerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

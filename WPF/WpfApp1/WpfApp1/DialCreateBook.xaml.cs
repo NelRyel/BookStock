@@ -46,6 +46,7 @@ namespace WpfApp1
             {
                 Book book = new Book();
                 BookFullDescription bookFullDescription = new BookFullDescription();
+                BookAndDesc bookAndDesc = new BookAndDesc();
                 book.Id = IdFromMain;
                 book.BookTitle = tbBookTitle.Text;
                 book.BarcodeISBN = tbBarcode.Text;
@@ -53,9 +54,9 @@ namespace WpfApp1
                 book.PurchasePrice = Convert.ToDecimal( tbPurchasePrice.Text);
                 book.RetailPrice = Convert.ToDecimal( tbRetailPrice.Text);
 
-                var jsonBook = JsonConvert.SerializeObject(book);
-                client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString(), jsonBook);
-                Thread.Sleep(1000);
+                //var jsonBook = JsonConvert.SerializeObject(book);
+                //client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString(), jsonBook);
+                //Thread.Sleep(1000);
 
                 bookFullDescription.Id = IdFromMain;
                 bookFullDescription.YearBookPublishing = tbYearFirstPubl.Text;
@@ -67,15 +68,16 @@ namespace WpfApp1
                 bookFullDescription.Publisher = tbPublisher.Text;
                 bookFullDescription.ImageUrl = tbUrlImg.Text;
 
-                var jsonDesc = JsonConvert.SerializeObject(bookFullDescription);
-                client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.BookDescription.ToString(), jsonDesc);
+                //var jsonDesc = JsonConvert.SerializeObject(bookFullDescription);
+                //client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.BookDescription.ToString(), jsonDesc);
+
+                bookAndDesc.book = book;
+                bookAndDesc.bookFullDescription = bookFullDescription;
+                var jsonBookAndDes = JsonConvert.SerializeObject(bookAndDesc);
+                client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString(), jsonBookAndDes);
 
                 DialogResult = true;
                 Close();
-
-
-
-
             }
             catch(Exception ex)
             {
@@ -83,6 +85,14 @@ namespace WpfApp1
             }
 
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            decimal x = Convert.ToDecimal(tbSum.Text);
+            decimal Pprice = Convert.ToDecimal(tbPurchasePrice.Text);
+            decimal RetailPrice = x * Pprice;
+            tbRetailPrice.Text = RetailPrice.ToString();
         }
     }
 }

@@ -54,7 +54,9 @@ namespace WpfApp1
             PurchaseDoc,
             PurchaseDocRec,
             SaleDocRec,
-            CustumerForGetByName
+            CustumerForGetByName,
+            SpecialCustumer
+
         }
 
         public MainWindow()

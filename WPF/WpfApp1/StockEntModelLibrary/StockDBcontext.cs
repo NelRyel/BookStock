@@ -28,7 +28,7 @@ namespace StockEntModelLibrary
         public DbSet<SaleDoc> SaleDocs { get; set; }
         public DbSet<SaleDocRec> SaleDocRecs { get; set; }
 
-
+        public DbSet<custAndDesc> custAndDescs { get; set; }
  
 
 

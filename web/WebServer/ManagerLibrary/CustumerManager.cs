@@ -38,12 +38,25 @@ namespace ManagerLibrary
             Custumer c = stockDBcontext.Custumers.Where(p => p.CustumerTitle == name).First();
             return c;
         }
-        public void CreateCustumer(Custumer custumer)
+
+        public void SpecialCreateCustumer(CustAndDesc custAndDesc) //новый метод создания кастумера
+        {
+            Custumer custumer = custAndDesc.custumer;
+            CustumerDescription custumerDescription = custAndDesc.custumerDescription;
+            stockDBcontext.Custumers.Add(custumer);
+            stockDBcontext.SaveChanges();
+            stockDBcontext.CustumerDescriptions.Add(custumerDescription);
+            stockDBcontext.SaveChanges();
+
+
+        }
+
+        public void CreateCustumer(Custumer custumer) //старый метод создания кастумера
         {
             stockDBcontext.Custumers.Add(custumer);
                 stockDBcontext.SaveChanges();
         }
-        public void CreateCustumerDescription(CustumerDescription custumerDescription)
+        public void CreateCustumerDescription(CustumerDescription custumerDescription)  //старый метод создания кастумера
         {
             stockDBcontext.CustumerDescriptions.Add(custumerDescription);
                 stockDBcontext.SaveChanges();
