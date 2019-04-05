@@ -40,10 +40,11 @@ namespace WebServer.Controllers
         }
 
         [HttpPut]
-        public void EditBook(int id, [FromBody] string JsonBook)//редактировать черезе Пут
+        public void EditBook(int id, [FromBody] string jsonBookAndDesc)//редактировать черезе Пут
         {
-            Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
-            manager.EditBook(book.Id, book.BookTitle ,book.BarcodeISBN, book.PurchasePrice, book.RetailPrice);
+            //Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
+            BookAndDesc bookAndDesc = JsonConvert.DeserializeObject<BookAndDesc>(jsonBookAndDesc);
+            manager.EditBook(id, bookAndDesc);
         }
 
         [HttpDelete]

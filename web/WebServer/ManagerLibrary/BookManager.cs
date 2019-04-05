@@ -97,15 +97,37 @@ namespace ManagerLibrary
 
         }
 
-        public void EditBook(int id, string BookTitle, string BarcodeISBN, decimal PurchasePrice, decimal RetailPrice)
+        public  void EditBook(int id, BookAndDesc bookAndDesc)
         {
             Book book = stockDBcontext.Books.Find(id);
+            BookFullDescription bookFullDescription = stockDBcontext.BookFullDescriptions.Find(id);
+
+            Book editedBook = bookAndDesc.book;
+            BookFullDescription editedBookDesc = bookAndDesc.bookFullDescription;
+
+            book.BarcodeISBN = editedBook.BarcodeISBN;
+            book.BookTitle = editedBook.BookTitle;
+            book.PurchasePrice = editedBook.PurchasePrice;
+            book.RetailPrice = editedBook.RetailPrice;
+
+            bookFullDescription.Author = editedBookDesc.Author;
+            bookFullDescription.Description = editedBookDesc.Description;
+            bookFullDescription.FirstYearBookPublishing = editedBookDesc.FirstYearBookPublishing;
+            bookFullDescription.ImageUrl = editedBookDesc.ImageUrl;
+            bookFullDescription.Publisher = editedBookDesc.Publisher;
+            bookFullDescription.Section = editedBookDesc.Section;
+            bookFullDescription.Serie = editedBookDesc.Serie;
+            bookFullDescription.YearBookPublishing = editedBookDesc.YearBookPublishing;
+
+
+            stockDBcontext.SaveChanges();
+            //Book book = stockDBcontext.Books.Find(id);
               
-                book.BookTitle = BookTitle;
-                book.BarcodeISBN = BarcodeISBN;
-                book.PurchasePrice = PurchasePrice;
-                book.RetailPrice = RetailPrice;
-                stockDBcontext.SaveChanges();
+            //    book.BookTitle = BookTitle;
+            //    book.BarcodeISBN = BarcodeISBN;
+            //    book.PurchasePrice = PurchasePrice;
+            //    book.RetailPrice = RetailPrice;
+            //    stockDBcontext.SaveChanges();
         }
 
         public void EditBookDesc(int id, string Section,

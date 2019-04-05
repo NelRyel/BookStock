@@ -59,6 +59,15 @@ namespace WebServer.Controllers
             CustAndDesc custAndDesc = JsonConvert.DeserializeObject<CustAndDesc>(specialJson);
             manager.SpecialCreateCustumer(custAndDesc);
         }
+
+
+        [HttpPut]
+        public void SpecialEdit(int id,[FromBody] string jsonEditCust)
+        {
+            CustAndDesc custAndDesc = JsonConvert.DeserializeObject<CustAndDesc>(jsonEditCust);
+            manager.SpecialEditCustumer(id, custAndDesc);
+        }
+
     }
 
 

@@ -29,9 +29,11 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\BookDB.mdf
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\BookDB_log.ldf
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.dll
 E:\BookStock\WPF\WpfApp1\WpfApp1\bin\Debug\ManagerWpfLibrary.pdb
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogCreateCustomer.g.cs
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogCreateCustomer.baml
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogEditCust.g.cs
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialogEditCust.baml
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialCreateBook.g.cs
-E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\DialCreateBook.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialCreateBook.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogCreateCustomer.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogEditBook.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogEditCust.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialCreateBook.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogCreateCustomer.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogEditBook.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogEditCust.baml

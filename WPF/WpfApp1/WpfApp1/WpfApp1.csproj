@@ -68,15 +68,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="DialCreateBook.xaml">
+    <Page Include="dialogs\DialCreateBook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogCreateCustomer.xaml">
+    <Page Include="dialogs\DialogCreateCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogEditCust.xaml">
+    <Page Include="dialogs\DialogEditBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialogs\DialogEditCust.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -88,13 +92,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DialCreateBook.xaml.cs">
+    <Compile Include="dialogs\DialCreateBook.xaml.cs">
       <DependentUpon>DialCreateBook.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogCreateCustomer.xaml.cs">
+    <Compile Include="dialogs\DialogCreateCustomer.xaml.cs">
       <DependentUpon>DialogCreateCustomer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogEditCust.xaml.cs">
+    <Compile Include="dialogs\DialogEditBook.xaml.cs">
+      <DependentUpon>DialogEditBook.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialogs\DialogEditCust.xaml.cs">
       <DependentUpon>DialogEditCust.xaml</DependentUpon>
     </Compile>
     <Compile Include="loadManager.cs" />

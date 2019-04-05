@@ -121,6 +121,24 @@ namespace ManagerLibrary
             
         }
 
+        public void SpecialEditCustumer(int id, CustAndDesc custAndDesc)
+        {
+            Custumer editedCust = custAndDesc.custumer;
+            CustumerDescription editedDesc = custAndDesc.custumerDescription;
+
+            Custumer custumer = stockDBcontext.Custumers.Find(id);
+            CustumerDescription custumerDescription = stockDBcontext.CustumerDescriptions.Find(id);
+
+            custumer.CustumerTitle = editedCust.CustumerTitle;
+            custumer.BuyerTrue_SuplierFalse = editedCust.BuyerTrue_SuplierFalse;
+            custumerDescription.Address = editedDesc.Address;
+            custumerDescription.Email = editedDesc.Email;
+            custumerDescription.FullName = editedDesc.FullName;
+            custumerDescription.Phone = editedDesc.Phone;
+            stockDBcontext.SaveChanges();
+        }
+
+
         public void EditCustumerDesc(int id, string FullName, string address, string phone, string Email)
         {
            

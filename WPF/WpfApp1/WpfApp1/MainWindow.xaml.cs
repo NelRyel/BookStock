@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.dialogs;
 
 namespace WpfApp1
 {
@@ -41,7 +42,8 @@ namespace WpfApp1
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
         BookManager BookManager = new BookManager();
-
+        int selectedColumn;
+        int selectedId;
         string rbChose=""; //нужен для проверки какой РадиоБаттон выбран 
 
         public enum API_CON_TYPE //выбор АпиКонтроллера
@@ -384,7 +386,7 @@ namespace WpfApp1
         {
             //--------------------------------------------------------------------------------------------------------------------------------------
             string StringBookId = "";
-            int? selectedColumn = null;
+           // int? selectedColumn = null;
             try
             {
 
@@ -396,7 +398,7 @@ namespace WpfApp1
                 {
                     StringBookId = (cellContent as TextBlock).Text;
                 }
-                int selectedId = Convert.ToInt32(StringBookId);
+                selectedId = Convert.ToInt32(StringBookId);
                 //---------------------------------------------------------------------------------------------------------------------------------------
                 switch (rbChose)
                 {
@@ -456,21 +458,46 @@ namespace WpfApp1
             }
         }
 
-
+       
         private void EditCustBtn_Click(object sender, RoutedEventArgs e)
         {
-            string StringSelectedId = "";
-            int? selectedColumn = null;
-         
-                selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
-                var selectedCell = dataGrid1.SelectedCells[0];
-                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
-                if (cellContent is TextBlock)
+            //string StringSelectedId = "";
+            //int? selectedColumn = null;
+            try
+            {
+
+                //selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
+                //var selectedCell = dataGrid1.SelectedCells[0];
+                //var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                //if (cellContent is TextBlock)
+                //{
+                //    StringSelectedId = (cellContent as TextBlock).Text;
+                //}
+                //int selectedId = Convert.ToInt32(StringSelectedId);
+                DialogEditCust dialogEditCust = new DialogEditCust(selectedId);
+                if (dialogEditCust.ShowDialog() == true)
                 {
-                     StringSelectedId = (cellContent as TextBlock).Text;
+                    dataGrid1.ItemsSource = null;
+                    tbCustTitle.Text = "";
+                    tbCustFullName.Text = "";
+                    tbCustAddress.Text = "";
+                    tbCustPhone.Text = "";
+                    tbCustEmail.Text = "";
+                    tbCustBalance.Text = "";
+                    labelCustType.Content = "";
+                    LoadCustumers();
+                    DataTable dt;
+                    dt = CustManager.LoadCustemer(custumers);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    MessageBox.Show("edit done");
                 }
-                int selectedId = Convert.ToInt32(StringSelectedId);
-            EditCust(selectedId);
+                LoadCustumers();
+                //EditCust(selectedId);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error select from grid in Edit-Click: " + ex);
+            }
         }
 
         private void AddBookBtn_Click(object sender, RoutedEventArgs e)
@@ -487,6 +514,28 @@ namespace WpfApp1
             }
 
 
+        }
+
+        private void EditBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DialogEditBook dialogEditBook = new DialogEditBook(selectedId);
+                if (dialogEditBook.ShowDialog() == true)
+                {
+                    dataGrid1.ItemsSource = null;
+
+                    LoadBooks();
+                    DataTable dt = BookManager.LoadBook(books, bookFullDescriptions);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+
+                    MessageBox.Show("edit done");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error in edit book: " + ex);
+            }
         }
     }
 

@@ -1,7 +1,8 @@
 ﻿
 
-FE:\BookStock\WPF\WpfApp1\WpfApp1\DialCreateBook.xaml;;
-FE:\BookStock\WPF\WpfApp1\WpfApp1\DialogCreateCustomer.xaml;;
-FE:\BookStock\WPF\WpfApp1\WpfApp1\DialogEditCust.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialCreateBook.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogCreateCustomer.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogEditBook.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogEditCust.xaml;;
 FE:\BookStock\WPF\WpfApp1\WpfApp1\MainWindow.xaml;;
 
