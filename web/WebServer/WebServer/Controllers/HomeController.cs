@@ -25,9 +25,9 @@ namespace WebServer.Controllers
             //    ViewBag.SomeShit = s.ToList();
             //}
 
-            //CustumerManager manager = new CustumerManager();
-            //var mod = manager.GetCustumerDescriptions();
-            //ViewBag.SomeShit = mod.ToList();
+            CustumerManager manager = new CustumerManager();
+            var mod = manager.GetCustumerDescriptions();
+            ViewBag.SomeShit = mod.ToList();
 
             return View();
         }

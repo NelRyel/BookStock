@@ -1,5 +1,6 @@
 ﻿using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
+using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -87,6 +88,41 @@ namespace StockEntModelLibrary
                 ImageUrl = "http://cdn.eksmo.ru/v2/ASE000000000834234/COVER/cover1__w600.jpg"
             };
             context.BookFullDescriptions.Add(bookFullDescription1);
+
+
+            PurchaseDoc purchaseDoc1 = new PurchaseDoc()
+            {
+                //Id = custumerDefaultSuplier.Id,
+                Custumer = custumerDefaultSuplier,
+                DateCreate = DateTime.Today,
+                DateOfLastChangeStatus = DateTime.Today,
+                Status = "Проведено",
+                Comment = "",
+                FullSum = 535,
+                CustumerId = custumerDefaultSuplier.Id
+
+            };
+            context.PurchaseDocs.Add(purchaseDoc1);
+            context.SaveChanges();
+
+            PurchaseDocRec purchaseDocRec1 = new PurchaseDocRec()
+            {
+                LineNumber = 1,
+                Count = 1,
+                PurchasePrice = 535,
+                RetailPrice = 1070,
+                SumPrice = 535,
+                PurchaseDoc = purchaseDoc1,
+                PurchaseDocId = purchaseDoc1.Id,
+                Book = book1,
+                BookId = book1.Id
+            };
+
+            context.PurchaseDocRecs.Add(purchaseDocRec1);
+            context.SaveChanges();
+            
+
+
             context.SaveChanges();
 
             

@@ -18,7 +18,7 @@ namespace ManagerLibrary
         public IEnumerable<PurchaseDoc> GetAllPurchaseDocs()
         {
 
-            IEnumerable<PurchaseDoc> purchaseDocs = stockDBcontext.PurchaseDocs.Include("Custumers").Where(u => u.IsDelete == false);
+            IEnumerable<PurchaseDoc> purchaseDocs = stockDBcontext.PurchaseDocs.Where(u => u.IsDelete == false);
                 return purchaseDocs;
            
         }

@@ -38,9 +38,10 @@ namespace WpfApp1
         List<PurchaseDoc> purchaseDocs;
         List<SaleDocRec> saleDocRecs;
         List<PurchaseDocRec> purchaseDocRecs;
-       public string APP_CONNECT = "http://localhost:47914/api/";
+        public string APP_CONNECT = "http://localhost:47914/api/";
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
+        PurchaseDocsManager PurchaseDocsManager = new PurchaseDocsManager();
         BookManager BookManager = new BookManager();
         int selectedColumn;
         int selectedId;
@@ -63,11 +64,16 @@ namespace WpfApp1
 
         public MainWindow()
         {
-            LoadDatas();
             InitializeComponent();
+            LoadDatas();
+            var winHeight= System.Windows.SystemParameters.PrimaryScreenHeight;
+            var winWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
 
+            MainWind.MaxHeight = winHeight;
+            MainWind.MaxWidth = winWidth;
             //string API_CUSTUMER = "Custumer";
-
+            CustPanel_ShowTrue_HideFalse(false);
+            PricePanel_ShowTrue_HideFalse(false);
 
 
             //StockDBcontext ctx = new StockDBcontext();
@@ -108,15 +114,14 @@ namespace WpfApp1
 
         }
 
-        static async void UpdateCust(Custumer custumerById)
-        {
-            string APP_CONNECT = "http://localhost:47914/api/";
-            var client = new HttpClient();
-            var jjson = JsonConvert.SerializeObject(custumerById);
-            var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
-        }
+        //static async void UpdateCust(Custumer custumerById)//тестовый не нужен
+        //{
+        //    string APP_CONNECT = "http://localhost:47914/api/";
+        //    var client = new HttpClient();
+        //    var jjson = JsonConvert.SerializeObject(custumerById);
+        //    var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
+        //}
      
-        
         public void LoadCustumers()
         {
             try
@@ -139,6 +144,19 @@ namespace WpfApp1
             catch
             {
 
+            }
+        }
+        public void LoadPurchaseDocs()
+        {
+            try
+            {
+                var respPurchaseDocs = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDoc.ToString()).Result;
+                var jsonRespPDocs = respPurchaseDocs.Content.ReadAsStringAsync().Result;
+                purchaseDocs = JsonConvert.DeserializeObject<List<PurchaseDoc>>(jsonRespPDocs);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error load Purchase Docs: " + ex);
             }
         }
 
@@ -232,6 +250,21 @@ namespace WpfApp1
             }
            
         }
+
+
+        private void PricePanel_ShowTrue_HideFalse(bool check)
+        {
+            spBook.Visibility = (check==true) ? Visibility.Visible : Visibility.Hidden;
+            descStackPanel.Visibility = (check == true) ? Visibility.Visible : Visibility.Hidden;
+            tbDescription.Visibility = (check == true) ? Visibility.Visible : Visibility.Hidden;
+            imgDesc.Visibility = (check == true) ? Visibility.Visible : Visibility.Hidden;
+        }
+        private void CustPanel_ShowTrue_HideFalse(bool check)
+        {
+            CustDescStackPanel.Visibility = (check == true) ? Visibility.Visible : Visibility.Hidden;
+            spCust.Visibility = (check == true) ? Visibility.Visible : Visibility.Hidden;
+        }
+
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
            
@@ -244,10 +277,16 @@ namespace WpfApp1
                 case "Номенклатура":
                     LoadBooks();
                     rbChose = check;
-                    descStackPanel.Visibility = Visibility.Visible;
-                    tbDescription.Visibility = Visibility.Visible;
-                    imgDesc.Visibility = Visibility.Visible;
-                    CustDescStackPanel.Visibility = Visibility.Hidden;
+                    dataGrid1.Visibility = Visibility.Visible;
+                    dataGridJournal.Visibility = Visibility.Hidden;
+                    //spBook.Visibility = Visibility.Visible;
+                    //descStackPanel.Visibility = Visibility.Visible;
+                    //tbDescription.Visibility = Visibility.Visible;
+                    //imgDesc.Visibility = Visibility.Visible;
+                    PricePanel_ShowTrue_HideFalse(true);
+                    //CustDescStackPanel.Visibility = Visibility.Hidden;
+                    //spCust.Visibility = Visibility.Hidden;
+                    CustPanel_ShowTrue_HideFalse(false);
                     dt = BookManager.LoadBook(books, bookFullDescriptions);
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
@@ -255,14 +294,28 @@ namespace WpfApp1
                 case "Контрагенты":
                     LoadCustumers();
                     rbChose = check;
-                    descStackPanel.Visibility = Visibility.Hidden;
-                    tbDescription.Visibility = Visibility.Hidden;
-                    imgDesc.Visibility = Visibility.Hidden;
-                    CustDescStackPanel.Visibility = Visibility.Visible;
+                    dataGrid1.Visibility = Visibility.Visible;
+                    dataGridJournal.Visibility = Visibility.Hidden;
+
+                    //spBook.Visibility = Visibility.Hidden;
+                    //descStackPanel.Visibility = Visibility.Hidden;
+                    //tbDescription.Visibility = Visibility.Hidden;
+                    //imgDesc.Visibility = Visibility.Hidden;
+                    PricePanel_ShowTrue_HideFalse(false);
+                    //CustDescStackPanel.Visibility = Visibility.Visible;
+                    //spCust.Visibility = Visibility.Visible;
+                    CustPanel_ShowTrue_HideFalse(true);
                     dt = CustManager.LoadCustemer(custumers);
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
-
+                case "Журнал Приходных":
+                    PricePanel_ShowTrue_HideFalse(false);
+                    CustPanel_ShowTrue_HideFalse(false);
+                    dataGridJournal.Visibility = Visibility.Visible;
+                    rbChose = check;
+                    dt = PurchaseDocsManager.LoadPurchaseDocsDataTable(purchaseDocs,custumers);
+                    dataGridJournal.ItemsSource = dt.DefaultView;
+                    break;
                 default: MessageBox.Show("wrong select");
                     break;
 
@@ -296,16 +349,6 @@ namespace WpfApp1
             BookFullDescription bookFull = null;
             try
             {
-
-                //int selectedColumn = md.dataGrid1.CurrentCell.Column.DisplayIndex;
-                //var selectedCell = md.dataGrid1.SelectedCells[0];
-                //var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                //if (cellContent is TextBlock)
-                //{
-                //    StringBookId = (cellContent as TextBlock).Text;
-                //}
-                //int BookId = Convert.ToInt32(StringBookId);
-
                 foreach (var item in books)
                 {
                     if (item.Id == BookId)
@@ -461,19 +504,8 @@ namespace WpfApp1
        
         private void EditCustBtn_Click(object sender, RoutedEventArgs e)
         {
-            //string StringSelectedId = "";
-            //int? selectedColumn = null;
             try
             {
-
-                //selectedColumn = dataGrid1.CurrentCell.Column.DisplayIndex;
-                //var selectedCell = dataGrid1.SelectedCells[0];
-                //var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
-                //if (cellContent is TextBlock)
-                //{
-                //    StringSelectedId = (cellContent as TextBlock).Text;
-                //}
-                //int selectedId = Convert.ToInt32(StringSelectedId);
                 DialogEditCust dialogEditCust = new DialogEditCust(selectedId);
                 if (dialogEditCust.ShowDialog() == true)
                 {
@@ -524,7 +556,19 @@ namespace WpfApp1
                 if (dialogEditBook.ShowDialog() == true)
                 {
                     dataGrid1.ItemsSource = null;
-
+                    tbBookTitle.Text = "";
+                    tbBarcode.Text = "";
+                    tbFirstYear.Text = "";
+                    tbLastYear.Text = "";
+                    tbSeria.Text = "";
+                    tbSection.Text = "";
+                    tbAuthor.Text = "";
+                    tbPublisher.Text = "";
+                    tbPurchasePrice.Text = "";
+                    tbRetailPrice.Text = "";
+                    tbDescription.Text = "";
+                    
+                    //imgDesc = null;
                     LoadBooks();
                     DataTable dt = BookManager.LoadBook(books, bookFullDescriptions);
                     dataGrid1.ItemsSource = dt.DefaultView;

@@ -1,5 +1,6 @@
 ﻿using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
+using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -84,7 +85,9 @@ namespace StockEntModelLibrary
                 ImageUrl = "http://cdn.eksmo.ru/v2/ASE000000000834234/COVER/cover1__w600.jpg"
             };
             context.BookFullDescriptions.Add(bookFullDescription1);
+
             
+
 
 
 
