@@ -51,6 +51,15 @@ namespace WebServer.Controllers
     {
         PurchaseManager manager = new PurchaseManager();
 
+        [HttpGet]
+        public IEnumerable<PurchaseDocRec> GetPurchaseDocRecs(int id)
+        {
+            IEnumerable<PurchaseDocRec> purchaseDocRecs = manager.GetPurchaseDocRecsByDocId(id);
+            return purchaseDocRecs;
+        }
+
+
+
         [HttpPost]
         public void AddPurchaseDocRec(int id,[FromBody] string JsonPurchaseDocRecs)
         {

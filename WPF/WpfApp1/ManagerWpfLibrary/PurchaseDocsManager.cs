@@ -34,8 +34,6 @@ namespace ManagerWpfLibrary
                 dt.Rows.Add(item.Id, item.DateCreate, item.DateOfLastChangeStatus, client,item.Status, item.FullSum, item.Comment);
             }
             return dt;
-
-
         }
     }
 }

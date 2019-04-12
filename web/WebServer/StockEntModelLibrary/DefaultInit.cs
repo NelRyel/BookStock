@@ -15,7 +15,7 @@ namespace StockEntModelLibrary
     //DropCreateDatabaseIfModelChanges - пересоздаёт если были изменения
     //CreateDatabaseIfNotExists - создаёт БД еси её нет
 
-    class DefaultInit : DropCreateDatabaseIfModelChanges<StockDBcontext>
+    class DefaultInit : DropCreateDatabaseAlways<StockDBcontext>
     {
         protected override void Seed(StockDBcontext context)
         {
@@ -96,7 +96,7 @@ namespace StockEntModelLibrary
                 Custumer = custumerDefaultSuplier,
                 DateCreate = DateTime.Today,
                 DateOfLastChangeStatus = DateTime.Today,
-                Status = "Проведено",
+                Status = StaticDatas.DocStatuses.Проведен.ToString(),
                 Comment = "",
                 FullSum = 535,
                 CustumerId = custumerDefaultSuplier.Id

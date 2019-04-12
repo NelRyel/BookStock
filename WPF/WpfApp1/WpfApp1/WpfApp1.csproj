@@ -84,6 +84,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="dialogs\DialogPurchaseDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +107,9 @@
     </Compile>
     <Compile Include="dialogs\DialogEditCust.xaml.cs">
       <DependentUpon>DialogEditCust.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialogs\DialogPurchaseDoc.xaml.cs">
+      <DependentUpon>DialogPurchaseDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="loadManager.cs" />
     <Compile Include="MainWindow.xaml.cs">

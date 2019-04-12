@@ -33,7 +33,6 @@ namespace ManagerLibrary
         }
         public IEnumerable<PurchaseDocRec> GetPurchaseDocRecs(int PurchaseDocId)
         {
-
             IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == PurchaseDocId);
                 return purchaseDocRecs;
             
@@ -162,6 +161,15 @@ namespace ManagerLibrary
             }
 
         }
+
+        public IEnumerable<PurchaseDocRec> GetPurchaseDocRecsByDocId(int docId)
+        {
+            IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == docId);
+            return purchaseDocRecs;
+
+
+        }
+
 
         public void ChangeIsDelete(int id, bool IsDelete)
         {

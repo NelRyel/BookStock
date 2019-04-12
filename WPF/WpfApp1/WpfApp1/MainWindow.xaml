@@ -31,7 +31,7 @@
         <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Hidden" IsReadOnly="True" SelectionChanged="DataGrid1_SelectionChanged">
         </DataGrid>
 
-        <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden">
+        <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGrid1_SelectionChanged" MouseDoubleClick="DataGridJournal_MouseDoubleClick">
             
         </DataGrid>
         
@@ -81,7 +81,7 @@
             <Label>RetailPrice</Label>
             <TextBox x:Name="tbRetailPrice" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
             <Label>Description</Label>
-            <TextBox x:Name="tbDescription" TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True" Width="auto" ></TextBox>
+            <TextBox x:Name="tbDescription" VerticalScrollBarVisibility="Visible"  TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True" Width="auto" ></TextBox>
 
             <!--<TextBox x:Name="tbDescription" IsReadOnly="True" Width="auto" Height="auto"></TextBox>-->
         </StackPanel>

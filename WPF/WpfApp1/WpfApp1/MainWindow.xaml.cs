@@ -59,6 +59,7 @@ namespace WpfApp1
             SaleDocRec,
             CustumerForGetByName,
             SpecialCustumer
+            
 
         }
 
@@ -75,7 +76,7 @@ namespace WpfApp1
             CustPanel_ShowTrue_HideFalse(false);
             PricePanel_ShowTrue_HideFalse(false);
 
-
+         
             //StockDBcontext ctx = new StockDBcontext();
             //ctx.Custumers.Load();
             //Custumer custumer = new Custumer();
@@ -580,6 +581,38 @@ namespace WpfApp1
             {
                 MessageBox.Show("Error in edit book: " + ex);
             }
+        }
+
+        private void DataGridJournal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int sId=0;
+            try
+            {
+                string StringBookId = "";
+                var selectedColumn = dataGridJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                sId = Convert.ToInt32(StringBookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error select ID" + ex);
+            }
+            PurchaseDoc purchaseDoc = purchaseDocs.Find(i => i.Id == sId);
+            Custumer custumer = custumers.Find(i => i.Id == purchaseDoc.CustumerId);
+
+            var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocRec.ToString()+"/"+purchaseDoc.Id).Result;
+            var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
+            var purchaseRecs = JsonConvert.DeserializeObject<List<PurchaseDocRec>>(jsonRespDocRecsk);
+
+
+            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs);
+            dialogPurchase.Show();
+
         }
     }
 
