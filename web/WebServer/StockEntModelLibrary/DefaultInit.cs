@@ -70,7 +70,31 @@ namespace StockEntModelLibrary
                 fullDescriptionId=1
                 
             };
+            Book book2 = new Book()
+            {
+                BookTitle = "Врата Штейна. Том 1",
+                BarcodeISBN = "9785919960638",
+                Count = 1,
+                PurchasePrice = 140,
+                RetailPrice = 140 * 2,
+                fullDescriptionId = 2
+            };
+            Book book3 = new Book()
+            {
+                BookTitle= "Врата Штейна. Том 2",
+                BarcodeISBN= "9785919960720",
+                Count=0,
+                PurchasePrice=142,
+                RetailPrice=142*2,
+                fullDescriptionId=3
+                
+            };
+
+
             context.Books.Add(book1);
+            context.Books.Add(book2);
+            context.Books.Add(book3);
+            context.SaveChanges();
             BookFullDescription bookFullDescription1 = new BookFullDescription()
             {
                 Id = book1.Id,
@@ -87,16 +111,52 @@ namespace StockEntModelLibrary
                 Publisher = "ООО \"Издательство АСТ\"",
                 ImageUrl = "http://cdn.eksmo.ru/v2/ASE000000000834234/COVER/cover1__w600.jpg"
             };
+            BookFullDescription bookFullDescription2 = new BookFullDescription()
+            {
+                Id = book2.Id,
+                FirstYearBookPublishing= "2015",
+                YearBookPublishing = "2018",
+                Serie = "Манга",
+                Section = "Триллер, Фантастика",
+                Description= "Окабэ Ринтаро — или просто Окарин — молодой студент, который до сих пор " +
+                "живет в мире детских фантазий. Он занимается придумыванием различных " +
+                "бесполезных изобретений вместе с двумя товарищами по клубу, который они гордо называют Лабораторией Гаджетов Будущего. " +
+                "Но однажды он встречает девушку-гения, Курису Макисэ, и случайно изобретает машину времени, способную посылать " +
+                "сообщения в прошлое. Привычная повседневность начинает потихоньку расходиться по швам, " +
+                "а главный герой оказывается вовлечён в заговор мирового масштаба!..",
+                Author = "Сарати Е.",
+                Publisher = "ЭксЭл Медиа",
+                ImageUrl= "https://img-gorod.ru/web/247/2470072/jpg/2470072_detail.jpg"
+
+            };
+            BookFullDescription bookFullDescription3 = new BookFullDescription()
+            {
+                Id=book3.Id,
+                FirstYearBookPublishing="2015",
+                Serie="Манга",
+                Section= "Триллер, Фантастика",
+                Description = "Окабэ Ринтаро — или просто Окарин — молодой студент, который до сих пор " +
+                "живет в мире детских фантазий. Он занимается придумыванием различных " +
+                "бесполезных изобретений вместе с двумя товарищами по клубу, который они гордо называют Лабораторией Гаджетов Будущего. " +
+                "Но однажды он встречает девушку-гения, Курису Макисэ, и случайно изобретает машину времени, способную посылать " +
+                "сообщения в прошлое. Привычная повседневность начинает потихоньку расходиться по швам, " +
+                "а главный герой оказывается вовлечён в заговор мирового масштаба!..",
+                Author = "Сарати Е.",
+                Publisher = "ЭксЭл Медиа",
+                ImageUrl = "https://img-gorod.ru/web/248/2488088/jpg/2488088_detail.jpg"
+
+            };
+
             context.BookFullDescriptions.Add(bookFullDescription1);
-
-
+            context.BookFullDescriptions.Add(bookFullDescription2);
+            context.BookFullDescriptions.Add(bookFullDescription3);
             PurchaseDoc purchaseDoc1 = new PurchaseDoc()
             {
                 //Id = custumerDefaultSuplier.Id,
                 Custumer = custumerDefaultSuplier,
                 DateCreate = DateTime.Today,
                 DateOfLastChangeStatus = DateTime.Today,
-                Status = StaticDatas.DocStatuses.Проведен.ToString(),
+                Status = StaticDatas.DocStatuses.Непроведен.ToString(),
                 Comment = "",
                 FullSum = 535,
                 CustumerId = custumerDefaultSuplier.Id

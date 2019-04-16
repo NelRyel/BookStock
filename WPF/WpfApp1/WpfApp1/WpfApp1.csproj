@@ -72,6 +72,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="dialogs\DialogAddBookToDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialogs\DialogChangeCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="dialogs\DialogCreateCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +106,12 @@
     </Compile>
     <Compile Include="dialogs\DialCreateBook.xaml.cs">
       <DependentUpon>DialCreateBook.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialogs\DialogAddBookToDoc.xaml.cs">
+      <DependentUpon>DialogAddBookToDoc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialogs\DialogChangeCustomer.xaml.cs">
+      <DependentUpon>DialogChangeCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialogs\DialogCreateCustomer.xaml.cs">
       <DependentUpon>DialogCreateCustomer.xaml</DependentUpon>

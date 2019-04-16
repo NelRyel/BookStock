@@ -32,7 +32,13 @@
         </DataGrid>
 
         <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGrid1_SelectionChanged" MouseDoubleClick="DataGridJournal_MouseDoubleClick">
-            
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Провести" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="Сделать не проведённым" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="Удалить"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="0" Margin="10 5 10 80"  Checked="RadioButton_Checked" Content="Журнал Расходных"/>

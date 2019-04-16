@@ -12,6 +12,7 @@ namespace StockEntModelLibrary.CustumerEnt
     {
         public int Id { get; set; }
         public string CustumerTitle { get; set; }
+
         public decimal Balance { get; set; }
         public bool BuyerTrue_SuplierFalse { get; set; }
         public int? CustumerDescriptionId { get; set; }

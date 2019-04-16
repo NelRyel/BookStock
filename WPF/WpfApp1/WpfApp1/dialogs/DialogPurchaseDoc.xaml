@@ -14,13 +14,17 @@
                 <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right" HorizontalAlignment="Left">дата создания: </Label>
                 <TextBox x:Name="tbDate" Width="75" Height="25" VerticalContentAlignment="Center">12.12.2019</TextBox>
                 <!--<Button Click="someShit"> Test</Button>-->
+               
                 <Button x:Name="btnAddComment" HorizontalAlignment="Right" Width="80" Height="25" Margin="500 5 5 5">Комментарий </Button>
+               
             </WrapPanel>
             <WrapPanel DockPanel.Dock="Top">
                 <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right">Клиент</Label>
                 <TextBox x:Name="tbClientTitle" Height="25" Margin="5 5 0 5" IsReadOnly="True" Text="какойто клиент"> </TextBox>
-                <Button x:Name="btnChangeCustumer" Height="25">...</Button>
-                <TextBox x:Name="tbComment" HorizontalAlignment="Right" Margin="300 5 5 5" Width="450"></TextBox>
+                <Button x:Name="btnChangeCustumer" Height="25" Click="BtnChangeCustumer_Click">...</Button>
+                <Button x:Name="btnAddBook" Height="25" Width="25" Margin="5" Click="BtnAddBook_Click">+</Button>
+                <TextBox x:Name="tbComment" HorizontalAlignment="Right" Margin="280 5 5 5" Width="450"></TextBox>
+           
             </WrapPanel>
 
            
@@ -29,6 +33,7 @@
                 <Button x:Name="btnOk" Margin="5" Height="25">ОК</Button>
                 <Button x:Name="btnChec" Margin="5" Height="25">Провести</Button>
                 <Button x:Name="btnPrint" Margin="5" Height="25">Печать</Button>
+                <Button x:Name="btnSave" Margin="5" Height="25" Click="BtnSave_Click">Сохранить</Button>
 
             </WrapPanel>
 

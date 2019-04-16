@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using ManagerLibrary.UnitedModels;
+using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
 using StockEntModelLibrary.Document;
@@ -111,61 +112,80 @@ namespace ManagerLibrary
 
         public bool ChangeStatus(int id)
         {
-
-            PurchaseDoc purchaseDoc = stockDBcontext.PurchaseDocs.Find(id);
-            if (purchaseDoc.Status == StaticDatas.DocStatuses.Непроведен.ToString())
-            {
-                IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == purchaseDoc.Id);
-                try
+           
+                PurchaseDoc purchaseDoc = stockDBcontext.PurchaseDocs.Find(id);
+                if (purchaseDoc.Status == StaticDatas.DocStatuses.Непроведен.ToString())
                 {
-                    foreach (var item in purchaseDocRecs)
+                    IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == purchaseDoc.Id).ToList();
+                    try
                     {
-                        Book b = stockDBcontext.Books.Find(item.BookId);
-                        if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
-                        b.Count = b.Count - item.Count;
-                    }
+                        foreach (var item in purchaseDocRecs)
+                        {
+                            Book b = stockDBcontext.Books.Find(item.BookId);
+                            if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
+                            b.Count = b.Count - item.Count;
+                        }
                     purchaseDoc.Status = StaticDatas.DocStatuses.Проведен.ToString();
-                    purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance + purchaseDoc.FullSum;
+                    purchaseDoc.DateOfLastChangeStatus = DateTime.Now;
+                    Custumer c = stockDBcontext.Custumers.Find(purchaseDoc.CustumerId);
+                    c.Balance = c.Balance + purchaseDoc.FullSum;
+                    //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
                     return true;
-                }
-                catch (Exception e)
-                {
-                    return false;
-                }
-            }
-            else if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
-            {
-                IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == purchaseDoc.Id);
-                try
-                {
-                    foreach (var item in purchaseDocRecs)
-                    {
-                        Book b = stockDBcontext.Books.Find(item.BookId);
-                        b.Count = b.Count + item.Count;
                     }
-                    purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
-                    purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
-                    stockDBcontext.SaveChanges();
-                    return true;
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
                 }
-                catch (Exception e)
+                else if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
+                {
+                    IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == purchaseDoc.Id).ToList();
+                    try
+                    {
+                        foreach (var item in purchaseDocRecs)
+                        {
+                            Book b = stockDBcontext.Books.Find(item.BookId);
+                            b.Count = b.Count + item.Count;
+                        }
+                        purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
+                    purchaseDoc.DateOfLastChangeStatus = DateTime.Now;
+                    Custumer c = stockDBcontext.Custumers.Find(purchaseDoc.CustumerId);
+                        c.Balance = c.Balance - purchaseDoc.FullSum;
+                    //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
+                    stockDBcontext.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+
+                }
+                else
                 {
                     return false;
                 }
-
-            }
-            else
-            {
-                return false;
-            }
-
+            
         }
 
         public IEnumerable<PurchaseDocRec> GetPurchaseDocRecsByDocId(int docId)
         {
             IEnumerable<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == docId);
             return purchaseDocRecs;
+
+
+        }
+
+
+        public void SavePurchaseDoc(unitedPurchaseDoc doc)
+        {
+            Custumer editedCustumer = doc.custumer;
+            PurchaseDoc editedPurchaseDoc = doc.PurchaseDoc;
+            List<PurchaseDocRec> editedPurchaseDocRecs = doc.purchaseDocRecs;
+
+
+
 
 
         }

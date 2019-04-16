@@ -1,6 +1,8 @@
 ﻿
 
 FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialCreateBook.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogAddBookToDoc.xaml;;
+FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogChangeCustomer.xaml;;
 FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogCreateCustomer.xaml;;
 FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogEditBook.xaml;;
 FE:\BookStock\WPF\WpfApp1\WpfApp1\dialogs\DialogEditCust.xaml;;

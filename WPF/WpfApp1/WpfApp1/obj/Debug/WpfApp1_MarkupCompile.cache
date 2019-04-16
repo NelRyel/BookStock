@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\BookStock\WPF\WpfApp1\WpfApp1\App.xaml
-6-51984177
+8390802264
 
-11-853209995
+13-1064048577
 201494384760
-dialogs\DialCreateBook.xaml;dialogs\DialogCreateCustomer.xaml;dialogs\DialogEditBook.xaml;dialogs\DialogEditCust.xaml;dialogs\DialogPurchaseDoc.xaml;MainWindow.xaml;
+dialogs\DialCreateBook.xaml;dialogs\DialogAddBookToDoc.xaml;dialogs\DialogChangeCustomer.xaml;dialogs\DialogCreateCustomer.xaml;dialogs\DialogEditBook.xaml;dialogs\DialogEditCust.xaml;dialogs\DialogPurchaseDoc.xaml;MainWindow.xaml;
 
 False
 

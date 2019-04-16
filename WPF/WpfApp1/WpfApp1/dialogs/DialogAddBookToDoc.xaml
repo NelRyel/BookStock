@@ -1,0 +1,32 @@
+﻿<Window x:Class="WpfApp1.dialogs.DialogAddBookToDoc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.dialogs"
+        mc:Ignorable="d"
+        Title="DialogAddBookToDoc" Height="450" Width="800">
+    <Grid>
+        <DockPanel>
+            <WrapPanel DockPanel.Dock="Top">
+                <Label Width="100" Margin="3">штрихкод</Label>
+                <Label Width="100" Margin="3">Наименование</Label>
+                <Label Width="100" Margin="3">автор</Label>
+                <Label Width="100" Margin="3">серия</Label>
+                <Label Width="100" Margin="3">секция</Label>
+                <!--<Label x:Name="TESTlabel"> TEST</Label>-->
+            </WrapPanel>
+            <WrapPanel DockPanel.Dock="Top">
+                <TextBox x:Name="tbBarcode" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbTitle" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbAuthor" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbSerie" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbSection" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+            </WrapPanel>
+            
+            <DataGrid x:Name="dataGridBookAddToDoc" DockPanel.Dock="Bottom" MouseDoubleClick="DataGridBookAddToDoc_MouseDoubleClick" IsReadOnly="True">
+                
+            </DataGrid>
+        </DockPanel>
+    </Grid>
+</Window>

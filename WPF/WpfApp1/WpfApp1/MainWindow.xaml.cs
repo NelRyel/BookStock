@@ -39,6 +39,7 @@ namespace WpfApp1
         List<SaleDocRec> saleDocRecs;
         List<PurchaseDocRec> purchaseDocRecs;
         public string APP_CONNECT = "http://localhost:47914/api/";
+        //public string APP_CONNECT = "http://192.168.0.109:47914/api/";
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
         PurchaseDocsManager PurchaseDocsManager = new PurchaseDocsManager();
@@ -61,6 +62,10 @@ namespace WpfApp1
             SpecialCustumer
             
 
+        }
+        public List<Custumer> getCustumers
+        {
+            get { return custumers; }
         }
 
         public MainWindow()
@@ -169,8 +174,10 @@ namespace WpfApp1
                 var jsonRespBook = responceBook.Content.ReadAsStringAsync().Result;
                 books = JsonConvert.DeserializeObject<List<Book>>(jsonRespBook);
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error load Book: " + ex);
+            }
 
             try
             {
@@ -178,9 +185,9 @@ namespace WpfApp1
                 var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
                 bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
             }
-            catch
+            catch(Exception ex)
             {
-
+                MessageBox.Show("Error load Book desc: " + ex);
             }
         }
 
@@ -310,6 +317,7 @@ namespace WpfApp1
                     dataGrid1.ItemsSource = dt.DefaultView;
                     break;
                 case "Журнал Приходных":
+                    LoadPurchaseDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
                     dataGridJournal.Visibility = Visibility.Visible;
@@ -610,9 +618,39 @@ namespace WpfApp1
             var purchaseRecs = JsonConvert.DeserializeObject<List<PurchaseDocRec>>(jsonRespDocRecsk);
 
 
-            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs);
+            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions);
             dialogPurchase.Show();
 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            int sId = 0;
+            try
+            {
+                string StringBookId = "";
+                var selectedColumn = dataGridJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                sId = Convert.ToInt32(StringBookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error select ID" + ex);
+            }
+
+            var jsos = JsonConvert.SerializeObject(sId);
+            client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.PurchaseDoc.ToString(), jsos);
+            LoadPurchaseDocs();
+
+
+
+
+            MessageBox.Show(jsos.ToString());
         }
     }
 

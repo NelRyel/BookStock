@@ -69,6 +69,7 @@
     <Compile Include="BookEnt\BookGenre.cs" />
     <Compile Include="CustumerEnt\custAndDesc.cs" />
     <Compile Include="DefaultInit.cs" />
+    <Compile Include="Document\unitedPurchaseDoc.cs" />
     <Compile Include="StaticDatas.cs" />
     <Compile Include="StockDBcontext.cs" />
     <Compile Include="CustumerEnt\Custumer.cs" />

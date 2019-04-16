@@ -19,10 +19,12 @@ namespace ManagerWpfLibrary
             dt.Columns.Add("BookTitle");
             dt.Columns.Add("Retail Price");
             dt.Columns.Add("auth");
+            dt.Columns.Add("serie");
             dt.Columns.Add("Section");
             dt.Columns.Add("count");
             string auth=null;
             string section = null;
+            string serie = null;
             foreach (var item in books)
             {
                 foreach (var item1 in bookFulls)
@@ -31,9 +33,10 @@ namespace ManagerWpfLibrary
                     {
                         auth = item1.Author;
                         section = item1.Section;
+                        serie = item1.Serie;
                     }
                 }
-                dt.Rows.Add(item.Id, item.BarcodeISBN, item.BookTitle, item.RetailPrice,auth, section, item.Count);
+                dt.Rows.Add(item.Id, item.BarcodeISBN, item.BookTitle, item.RetailPrice,auth, serie, section, item.Count);
             }
             return dt;
         }

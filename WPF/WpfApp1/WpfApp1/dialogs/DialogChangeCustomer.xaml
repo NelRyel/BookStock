@@ -1,0 +1,21 @@
+﻿<Window x:Class="WpfApp1.dialogs.DialogChangeCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.dialogs"
+        mc:Ignorable="d"
+        Title="DialogChangeCustomer" Height="700" Width="400">
+    <Grid>
+        <DockPanel>
+            <WrapPanel DockPanel.Dock="Top">
+                <Label Margin="3">Наименование</Label>
+                <TextBox x:Name="tbTitleCust" Width="100" Margin="3" TextChanged="TextBox_TextChanged"></TextBox>
+                <RadioButton GroupName="custType" x:Name="rbCusumerTypeBuy" Margin="3">Покупатель</RadioButton>
+                <RadioButton GroupName="custType" x:Name="rbCusumerTypeSup" Margin="3">Поставщик</RadioButton>
+            </WrapPanel>
+            <DataGrid x:Name="dataGridChangeCust" DockPanel.Dock="Bottom" MouseDoubleClick="DataGridChangeCust_MouseDoubleClick"></DataGrid>
+            
+        </DockPanel>
+    </Grid>
+</Window>

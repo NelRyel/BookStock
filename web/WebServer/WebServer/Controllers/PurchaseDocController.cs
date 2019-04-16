@@ -40,12 +40,23 @@ namespace WebServer.Controllers
         }
 
         [HttpPut]
-        public void ChangeStatus(int PurchaceDocId)
+        public void ChangeStatus([FromBody] string jsonId)
         {
+            int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
             manager.ChangeStatus(PurchaceDocId);
         }
 
     }
+
+    public class UnitedPurchaseDocController : ApiController
+    {
+        [HttpPut]
+        public void SavePurchaseDoc([FromBody] string jsonUnitedPurchaseDoc)
+        {
+
+        }
+    }
+
 
     public class PurchaseDocRecController: ApiController
     {
