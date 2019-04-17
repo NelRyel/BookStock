@@ -183,8 +183,37 @@ namespace ManagerLibrary
             Custumer editedCustumer = doc.custumer;
             PurchaseDoc editedPurchaseDoc = doc.PurchaseDoc;
             List<PurchaseDocRec> editedPurchaseDocRecs = doc.purchaseDocRecs;
+            PurchaseDoc pd = stockDBcontext.PurchaseDocs.Find(editedPurchaseDoc.Id);
+            List<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == pd.Id).ToList();
+         
+
+          
+            purchaseDocRecs.Clear();
+            pd.PurchaseDocRecs.Clear();
+            
+            foreach (var item in purchaseDocRecs)
+            {
+                pd.PurchaseDocRecs.Remove(item);
+                //purchaseDocRecs.Remove(item);
+            }
+
+            foreach (var item in editedPurchaseDocRecs)
+            {
+                purchaseDocRecs.Add(item);
+                pd.PurchaseDocRecs.Add(item);
+            }
+
+            pd.DateCreate = editedPurchaseDoc.DateCreate;
+            pd.DateOfLastChangeStatus = editedPurchaseDoc.DateOfLastChangeStatus;
+            pd.Status = editedPurchaseDoc.Status;
+            pd.Comment = editedPurchaseDoc.Comment;
+            pd.FullSum = editedPurchaseDoc.FullSum;
+            pd.CustumerId = editedPurchaseDoc.CustumerId;
+            //pd.Custumer = editedCustumer;
+            pd.IsDelete = editedPurchaseDoc.IsDelete;
 
 
+            stockDBcontext.SaveChanges();
 
 
 

@@ -59,8 +59,9 @@ namespace WpfApp1
             PurchaseDocRec,
             SaleDocRec,
             CustumerForGetByName,
-            SpecialCustumer
-            
+            SpecialCustumer,
+            UnitedPurchaseDoc
+
 
         }
         public List<Custumer> getCustumers

@@ -1,4 +1,5 @@
 ﻿using ManagerLibrary;
+using ManagerLibrary.UnitedModels;
 using Newtonsoft.Json;
 using StockEntModelLibrary.Document;
 using System;
@@ -50,9 +51,13 @@ namespace WebServer.Controllers
 
     public class UnitedPurchaseDocController : ApiController
     {
+        PurchaseManager manager = new PurchaseManager();
+
         [HttpPut]
         public void SavePurchaseDoc([FromBody] string jsonUnitedPurchaseDoc)
         {
+            unitedPurchaseDoc upd = JsonConvert.DeserializeObject<unitedPurchaseDoc>(jsonUnitedPurchaseDoc);
+            manager.SavePurchaseDoc(upd);
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using Newtonsoft.Json;
+using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
 using StockEntModelLibrary.Document;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -39,6 +41,8 @@ namespace WpfApp1.dialogs
         List<PurchaseDocRec> _pdrs;
         List<BookFullDescription> _bookFullDescriptions;
         DataTable dt;
+        HttpClient client = new HttpClient();
+        MainWindow mw = new MainWindow();
         decimal sum = 0;
         int CountSum = 0;
         public DialogPurchaseDoc(Custumer custumer, PurchaseDoc purchaseDoc, List<Book> books, List<PurchaseDocRec> purchaseDocRecs, List<BookFullDescription> fullDescriptions )
@@ -297,6 +301,8 @@ namespace WpfApp1.dialogs
             unitedPurchaseDoc.custumer = _c;
             unitedPurchaseDoc.PurchaseDoc = _pd;
             unitedPurchaseDoc.purchaseDocRecs = _pdrs;
+            string jsonUnited = JsonConvert.SerializeObject(unitedPurchaseDoc);
+            client.PutAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.UnitedPurchaseDoc.ToString(), jsonUnited);
 
         }
     }
