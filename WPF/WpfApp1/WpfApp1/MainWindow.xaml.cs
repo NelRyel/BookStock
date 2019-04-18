@@ -60,7 +60,8 @@ namespace WpfApp1
             SaleDocRec,
             CustumerForGetByName,
             SpecialCustumer,
-            UnitedPurchaseDoc
+            UnitedPurchaseDoc,
+            SomeTest
 
 
         }
@@ -644,14 +645,13 @@ namespace WpfApp1
                 MessageBox.Show("Error select ID" + ex);
             }
 
-            var jsos = JsonConvert.SerializeObject(sId);
-            client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.PurchaseDoc.ToString(), jsos);
+            var json = JsonConvert.SerializeObject(sId);
+            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.SomeTest.ToString()+"/"+ sId).Result;
+            var jsonResp = responce.Content.ReadAsStringAsync().Result;
+           // string t = JsonConvert.DeserializeObject<string>(jsonResp);
             LoadPurchaseDocs();
-
-
-
-
-            MessageBox.Show(jsos.ToString());
+            
+            MessageBox.Show(json.ToString());
         }
     }
 

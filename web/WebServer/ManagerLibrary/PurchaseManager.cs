@@ -110,7 +110,7 @@ namespace ManagerLibrary
             stockDBcontext.SaveChanges();
         }
 
-        public bool ChangeStatus(int id)
+        public string ChangeStatus(int id)
         {
            
                 PurchaseDoc purchaseDoc = stockDBcontext.PurchaseDocs.Find(id);
@@ -131,11 +131,14 @@ namespace ManagerLibrary
                     c.Balance = c.Balance + purchaseDoc.FullSum;
                     //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                    return true;
+                    string bl = "1";
+                    return bl ;
                     }
                     catch (Exception e)
                     {
-                        return false;
+                    string bl = "0";
+                    return bl;
+                    
                     }
                 }
                 else if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
@@ -154,18 +157,21 @@ namespace ManagerLibrary
                         c.Balance = c.Balance - purchaseDoc.FullSum;
                     //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                        return true;
-                    }
+                    string bl = "1";
+                    return bl;
+                }
                     catch (Exception e)
                     {
-                        return false;
-                    }
+                    string bl = "0";
+                    return bl;
+                }
 
                 }
                 else
                 {
-                    return false;
-                }
+                string bl = "0";
+                return bl;
+            }
             
         }
 

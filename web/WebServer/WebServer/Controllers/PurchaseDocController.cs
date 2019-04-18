@@ -40,14 +40,36 @@ namespace WebServer.Controllers
             manager.ChangePurchaseDocCustumer(PurchaseDocId, CustumerId);
         }
 
-        [HttpPut]
-        public void ChangeStatus([FromBody] string jsonId)
-        {
-            int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
-            manager.ChangeStatus(PurchaceDocId);
-        }
+        //[HttpPut]
+        //public void ChangeStatus([FromBody] string jsonId)
+        //{
+        //    int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
+        //    manager.ChangeStatus(PurchaceDocId);
+        //}
+        //[HttpGet]
+        //public bool ChangeStatus([FromBody] string jsonId)
+        //{
+        //    int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
+        //    return manager.ChangeStatus(PurchaceDocId);
+
+        //}
 
     }
+
+
+    public class SomeTestController : ApiController
+    {
+        PurchaseManager manager = new PurchaseManager();
+
+        [HttpGet]
+        public string ChangeStatus(int jsonId)
+        {
+            //int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
+            return manager.ChangeStatus(jsonId);
+
+        }
+    }
+
 
     public class UnitedPurchaseDocController : ApiController
     {
