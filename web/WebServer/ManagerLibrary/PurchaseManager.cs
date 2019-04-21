@@ -110,9 +110,10 @@ namespace ManagerLibrary
             stockDBcontext.SaveChanges();
         }
 
-        public string ChangeStatus(int id)
+        public ErrorsMessage ChangeStatus(int id)
         {
-           
+
+                ErrorsMessage msg = new ErrorsMessage();
                 PurchaseDoc purchaseDoc = stockDBcontext.PurchaseDocs.Find(id);
                 if (purchaseDoc.Status == StaticDatas.DocStatuses.Непроведен.ToString())
                 {
@@ -122,24 +123,28 @@ namespace ManagerLibrary
                         foreach (var item in purchaseDocRecs)
                         {
                             Book b = stockDBcontext.Books.Find(item.BookId);
-                            if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
-                            b.Count = b.Count - item.Count;
+                            //if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
+                            b.Count = b.Count + item.Count;
                         }
                     purchaseDoc.Status = StaticDatas.DocStatuses.Проведен.ToString();
                     purchaseDoc.DateOfLastChangeStatus = DateTime.Now;
                     Custumer c = stockDBcontext.Custumers.Find(purchaseDoc.CustumerId);
-                    c.Balance = c.Balance + purchaseDoc.FullSum;
+                    c.Balance = c.Balance - purchaseDoc.FullSum;
                     //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                    string bl = "1";
-                    return bl ;
+
+                    msg.boolen = 1;
+                    msg.message = "OK";
+                    return msg;
                     }
                     catch (Exception e)
                     {
-                    string bl = "0";
-                    return bl;
-                    
-                    }
+
+                    msg.boolen = 0;
+                    msg.message = "False on coming Не Проведено: "+ e;
+                    return msg;
+
+                }
                 }
                 else if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
                 {
@@ -149,28 +154,35 @@ namespace ManagerLibrary
                         foreach (var item in purchaseDocRecs)
                         {
                             Book b = stockDBcontext.Books.Find(item.BookId);
-                            b.Count = b.Count + item.Count;
-                        }
+                        if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
+                        b.Count = b.Count - item.Count;
+                    }
                         purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
                     purchaseDoc.DateOfLastChangeStatus = DateTime.Now;
                     Custumer c = stockDBcontext.Custumers.Find(purchaseDoc.CustumerId);
-                        c.Balance = c.Balance - purchaseDoc.FullSum;
+                        c.Balance = c.Balance + purchaseDoc.FullSum;
                     //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                    string bl = "1";
-                    return bl;
+                    msg.boolen = 1;
+                    msg.message = "OK";
+                    return msg;
                 }
                     catch (Exception e)
                     {
-                    string bl = "0";
-                    return bl;
+
+                    msg.boolen = 0;
+                    msg.message = "False on coming Проведено: " + e;
+                    return msg;
                 }
 
                 }
                 else
                 {
-                string bl = "0";
-                return bl;
+                
+                msg.boolen = 0;
+                msg.message = "False в Элсе";
+                return msg;
+
             }
             
         }

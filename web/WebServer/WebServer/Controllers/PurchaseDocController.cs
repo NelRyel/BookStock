@@ -24,7 +24,9 @@ namespace WebServer.Controllers
         [HttpGet]
         public PurchaseDoc GetPurchaseDocById(int id)
         {
+          
             return manager.GetPurchaseDocById(id);
+
         }
 
         [HttpPost]
@@ -57,17 +59,19 @@ namespace WebServer.Controllers
     }
 
 
-    public class SomeTestController : ApiController
+    public class PurchaseDocChangeController : ApiController
+
+
     {
         PurchaseManager manager = new PurchaseManager();
 
         [HttpGet]
-        public string ChangeStatus(int jsonId)
+        public ErrorsMessage GetStrange(int id)
         {
-            //int PurchaceDocId = JsonConvert.DeserializeObject<int>(jsonId);
-            return manager.ChangeStatus(jsonId);
-
+            ErrorsMessage msg = manager.ChangeStatus(id);
+            return msg;
         }
+       
     }
 
 

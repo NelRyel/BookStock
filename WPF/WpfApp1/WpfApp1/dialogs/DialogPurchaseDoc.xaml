@@ -23,15 +23,18 @@
                 <TextBox x:Name="tbClientTitle" Height="25" Margin="5 5 0 5" IsReadOnly="True" Text="какойто клиент"> </TextBox>
                 <Button x:Name="btnChangeCustumer" Height="25" Click="BtnChangeCustumer_Click">...</Button>
                 <Button x:Name="btnAddBook" Height="25" Width="25" Margin="5" Click="BtnAddBook_Click">+</Button>
-                <TextBox x:Name="tbComment" HorizontalAlignment="Right" Margin="280 5 5 5" Width="450"></TextBox>
+                <Button x:Name="btnDellBook" Height="25" Width="25" Margin="5" Click="BtnDellBook_Click_1">-</Button>
+                <Button x:Name="btnRefresh" Height="25" Width="25" Click="BtnRefresh_Click" > R </Button>
+                <Label x:Name="labelTestId" Margin="5">1</Label>
+                <TextBox x:Name="tbComment" HorizontalAlignment="Right" Margin="100 5 5 5" Width="450"></TextBox>
            
             </WrapPanel>
 
            
 
             <WrapPanel DockPanel.Dock="Bottom" Margin="5">
-                <Button x:Name="btnOk" Margin="5" Height="25">ОК</Button>
-                <Button x:Name="btnChec" Margin="5" Height="25">Провести</Button>
+                <Button x:Name="btnOk" Margin="5" Height="25" Click="BtnOK_Click" IsEnabled="False">ОК</Button>
+                <Button x:Name="btnChec" Margin="5" Height="25" >Провести</Button>
                 <Button x:Name="btnPrint" Margin="5" Height="25">Печать</Button>
                 <Button x:Name="btnSave" Margin="5" Height="25" Click="BtnSave_Click">Сохранить</Button>
 
@@ -51,7 +54,7 @@
                 
             </WrapPanel>
 
-            <DataGrid x:Name="dataGridPurchaseDoc" SelectionChanged="CntSumm">
+            <DataGrid x:Name="dataGridPurchaseDoc" MouseDoubleClick="DataGridPurchaseDoc_MouseDoubleClick" CellEditEnding="DataGridPurchaseDoc_CellEditEnding" Initialized="CntSumm">
                 
             </DataGrid>
 

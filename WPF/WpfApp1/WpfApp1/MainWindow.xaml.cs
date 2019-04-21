@@ -61,7 +61,7 @@ namespace WpfApp1
             CustumerForGetByName,
             SpecialCustumer,
             UnitedPurchaseDoc,
-            SomeTest
+            PurchaseDocChange
 
 
         }
@@ -645,10 +645,23 @@ namespace WpfApp1
                 MessageBox.Show("Error select ID" + ex);
             }
 
+
+            //var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
+            //var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
+            //bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
+        
+
+
             var json = JsonConvert.SerializeObject(sId);
-            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.SomeTest.ToString()+"/"+ sId).Result;
+            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocChange.ToString()+"/"+ sId).Result;
             var jsonResp = responce.Content.ReadAsStringAsync().Result;
-           // string t = JsonConvert.DeserializeObject<string>(jsonResp);
+            ErrorsMessage t = JsonConvert.DeserializeObject<ErrorsMessage>(jsonResp);
+            if (t.boolen == 0)
+            {
+                MessageBox.Show(t.message);
+            }
+
+
             LoadPurchaseDocs();
             
             MessageBox.Show(json.ToString());
