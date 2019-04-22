@@ -141,7 +141,7 @@ namespace ManagerLibrary
                     {
 
                     msg.boolen = 0;
-                    msg.message = "False on coming Не Проведено: "+ e;
+                    msg.message = "False on coming Проведено: "+ e;
                     return msg;
 
                 }
@@ -171,7 +171,7 @@ namespace ManagerLibrary
                     {
 
                     msg.boolen = 0;
-                    msg.message = "False on coming Проведено: " + e;
+                    msg.message = "False on coming Не Проведено: " + e;
                     return msg;
                 }
 
@@ -201,13 +201,25 @@ namespace ManagerLibrary
             Custumer editedCustumer = doc.custumer;
             PurchaseDoc editedPurchaseDoc = doc.PurchaseDoc;
             List<PurchaseDocRec> editedPurchaseDocRecs = doc.purchaseDocRecs;
-            PurchaseDoc pd = stockDBcontext.PurchaseDocs.Find(editedPurchaseDoc.Id);
-            List<PurchaseDocRec> purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == pd.Id).ToList();
-         
+            PurchaseDoc pd;
+            List<PurchaseDocRec> purchaseDocRecs;
 
+            if (doc.IsNew == true)
+            {
+
+                pd = new PurchaseDoc();
+                pd.CustumerId = editedCustumer.Id;
+                purchaseDocRecs = new List<PurchaseDocRec>();
+            }
+            else
+            {
+                pd = stockDBcontext.PurchaseDocs.Find(editedPurchaseDoc.Id);
+                purchaseDocRecs = stockDBcontext.PurchaseDocRecs.Where(i => i.PurchaseDocId == pd.Id).ToList();
+                purchaseDocRecs.Clear();
+                pd.PurchaseDocRecs.Clear();
+            }
           
-            purchaseDocRecs.Clear();
-            pd.PurchaseDocRecs.Clear();
+            
             
             foreach (var item in purchaseDocRecs)
             {
@@ -221,14 +233,24 @@ namespace ManagerLibrary
                 pd.PurchaseDocRecs.Add(item);
             }
 
-            pd.DateCreate = editedPurchaseDoc.DateCreate;
-            pd.DateOfLastChangeStatus = editedPurchaseDoc.DateOfLastChangeStatus;
+            pd.DateCreate = (doc.IsNew == false) ? editedPurchaseDoc.DateCreate : DateTime.Now;
+            pd.DateOfLastChangeStatus = (doc.IsNew == false) ? editedPurchaseDoc.DateOfLastChangeStatus : DateTime.Now;
             pd.Status = editedPurchaseDoc.Status;
             pd.Comment = editedPurchaseDoc.Comment;
             pd.FullSum = editedPurchaseDoc.FullSum;
-            pd.CustumerId = editedPurchaseDoc.CustumerId;
+            pd.CustumerId = editedCustumer.Id;
             //pd.Custumer = editedCustumer;
             pd.IsDelete = editedPurchaseDoc.IsDelete;
+
+            if (doc.IsNew == true)
+            {
+                stockDBcontext.PurchaseDocs.Add(pd);
+
+                foreach (var item in purchaseDocRecs)
+                {
+                    stockDBcontext.PurchaseDocRecs.Add(item);
+                }
+            }
 
 
             stockDBcontext.SaveChanges();

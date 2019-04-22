@@ -28,6 +28,9 @@ namespace WpfApp1
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
+
+        /// ОСНОВНОЙ ПОСТАВЩИК - 1, ОСНОВНОЙ ПОКУПАТЕЛЬ - 2
     public partial class MainWindow : Window
     {
         List<Book> books;
@@ -618,9 +621,8 @@ namespace WpfApp1
             var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocRec.ToString()+"/"+purchaseDoc.Id).Result;
             var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
             var purchaseRecs = JsonConvert.DeserializeObject<List<PurchaseDocRec>>(jsonRespDocRecsk);
-
-
-            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions);
+            
+            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions, false);
             dialogPurchase.Show();
 
         }
@@ -665,6 +667,21 @@ namespace WpfApp1
             LoadPurchaseDocs();
             
             MessageBox.Show(json.ToString());
+        }
+
+        private void AddPurDocBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Custumer custumer = custumers.Find(i => i.Id == 1);
+            PurchaseDoc purchaseDoc = new PurchaseDoc();
+            purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
+            List<PurchaseDocRec> purchaseRecs = new List<PurchaseDocRec>();
+
+
+
+            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions, true);
+            dialogPurchase.Show();
+
+
         }
     }
 

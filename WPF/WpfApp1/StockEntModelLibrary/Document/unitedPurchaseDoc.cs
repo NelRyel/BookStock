@@ -12,5 +12,6 @@ namespace StockEntModelLibrary.Document
         public Custumer custumer { get; set; }
         public PurchaseDoc PurchaseDoc { get; set; }
         public List<PurchaseDocRec> purchaseDocRecs { get; set; }
+        public bool IsNew { get; set; }
     }
 }

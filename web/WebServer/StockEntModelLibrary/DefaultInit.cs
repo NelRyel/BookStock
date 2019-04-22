@@ -24,15 +24,17 @@ namespace StockEntModelLibrary
             #region
             Custumer custumerDefaultSuplier = new Custumer()
             {
+                Id = 1,
                 CustumerTitle = "Основной поставщик",
                 Balance = 0,
                 BuyerTrue_SuplierFalse = false,
+                CustumerDescriptionId=1
 
             };
             context.Custumers.Add(custumerDefaultSuplier);
             CustumerDescription custumerDescriptionDefaultSuplier = new CustumerDescription()
             {
-                Id=custumerDefaultSuplier.Id,
+                Id=1,
                 FullName="Полное имя поставщика",
                 Address="какойто адресс поставщика",
                 Phone="21321412",
@@ -42,16 +44,17 @@ namespace StockEntModelLibrary
             context.SaveChanges();
             Custumer custumerDefaultBuyer = new Custumer()
             {
+                Id=2,
                 CustumerTitle = "Основной Покупатель",
                 Balance = 0,
                 BuyerTrue_SuplierFalse = true,
-                CustumerDescriptionId=1
+                CustumerDescriptionId=2
 
             };
             context.Custumers.Add(custumerDefaultBuyer);
             CustumerDescription custumerDescriptionDefaultBuyer = new CustumerDescription()
             {
-                Id = custumerDefaultBuyer.Id,
+                Id = 2,
                 FullName = "Полное имя покупателя",
                 Address = "какойто адресс",
                 Phone = "6547546546",

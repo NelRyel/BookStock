@@ -48,8 +48,8 @@ namespace WpfApp1.dialogs
         decimal _sum;
         int _CountSum;
         int SelectedId;
-
-        public DialogPurchaseDoc(Custumer custumer, PurchaseDoc purchaseDoc, List<Book> books, List<PurchaseDocRec> purchaseDocRecs, List<BookFullDescription> fullDescriptions )
+        bool _isNew;
+        public DialogPurchaseDoc(Custumer custumer, PurchaseDoc purchaseDoc, List<Book> books, List<PurchaseDocRec> purchaseDocRecs, List<BookFullDescription> fullDescriptions, bool IsNew )
         {
             InitializeComponent();
             if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
@@ -62,6 +62,7 @@ namespace WpfApp1.dialogs
            _Lbooks = books;
             _pdrs = purchaseDocRecs;
             _bookFullDescriptions = fullDescriptions;
+            _isNew = IsNew;
             LoadDatas();
             btnOk.IsEnabled = false;
             //decimal sum = 0;
@@ -127,8 +128,8 @@ namespace WpfApp1.dialogs
                 dt.Clear();
             }
            
-            tbDocId.Text = _pd.Id.ToString();
-            tbDate.Text = _pd.DateCreate.ToString();
+            tbDocId.Text = (_isNew==false)? _pd.Id.ToString(): "null";
+            tbDate.Text =(_isNew == false)? _pd.DateCreate.ToString() : DateTime.Now.ToString(); 
             tbClientTitle.Text = _c.CustumerTitle;
             //dt = new DataTable();
             if (dt.Columns.Count==0)
@@ -340,10 +341,12 @@ namespace WpfApp1.dialogs
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            _pd.CustumerId = _c.Id;
             unitedPurchaseDoc unitedPurchaseDoc = new unitedPurchaseDoc();
             unitedPurchaseDoc.custumer = _c;
             unitedPurchaseDoc.PurchaseDoc = _pd;
             unitedPurchaseDoc.purchaseDocRecs = _pdrs;
+            unitedPurchaseDoc.IsNew = _isNew;
             string jsonUnited = JsonConvert.SerializeObject(unitedPurchaseDoc);
             client.PutAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.UnitedPurchaseDoc.ToString(), jsonUnited);
             Thread.Sleep(100);
