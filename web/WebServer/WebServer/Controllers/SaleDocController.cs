@@ -1,4 +1,5 @@
 ﻿using ManagerLibrary;
+using ManagerLibrary.UnitedModels;
 using Newtonsoft.Json;
 using StockEntModelLibrary.Document;
 using System;
@@ -51,6 +52,15 @@ namespace WebServer.Controllers
     {
         SaleManager manager = new SaleManager();
 
+        [HttpGet]
+        public IEnumerable<SaleDocRec> GetSaleDocRecs(int id)
+        {
+            IEnumerable<SaleDocRec> saleDocRecs = manager.GetSaleDocRecs(id);
+            return saleDocRecs;
+        }
+
+
+
         [HttpPost]
         public void AddSellDocRec(int id,[FromBody] string JsonSaleDocRecs)
         {
@@ -58,4 +68,33 @@ namespace WebServer.Controllers
             manager.AddSaleDocRec(id, saleDocRecs);
         }
     }
+
+    public class UnitedSaleDocController : ApiController
+    {
+        SaleManager manager = new SaleManager();
+
+        [HttpPut]
+        public void SavePurchaseDoc([FromBody] string jsonUnitedSaleDoc)
+        {
+            unitedSaleDoc usd = JsonConvert.DeserializeObject<unitedSaleDoc>(jsonUnitedSaleDoc);
+            manager.SaveSaleDoc(usd);
+
+        }
+    }
+
+    public class SaleDocChangeController : ApiController
+
+
+    {
+        SaleManager manager = new SaleManager();
+
+        [HttpGet]
+        public ErrorsMessage GetStrange(int id)
+        {
+            ErrorsMessage msg = manager.ChangeStatus(id);
+            return msg;
+        }
+
+    }
+
 }

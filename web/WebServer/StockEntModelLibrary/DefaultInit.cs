@@ -25,7 +25,7 @@ namespace StockEntModelLibrary
             Custumer custumerDefaultSuplier = new Custumer()
             {
                 Id = 1,
-                CustumerTitle = "Основной поставщик",
+                CustumerTitle = "Основной Поставщик",
                 Balance = 0,
                 BuyerTrue_SuplierFalse = false,
                 CustumerDescriptionId=1
@@ -183,8 +183,35 @@ namespace StockEntModelLibrary
 
             context.PurchaseDocRecs.Add(purchaseDocRec1);
             context.SaveChanges();
-            
 
+
+            SaleDoc saleDoc1 = new SaleDoc()
+            {
+                Custumer = custumerDefaultBuyer,
+                DateCreate = DateTime.Today,
+                DateOfLastChangeStatus = DateTime.Today,
+                Status = StaticDatas.DocStatuses.Непроведен.ToString(),
+                Comment = "",
+                FullSum=535,
+                CustumerId = custumerDefaultBuyer.Id
+            };
+
+            context.SaleDocs.Add(saleDoc1);
+            context.SaveChanges();
+
+            SaleDocRec saleDocRec1 = new SaleDocRec()
+            {
+                LineNumber = 1,
+                Count = 1,
+                RetailPrice = 535,
+                SaleDoc = saleDoc1,
+                SaleDocId = saleDoc1.Id,
+                Book = book1,
+                BookId = book1.Id
+            };
+
+            context.SaleDocRecs.Add(saleDocRec1);
+            context.SaveChanges();
 
             context.SaveChanges();
 

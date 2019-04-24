@@ -46,6 +46,7 @@ namespace WpfApp1
         HttpClient client = new HttpClient();
         CustumerManager CustManager = new CustumerManager();
         PurchaseDocsManager PurchaseDocsManager = new PurchaseDocsManager();
+        SaleDocManager SaleDocManager = new SaleDocManager();
         BookManager BookManager = new BookManager();
         int selectedColumn;
         int selectedId;
@@ -64,7 +65,9 @@ namespace WpfApp1
             CustumerForGetByName,
             SpecialCustumer,
             UnitedPurchaseDoc,
-            PurchaseDocChange
+            PurchaseDocChange,
+            UnitedSaleDoc,
+            SaleDocChange
 
 
         }
@@ -170,6 +173,21 @@ namespace WpfApp1
                 MessageBox.Show("Error load Purchase Docs: " + ex);
             }
         }
+        public void LoadSaleDocs()
+        {
+            try
+            {
+                var respPurchaseDocs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDoc.ToString()).Result;
+                var jsonRespPDocs = respPurchaseDocs.Content.ReadAsStringAsync().Result;
+                saleDocs = JsonConvert.DeserializeObject<List<SaleDoc>>(jsonRespPDocs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error load Purchase Docs: " + ex);
+            }
+        }
+
+
 
         public void LoadBooks()
         {
@@ -292,6 +310,7 @@ namespace WpfApp1
                     rbChose = check;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
+                    dataGridSellJournal.Visibility = Visibility.Hidden;
                     //spBook.Visibility = Visibility.Visible;
                     //descStackPanel.Visibility = Visibility.Visible;
                     //tbDescription.Visibility = Visibility.Visible;
@@ -309,7 +328,7 @@ namespace WpfApp1
                     rbChose = check;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
-
+                    dataGridSellJournal.Visibility = Visibility.Hidden;
                     //spBook.Visibility = Visibility.Hidden;
                     //descStackPanel.Visibility = Visibility.Hidden;
                     //tbDescription.Visibility = Visibility.Hidden;
@@ -326,9 +345,20 @@ namespace WpfApp1
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
                     dataGridJournal.Visibility = Visibility.Visible;
+                    dataGridSellJournal.Visibility = Visibility.Hidden;
                     rbChose = check;
                     dt = PurchaseDocsManager.LoadPurchaseDocsDataTable(purchaseDocs,custumers);
                     dataGridJournal.ItemsSource = dt.DefaultView;
+                    break;
+                case "Журнал Расходных":
+                    LoadSaleDocs();
+                    PricePanel_ShowTrue_HideFalse(false);
+                    CustPanel_ShowTrue_HideFalse(false);
+                    dataGridJournal.Visibility = Visibility.Hidden;
+                    dataGridSellJournal.Visibility = Visibility.Visible;
+                    rbChose = check;
+                    dt = SaleDocManager.LoadPurchaseDocsDataTable(saleDocs, custumers);
+                    dataGridSellJournal.ItemsSource = dt.DefaultView;
                     break;
                 default: MessageBox.Show("wrong select");
                     break;
@@ -669,9 +699,59 @@ namespace WpfApp1
             MessageBox.Show(json.ToString());
         }
 
+
+        private void MenuItemSell_Click(object sender, RoutedEventArgs e)
+        {
+            int sId = 0;
+            try
+            {
+                string StringBookId = "";
+                var selectedColumn = dataGridSellJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridSellJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                sId = Convert.ToInt32(StringBookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error select ID" + ex);
+            }
+
+
+            //var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
+            //var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
+            //bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
+
+
+
+            var json = JsonConvert.SerializeObject(sId);
+            var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocChange.ToString() + "/" + sId).Result;
+            var jsonResp = responce.Content.ReadAsStringAsync().Result;
+            ErrorsMessage t = JsonConvert.DeserializeObject<ErrorsMessage>(jsonResp);
+            if (t.boolen == 0)
+            {
+                MessageBox.Show(t.message);
+            }
+
+
+            LoadSaleDocs();
+
+            MessageBox.Show(json.ToString());
+        }
+
+
+
         private void AddPurDocBtn_Click(object sender, RoutedEventArgs e)
         {
-            Custumer custumer = custumers.Find(i => i.Id == 1);
+            Custumer custumer = null;
+            var c = custumers.Where((i => i.CustumerTitle.Contains("Основной Поставщик")));
+            foreach (var item in c)
+            {
+                custumer = item;
+            }
             PurchaseDoc purchaseDoc = new PurchaseDoc();
             purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
             List<PurchaseDocRec> purchaseRecs = new List<PurchaseDocRec>();
@@ -683,6 +763,61 @@ namespace WpfApp1
 
 
         }
+        private void AddSelDocBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Custumer custumer = null;
+            var c = custumers.Where(i => i.CustumerTitle.Contains("Основной Покупатель"));
+            foreach (var item in c)
+            {
+                custumer = item;
+            }
+
+            SaleDoc saleDoc = new SaleDoc();
+            saleDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
+            List<SaleDocRec> saleRecs = new List<SaleDocRec>();
+
+
+            DialogSellDoc dialogSell = new DialogSellDoc(custumer, saleDoc, saleRecs, books, bookFullDescriptions, true);
+            dialogSell.Show();
+        }
+
+
+
+
+
+        private void DataGridSellJournal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int sId = 0;
+            try
+            {
+                string StringBookId = "";
+                var selectedColumn = dataGridSellJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridSellJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                sId = Convert.ToInt32(StringBookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error select ID" + ex);
+            }
+            SaleDoc saleDoc = saleDocs.Find(i => i.Id == sId);
+            Custumer custumer = custumers.Find(i => i.Id == saleDoc.CustumerId);
+
+            var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocRec.ToString() + "/" + saleDoc.Id).Result;
+            var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
+            var saleRecs = JsonConvert.DeserializeObject<List<SaleDocRec>>(jsonRespDocRecsk);
+
+            DialogSellDoc dialogSell = new DialogSellDoc(custumer, saleDoc, saleRecs, books, bookFullDescriptions, false);
+            dialogSell.Show();
+
+
+        }
+
+      
     }
 
 }

@@ -5,32 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.dialogs"
         mc:Ignorable="d"
-        Title="DialogPurchaseDoc" Height="720" Width="1024" >
+        Title="DialogPurchaseDoc" Height="720" Width="1024" 
+        Closed="Window_Closed">
     <Grid>
-        <DockPanel x:Name="DockPanel1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="526*"/>
+            <ColumnDefinition Width="93*"/>
+            <ColumnDefinition Width="398*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel x:Name="DockPanel1" Grid.ColumnSpan="3">
             <WrapPanel DockPanel.Dock="Top" Margin="5">
                 <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right" HorizontalAlignment="Left">Накладная №</Label>
                 <TextBox x:Name="tbDocId" Text="12345" Width="100" Height="25" HorizontalAlignment="Left" VerticalContentAlignment="Center"></TextBox>
-                <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right" HorizontalAlignment="Left">дата создания: </Label>
+                <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right" HorizontalAlignment="Left">дата создания:</Label>
                 <TextBox x:Name="tbDate" Width="75" Height="25" VerticalContentAlignment="Center">12.12.2019</TextBox>
                 <!--<Button Click="someShit"> Test</Button>-->
-               
-                <Button x:Name="btnAddComment" HorizontalAlignment="Right" Width="80" Height="25" Margin="500 5 5 5">Комментарий </Button>
-               
+
+                <Button x:Name="btnAddComment" HorizontalAlignment="Right" Width="80" Height="25" Margin="500 5 5 5">Комментарий</Button>
+
             </WrapPanel>
             <WrapPanel DockPanel.Dock="Top">
                 <Label Margin="5" Width="100" Height="25" HorizontalContentAlignment="Right">Клиент</Label>
-                <TextBox x:Name="tbClientTitle" Height="25" Margin="5 5 0 5" IsReadOnly="True" Text="какойто клиент"> </TextBox>
+                <TextBox x:Name="tbClientTitle" Height="25" Margin="5 5 0 5" IsReadOnly="True" Text="какойто клиент"></TextBox>
                 <Button x:Name="btnChangeCustumer" Height="25" Click="BtnChangeCustumer_Click">...</Button>
                 <Button x:Name="btnAddBook" Height="25" Width="25" Margin="5" Click="BtnAddBook_Click">+</Button>
                 <Button x:Name="btnDellBook" Height="25" Width="25" Margin="5" Click="BtnDellBook_Click_1">-</Button>
-                <Button x:Name="btnRefresh" Height="25" Width="25" Click="BtnRefresh_Click" > R </Button>
+                <Button x:Name="btnRefresh" Height="25" Width="25" Click="BtnRefresh_Click" >R</Button>
                 <Label x:Name="labelTestId" Margin="5">1</Label>
                 <TextBox x:Name="tbComment" HorizontalAlignment="Right" Margin="100 5 5 5" Width="450"></TextBox>
-           
+
             </WrapPanel>
 
-           
+
 
             <WrapPanel DockPanel.Dock="Bottom" Margin="5">
                 <Button x:Name="btnOk" Margin="5" Height="25" Click="BtnOK_Click" IsEnabled="False">ОК</Button>
@@ -47,21 +53,21 @@
                 <Label Height="25" Margin="5 5 0 5">Общее колличество:</Label>
                 <Label x:Name="labelSumCount" Height="25" Margin="0 5 0 5">5</Label>
                 <Label Height="25" Margin="0 5 5 5">шт.</Label>
-                <Label Height="25" Margin="50 5 0 5">Итого сумма: </Label>
+                <Label Height="25" Margin="50 5 0 5">Итого сумма:</Label>
                 <Label x:Name="labelDocSum" Height="35" Margin="0 0 0 5" FontSize="20">100.0</Label>
                 <Label Height="35" Margin="0 5 5 5" FontSize="17">₽</Label>
-                
-                
+
+
             </WrapPanel>
 
             <DataGrid x:Name="dataGridPurchaseDoc" MouseDoubleClick="DataGridPurchaseDoc_MouseDoubleClick" CellEditEnding="DataGridPurchaseDoc_CellEditEnding" Initialized="CntSumm">
-                
+
             </DataGrid>
 
 
         </DockPanel>
-        
-        
-        
+
+
+
     </Grid>
 </Window>

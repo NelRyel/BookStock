@@ -58,6 +58,7 @@
     <Compile Include="StaticDatasManager.cs" />
     <Compile Include="UnitedModels\ErrorsMessage.cs" />
     <Compile Include="UnitedModels\unitedPurchaseDoc.cs" />
+    <Compile Include="UnitedModels\unitedSaleDoc.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockEntModelLibrary\StockEntModelLibrary.csproj">

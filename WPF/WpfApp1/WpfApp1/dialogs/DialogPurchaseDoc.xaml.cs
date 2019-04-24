@@ -476,11 +476,13 @@ namespace WpfApp1.dialogs
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
+           
             btnOk.IsEnabled = false;
             decimal inCntsum = 0;
             decimal inCntCountSum = 0;
             _CountSum = 0;
             _sum = 0;
+           
             
             try
             {
@@ -586,6 +588,12 @@ namespace WpfApp1.dialogs
             Close();
 
 
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MainWindow mw = new MainWindow();
+            mw.LoadDatas();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using ManagerLibrary.UnitedModels;
+using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
 using StockEntModelLibrary.CustumerEnt;
 using StockEntModelLibrary.Document;
@@ -11,35 +12,35 @@ using static ManagerLibrary.StaticDatasManager;
 
 namespace ManagerLibrary
 {
-   public class SaleManager
+    public class SaleManager
     {
-        private  StockDBcontext stockDBcontext = new StockDBcontext();
-        
+        private StockDBcontext stockDBcontext = new StockDBcontext();
+
         public IEnumerable<SaleDoc> GetAllSaleDocs()
         {
 
-            IEnumerable<SaleDoc> saleDocs = stockDBcontext.SaleDocs.Include("Custumers").Where(i => i.IsDelete == false);
-                return saleDocs;
-            
+            IEnumerable<SaleDoc> saleDocs = stockDBcontext.SaleDocs.Where(i => i.IsDelete == false);
+            return saleDocs;
+
         }
-            
+
         public SaleDoc GetSaleDocById(int id)
         {
-                SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
-                return saleDoc;
+            SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
+            return saleDoc;
         }
 
         public IEnumerable<SaleDocRec> GetSaleDocRecs(int SaleDocId)
         {
 
             IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == SaleDocId);
-                return saleDocRecs;
-          
+            return saleDocRecs;
+
         }
 
         //public void CreateSaleDoc()
         //{
-           
+
         //        Custumer custumer = stockDBcontext.Custumers.Where(p => p.CustumerTitle == "Основной Покупатель").FirstOrDefault();
         //        SaleDoc saleDoc = new SaleDoc();
         //        DateTime dateTime = DateTime.Today;
@@ -60,18 +61,18 @@ namespace ManagerLibrary
             stockDBcontext.SaveChanges();
         }
 
-        public void ChangeSaleDocCustumer(int DocId,int CustumerId)
+        public void ChangeSaleDocCustumer(int DocId, int CustumerId)
         {
-           
-                SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(DocId);
-                saleDoc.CustumerId = CustumerId;
-                stockDBcontext.SaveChanges();
-           
+
+            SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(DocId);
+            saleDoc.CustumerId = CustumerId;
+            stockDBcontext.SaveChanges();
+
         }
 
         //public void AddSaleDocRec(int SaleDocId, int BookId, int Count, int Price)
         //{
-           
+
         //        SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(SaleDocId);
         //        Book book = stockDBcontext.Books.Find(BookId);
 
@@ -90,7 +91,7 @@ namespace ManagerLibrary
         //        saleDoc.SaleDocRecs.Add(saleDocRec);
 
         //        stockDBcontext.SaveChanges();
-            
+
         //}
         public void AddSaleDocRec(int id, IEnumerable<SaleDocRec> saleDocRecs)
         {
@@ -105,13 +106,14 @@ namespace ManagerLibrary
             stockDBcontext.SaveChanges();
         }
 
-        public bool ChangeStatus(int id)
+        public ErrorsMessage ChangeStatus(int id)
         {
 
+            ErrorsMessage msg = new ErrorsMessage();
             SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
             if (saleDoc.Status == StaticDatas.DocStatuses.Непроведен.ToString())
             {
-                IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == saleDoc.Id);
+                IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == saleDoc.Id).ToList();
                 try
                 {
                     foreach (var item in saleDocRecs)
@@ -121,58 +123,140 @@ namespace ManagerLibrary
                         b.Count = b.Count - item.Count;
                     }
                     saleDoc.Status = StaticDatas.DocStatuses.Проведен.ToString();
-                    saleDoc.Custumer.Balance = saleDoc.Custumer.Balance + saleDoc.FullSum;
+                    saleDoc.DateOfLastChangeStatus = DateTime.Now;
+                    Custumer c = stockDBcontext.Custumers.Find(saleDoc.CustumerId);
+                    c.Balance = c.Balance + saleDoc.FullSum;
+                    //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                    return true;
+
+                    msg.boolen = 1;
+                    msg.message = "OK";
+                    return msg;
                 }
                 catch (Exception e)
                 {
-                    return false;
+                    msg.boolen = 0;
+                    msg.message = "False on coming Проведено: " + e;
+                    return msg;
+
                 }
-            }else if (saleDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
+            }
+            else if (saleDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
             {
-                IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == saleDoc.Id);
+                IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == saleDoc.Id).ToList();
                 try
                 {
                     foreach (var item in saleDocRecs)
                     {
                         Book b = stockDBcontext.Books.Find(item.BookId);
+                       // if (item.Count > b.Count) throw new Exception("Недостаточно единиц");
                         b.Count = b.Count + item.Count;
                     }
                     saleDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
-                    saleDoc.Custumer.Balance = saleDoc.Custumer.Balance - saleDoc.FullSum;
+                    saleDoc.DateOfLastChangeStatus = DateTime.Now;
+                    Custumer c = stockDBcontext.Custumers.Find(saleDoc.CustumerId);
+                    c.Balance = c.Balance - saleDoc.FullSum;
+                    //purchaseDoc.Custumer.Balance = purchaseDoc.Custumer.Balance - purchaseDoc.FullSum;
                     stockDBcontext.SaveChanges();
-                    return true;
+                    msg.boolen = 1;
+                    msg.message = "OK";
+                    return msg;
                 }
                 catch (Exception e)
                 {
-                    return false;
+                    msg.boolen = 0;
+                    msg.message = "False on coming Не Проведено: " + e;
+                    return msg;
                 }
-                
+
             }
             else
             {
-                return false;
+                msg.boolen = 0;
+                msg.message = "False в Элсе";
+                return msg;
+
             }
+
         }
+
 
 
         public void ChangeIsDelete(int id, bool IsDelete)
         {
-                SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
+            SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
 
-                saleDoc.IsDelete = (IsDelete == true) ? saleDoc.IsDelete = false : saleDoc.IsDelete = true;
-                //switch(IsDelete)
-                // {
-                //     case true:
-                //         saleDoc.IsDelete = false;
-                //         break;
-                //     case false:
-                //         saleDoc.IsDelete = true;
-                //         break;
-                // }
-                stockDBcontext.SaveChanges();
+            saleDoc.IsDelete = (IsDelete == true) ? saleDoc.IsDelete = false : saleDoc.IsDelete = true;
+            //switch(IsDelete)
+            // {
+            //     case true:
+            //         saleDoc.IsDelete = false;
+            //         break;
+            //     case false:
+            //         saleDoc.IsDelete = true;
+            //         break;
+            // }
+            stockDBcontext.SaveChanges();
         }
 
+        public void SaveSaleDoc(unitedSaleDoc doc)
+        {
+            Custumer editedCustumer = doc.custumer;
+            SaleDoc editedSaleDoc = doc.SaleDoc;
+            List<SaleDocRec> editedSaleDocRecs = doc.SaleDocRecs;
+            SaleDoc sd;
+            List<SaleDocRec> saleDocRecs;
+
+            if (doc.IsNew == true)
+            {
+
+                sd = new SaleDoc();
+                sd.CustumerId = editedCustumer.Id;
+                saleDocRecs = new List<SaleDocRec>();
+            }
+            else
+            {
+                sd = stockDBcontext.SaleDocs.Find(editedSaleDoc.Id);
+                saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == sd.Id).ToList();
+                saleDocRecs.Clear();
+                sd.SaleDocRecs.Clear();
+            }
+
+
+
+            foreach (var item in saleDocRecs)
+            {
+                sd.SaleDocRecs.Remove(item);
+                //purchaseDocRecs.Remove(item);
+            }
+
+            foreach (var item in editedSaleDocRecs)
+            {
+                saleDocRecs.Add(item);
+                sd.SaleDocRecs.Add(item);
+            }
+
+            sd.DateCreate = (doc.IsNew == false) ? editedSaleDoc.DateCreate : DateTime.Now;
+            sd.DateOfLastChangeStatus = (doc.IsNew == false) ? editedSaleDoc.DateOfLastChangeStatus : DateTime.Now;
+            sd.Status = editedSaleDoc.Status;
+            sd.Comment = editedSaleDoc.Comment;
+            sd.FullSum = editedSaleDoc.FullSum;
+            sd.CustumerId = editedCustumer.Id;
+            //pd.Custumer = editedCustumer;
+            sd.IsDelete = editedSaleDoc.IsDelete;
+
+            if (doc.IsNew == true)
+            {
+                stockDBcontext.SaleDocs.Add(sd);
+
+                foreach (var item in saleDocRecs)
+                {
+                    stockDBcontext.SaleDocRecs.Add(item);
+                }
+            }
+
+
+            stockDBcontext.SaveChanges();
+        }
     }
 }

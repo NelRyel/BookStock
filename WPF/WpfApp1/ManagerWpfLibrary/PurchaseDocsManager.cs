@@ -26,12 +26,13 @@ namespace ManagerWpfLibrary
             {
                 foreach (var item1 in custumers)
                 {
-                    if (item1.Id == item.Id)
+                    if (item1.Id == item.CustumerId)
                     {
+                        client = "";
                         client = item1.CustumerTitle;
                     }
                 }
-                dt.Rows.Add(item.Id, item.DateCreate, item.DateOfLastChangeStatus, client,item.Status, item.FullSum, item.Comment);
+                dt.Rows.Add(item.Id, item.DateCreate, item.DateOfLastChangeStatus, client, item.Status, item.FullSum, item.Comment);
             }
             return dt;
         }

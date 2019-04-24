@@ -43,3 +43,5 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogAddBookToDoc.g.cs
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogAddBookToDoc.baml
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogChangeCustomer.g.cs
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogChangeCustomer.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogSellDoc.g.cs
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogSellDoc.baml

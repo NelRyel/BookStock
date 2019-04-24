@@ -40,7 +40,17 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        
+
+        <DataGrid x:Name="dataGridSellJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGrid1_SelectionChanged" MouseDoubleClick="DataGridSellJournal_MouseDoubleClick" >
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Провести" Click="MenuItemSell_Click"></MenuItem>
+                    <MenuItem Header="Сделать не проведённым" Click="MenuItemSell_Click"></MenuItem>
+                    <MenuItem Header="Удалить"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="0" Margin="10 5 10 80"  Checked="RadioButton_Checked" Content="Журнал Расходных"/>
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="1" Margin="10 5 10 80" Checked="RadioButton_Checked" Content="Журнал Приходных"></RadioButton>
         <RadioButton x:Name="rbPriceList" GroupName="mainChose" Grid.Row="0" Grid.Column="2" Margin="10 5 10 80" Content="Номенклатура" Checked="RadioButton_Checked"></RadioButton>
@@ -48,7 +58,7 @@
 
         <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" Margin="0 30 0 0 ">           
-                <Button x:Name="AddSelDocBtn"   Height="20" Margin="5">add sell doc</Button>
+                <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">add sell doc</Button>
                 <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">add purchase doc</Button>
                 <Button x:Name="DelDocBtn" Height="20" Margin="5" >del doc</Button>
             </StackPanel>
