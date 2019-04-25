@@ -142,11 +142,7 @@ namespace WpfApp1.dialogs
 
         private void DataGridSaleDoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //int index = dataGridPurchaseDoc.SelectedIndex;
-            ////dataGridPurchaseDoc.Items.RemoveAt(index);
-            ////dataGridPurchaseDoc.Items.Remove(index);
-            //btnDellBook.Content = "- " + index;
-
+            
             _SelectedId = 0;
             try
             {

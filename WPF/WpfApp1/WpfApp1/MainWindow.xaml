@@ -58,25 +58,25 @@
 
         <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" Margin="0 30 0 0 ">           
-                <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">add sell doc</Button>
-                <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">add purchase doc</Button>
-                <Button x:Name="DelDocBtn" Height="20" Margin="5" >del doc</Button>
+                <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">Новая Расходная накладная</Button>
+                <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">Новая Приходная накладная</Button>
+                <Button x:Name="DelDocBtn" Height="20" Margin="5" >Удалить</Button>
             </StackPanel>
 
         </WrapPanel>
         
-        <Label x:Name="labelTest" Grid.Column="1" Margin="0 60 0 0">1</Label>
-        <WrapPanel Grid.Column="3" Grid.ColumnSpan="1" Margin="0 30 0 0"> 
+        <!--<Label x:Name="labelTest" Grid.Column="1" Margin="0 60 0 0">1</Label>-->
+        <WrapPanel Grid.Column="3" Grid.ColumnSpan="2" Margin="0 30 0 0"> 
         <StackPanel x:Name="spBook" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" Grid.ColumnSpan="2">
-            <Button x:Name="AddBookBtn" Width="60" Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="AddBookBtn_Click" >Add Book</Button>
-            <Button x:Name="EditBookBtn" Width="60" Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="EditBookBtn_Click" >Edit Book</Button>
-            <Button x:Name="DelBookBtn" Width="60" Height="20" Grid.Row="0" Grid.Column="2" Margin="5">Del Book</Button>
+            <Button x:Name="AddBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="AddBookBtn_Click" >Добавить Книгу</Button>
+            <Button x:Name="EditBookBtn" Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="EditBookBtn_Click" >Редактировать </Button>
+            <Button x:Name="DelBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5">Удалить</Button>
         </StackPanel>
 
-            <StackPanel x:Name="spCust" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal">
-        <Button x:Name="AddCustBtn"  Width="60" Height="20" Margin="5" Click="AddCustBtn_Click">Add Cust</Button>
-            <Button x:Name="EditCustBtn"  Width="60" Height="20" Margin="5" Click="EditCustBtn_Click" >Edit Cust</Button>
-            <Button x:Name="DelCustBtn"  Width="60" Height="20" Margin="5" >Del Cust</Button>
+        <StackPanel x:Name="spCust" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="AddCustBtn"  Height="20" Margin="5" Click="AddCustBtn_Click">Добавить Клиента</Button>
+                <Button x:Name="EditCustBtn" Height="20" Margin="5" Click="EditCustBtn_Click" >Редактировать</Button>
+                <Button x:Name="DelCustBtn"  Height="20" Margin="5" >Удалить</Button>
         </StackPanel>
         </WrapPanel>
         <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>

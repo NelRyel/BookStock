@@ -89,7 +89,9 @@ namespace WpfApp1
             CustPanel_ShowTrue_HideFalse(false);
             PricePanel_ShowTrue_HideFalse(false);
 
-         
+
+            //ТЕСТЫ ТЕСТЫ
+            #region
             //StockDBcontext ctx = new StockDBcontext();
             //ctx.Custumers.Load();
             //Custumer custumer = new Custumer();
@@ -125,17 +127,12 @@ namespace WpfApp1
             //List<Custumer> p = JsonConvert.DeserializeObject<List<Custumer>>(json);
             //dataGrid1.ItemsSource = p;
             //var jj = JsonConvert.SerializeObject(p);
-
+            #endregion //ТЕСТЫ ТЕСТЫ
+            //ТЕСТЫ ТЕСТЫ
         }
 
-        //static async void UpdateCust(Custumer custumerById)//тестовый не нужен
-        //{
-        //    string APP_CONNECT = "http://localhost:47914/api/";
-        //    var client = new HttpClient();
-        //    var jjson = JsonConvert.SerializeObject(custumerById);
-        //    var resp = await client.PutAsJsonAsync(APP_CONNECT + API_CON_TYPE.Custumer.ToString() + "/" + "5", jjson); //здесь JSON-Кастумер передаётся в АПИ-Контроллер
-        //}
-     
+       
+        // для обновления отдельных данных
         public void LoadCustumers()
         {
             try
@@ -186,9 +183,6 @@ namespace WpfApp1
                 MessageBox.Show("Error load Purchase Docs: " + ex);
             }
         }
-
-
-
         public void LoadBooks()
         {
             try
@@ -213,8 +207,11 @@ namespace WpfApp1
                 MessageBox.Show("Error load Book desc: " + ex);
             }
         }
+        // для обновления отдельных данных
 
-        public void LoadDatas()
+
+
+        public void LoadDatas()//загружает на старте все необходимые данные
         {
             try
             {
@@ -281,6 +278,7 @@ namespace WpfApp1
             }
            
         }
+
 
 
         private void PricePanel_ShowTrue_HideFalse(bool check)
@@ -429,8 +427,7 @@ namespace WpfApp1
                 MessageBox.Show("LoadBookDesc Error: " + e.ToString());
             }
         }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
-
-
+        
         public void DGLoadCustDesc(List<Custumer> custumers, List<CustumerDescription> custumerDescriptions, int CustId)
         {
             tbCustTitle.Text = "";
@@ -468,12 +465,12 @@ namespace WpfApp1
             }
 
 
-        }
+        }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
+
         public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //--------------------------------------------------------------------------------------------------------------------------------------
             string StringBookId = "";
-           // int? selectedColumn = null;
             try
             {
 
@@ -507,7 +504,7 @@ namespace WpfApp1
             }
         }
 
-        private void AddCustBtn_Click(object sender, RoutedEventArgs e)
+        private void AddCustBtn_Click(object sender, RoutedEventArgs e) //создание нового Клиента, по факту, переводит в диалогове окно для создания, там уже вся логика
         {
             tbCustTitle.Text = "";
             tbCustFullName.Text = "";
@@ -536,14 +533,14 @@ namespace WpfApp1
 
         }
 
-        public void EditCust(int idCust)
-        {
-            DialogEditCust dialogEditCust = new DialogEditCust(idCust);
-            if (dialogEditCust.ShowDialog() == true)
-            {
-                MessageBox.Show("edit done");
-            }
-        }
+        //public void EditCust(int idCust)
+        //{
+        //    DialogEditCust dialogEditCust = new DialogEditCust(idCust);
+        //    if (dialogEditCust.ShowDialog() == true)
+        //    {
+        //        MessageBox.Show("edit done");
+        //    }
+        //}
 
        
         private void EditCustBtn_Click(object sender, RoutedEventArgs e)
@@ -677,13 +674,6 @@ namespace WpfApp1
                 MessageBox.Show("Error select ID" + ex);
             }
 
-
-            //var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
-            //var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
-            //bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
-        
-
-
             var json = JsonConvert.SerializeObject(sId);
             var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocChange.ToString()+"/"+ sId).Result;
             var jsonResp = responce.Content.ReadAsStringAsync().Result;
@@ -692,8 +682,7 @@ namespace WpfApp1
             {
                 MessageBox.Show(t.message);
             }
-
-
+            
             LoadPurchaseDocs();
             
             MessageBox.Show(json.ToString());
@@ -719,13 +708,7 @@ namespace WpfApp1
             {
                 MessageBox.Show("Error select ID" + ex);
             }
-
-
-            //var respBooDesk = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDescription.ToString()).Result;
-            //var jsonRespBookDesk = respBooDesk.Content.ReadAsStringAsync().Result;
-            //bookFullDescriptions = JsonConvert.DeserializeObject<List<BookFullDescription>>(jsonRespBookDesk);
-
-
+            
 
             var json = JsonConvert.SerializeObject(sId);
             var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocChange.ToString() + "/" + sId).Result;
@@ -755,9 +738,7 @@ namespace WpfApp1
             PurchaseDoc purchaseDoc = new PurchaseDoc();
             purchaseDoc.Status = StaticDatas.DocStatuses.Непроведен.ToString();
             List<PurchaseDocRec> purchaseRecs = new List<PurchaseDocRec>();
-
-
-
+            
             DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions, true);
             dialogPurchase.Show();
 
@@ -813,10 +794,8 @@ namespace WpfApp1
 
             DialogSellDoc dialogSell = new DialogSellDoc(custumer, saleDoc, saleRecs, books, bookFullDescriptions, false);
             dialogSell.Show();
-
-
+            
         }
-
       
     }
 

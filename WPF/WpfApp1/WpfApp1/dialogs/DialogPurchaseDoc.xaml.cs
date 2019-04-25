@@ -65,58 +65,27 @@ namespace WpfApp1.dialogs
             _isNew = IsNew;
             LoadDatas();
             btnOk.IsEnabled = false;
-            //decimal sum = 0;
-            //int CountSum = 0;
-            //for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
-            //{
-            //    decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //    decimal y = (decimal.Parse((dataGridPurchaseDoc.Columns[3].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-
-            //    _pdrs[i].Count = Convert.ToInt32(x);
-            //    _pdrs[i].PurchasePrice = y;
-            //    _pdrs[i].SumPrice = x * y;
-            //    sum += (decimal.Parse((dataGridPurchaseDoc.Columns[5].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //    CountSum += (int.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //}
-            //labelDocSum.Content = sum.ToString();
-            //_pd.FullSum = sum;
-            //labelSumCount.Content = CountSum.ToString();
-            //reSum();
-            //for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
-            //{
-            //    decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //    decimal y = (decimal.Parse((dataGridPurchaseDoc.Columns[3].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-
-            //    _pdrs[i].Count = Convert.ToInt32(x);
-            //    _pdrs[i].PurchasePrice = y;
-            //    _pdrs[i].SumPrice = x * y;
-            //    sum += (decimal.Parse((dataGridPurchaseDoc.Columns[5].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //    CountSum += (int.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            //}
-            //labelDocSum.Content = sum.ToString();
-            //labelSumCount.Content = CountSum.ToString();
-
         }
 
-        public void GodDamnCount()
-        {
-            _sum = 0;
-            _CountSum = 0;
-            for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
-            {
-                decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-                decimal y = (decimal.Parse((dataGridPurchaseDoc.Columns[3].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+        //public void GodDamnCount()
+        //{
+        //    _sum = 0;
+        //    _CountSum = 0;
+        //    for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
+        //    {
+        //        decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+        //        decimal y = (decimal.Parse((dataGridPurchaseDoc.Columns[3].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
 
-                _pdrs[i].Count = Convert.ToInt32(x);
-                _pdrs[i].PurchasePrice = y;
-                _pdrs[i].SumPrice = x * y;
-                _sum += (decimal.Parse((dataGridPurchaseDoc.Columns[5].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-                _CountSum += (int.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
-            }
-            labelDocSum.Content = _sum.ToString();
-            _pd.FullSum = _sum;
-            labelSumCount.Content = _CountSum.ToString();
-        }
+        //        _pdrs[i].Count = Convert.ToInt32(x);
+        //        _pdrs[i].PurchasePrice = y;
+        //        _pdrs[i].SumPrice = x * y;
+        //        _sum += (decimal.Parse((dataGridPurchaseDoc.Columns[5].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+        //        _CountSum += (int.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+        //    }
+        //    labelDocSum.Content = _sum.ToString();
+        //    _pd.FullSum = _sum;
+        //    labelSumCount.Content = _CountSum.ToString();
+        //}
 
         public void LoadDatas()
         {
@@ -172,10 +141,7 @@ namespace WpfApp1.dialogs
             decimal inCntCountSum = 0;
             _CountSum = 0;
             _sum = 0;
-
-            //decimal sum = 0;
-            //int CountSum = 0;
-            //reSum();
+            
             try
             {
                 for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
@@ -194,32 +160,7 @@ namespace WpfApp1.dialogs
             {
 
             }
-
-            //    dataGridPurchaseDoc.Columns.Clear();
-            //  dataGridPurchaseDoc.ItemsSource = null;
-            //  //dt = new DataTable();
-            //  //dt.Columns.Add("№").ReadOnly = true;
-            //  //dt.Columns.Add("Наименование");
-            //  //dt.Columns.Add("кол-во");
-            //  //dt.Columns.Add("Закупочная Цена");
-            //  //dt.Columns.Add("Розничная Цена");
-            //  //dt.Columns.Add("Сумма").ReadOnly = true;
-            //  //string bookTitle = "";
-            //  //foreach (var item in _pdrs)
-            //  //{
-            //  //    foreach (var item1 in _Lbooks)
-            //  //    {
-            //  //        if (item.BookId == item1.Id)
-            //  //        {
-            //  //            bookTitle = item1.BookTitle;
-            //  //        }
-            //  //    }
-
-            //  //    dt.Rows.Add(item.LineNumber, bookTitle, item.Count, item.PurchasePrice, item.RetailPrice, item.Count * item.PurchasePrice);
-            //  //    //labelDocSum.Content = inCntsum.ToString();
-            //  //    //labelSumCount.Content = inCntCountSum.ToString();
-            //  //}
-            //  //dataGridPurchaseDoc.ItemsSource = dt.DefaultView;
+            
             LoadDatas();
 
             labelDocSum.Content = inCntsum.ToString();
@@ -228,27 +169,7 @@ namespace WpfApp1.dialogs
 
             _sum = inCntsum;
             _CountSum = Convert.ToInt32(inCntCountSum);
-
-            //SelectedId = 0;
-            //try
-            //{
-            //    string StringBookId = "";
-            //    var selectedColumn = dataGridPurchaseDoc.CurrentCell.Column.DisplayIndex;
-            //    var selectedCell = dataGridPurchaseDoc.SelectedCells[0];
-            //    var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
-            //    if (cellContent is TextBlock)
-            //    {
-            //        StringBookId = (cellContent as TextBlock).Text;
-            //    }
-            //    SelectedId = Convert.ToInt32(StringBookId);
-            //    labelTestId.Content = SelectedId.ToString();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error select ID" + ex);
-            //}
-
-
+            
         }
 
         private void BtnDiscount_Click(object sender, RoutedEventArgs e)
@@ -415,10 +336,7 @@ namespace WpfApp1.dialogs
         {
             decimal inCntsum = 0;
             decimal inCntCountSum = 0;
-
-            //decimal sum = 0;
-            //int CountSum = 0;
-            //reSum();
+            
             for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
             {
                 decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
@@ -450,10 +368,7 @@ namespace WpfApp1.dialogs
             decimal inCntCountSum = 0;
             _CountSum = 0;
             _sum = 0;
-
-            //decimal sum = 0;
-            //int CountSum = 0;
-            //reSum();
+            
             try
             {
                 for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
@@ -521,11 +436,7 @@ namespace WpfApp1.dialogs
 
         private void DataGridPurchaseDoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //int index = dataGridPurchaseDoc.SelectedIndex;
-            ////dataGridPurchaseDoc.Items.RemoveAt(index);
-            ////dataGridPurchaseDoc.Items.Remove(index);
-            //btnDellBook.Content = "- " + index;
-
+           
             SelectedId = 0;
             try
             {
@@ -549,9 +460,7 @@ namespace WpfApp1.dialogs
 
         private void BtnDellBook_Click_1(object sender, RoutedEventArgs e)
         {
-            //int index = dataGridPurchaseDoc.SelectedIndex;
-           // DataTable dt = new DataTable();
-
+            
             foreach (var item in _pdrs)
             {
                 if (item.Id == SelectedId)
@@ -561,15 +470,12 @@ namespace WpfApp1.dialogs
                 }
             }
             LoadDatas();
-            //dataGridPurchaseDoc.Items.Remove(index);
-            //btnDellBook.Content = "- " + index;
         }
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mw = new MainWindow();
-
-           // BtnSave_Click(null,null);
+            
 
             var json = JsonConvert.SerializeObject(_pd.Id);
             var responce = client.GetAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.PurchaseDocChange.ToString() + "/" + _pd.Id).Result;
@@ -579,9 +485,7 @@ namespace WpfApp1.dialogs
             {
                 MessageBox.Show(t.message);
             }
-
-
-            //LoadPurchaseDocs();
+            
             btnOk.IsEnabled = false;
             MessageBox.Show(json.ToString());
 
