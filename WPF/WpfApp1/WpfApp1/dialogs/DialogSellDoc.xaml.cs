@@ -49,6 +49,9 @@ namespace WpfApp1.dialogs
             if(saleDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
             {
                 btnChangeCustumer.IsEnabled = false;
+                btnAddBook.IsEnabled = false;
+                btnDellBook.IsEnabled = false;
+                btnDiscount.IsEnabled = false;
             }
 
             _c = custumer;

@@ -7,7 +7,7 @@
         
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024" MinHeight="768" MinWidth="1024" >
+        Title="MainWindow" Height="768" Width="1280" MinHeight="768" MinWidth="1024" >
     <Window.Resources>
 
         <Style TargetType="RadioButton">
@@ -56,11 +56,11 @@
         <RadioButton x:Name="rbPriceList" GroupName="mainChose" Grid.Row="0" Grid.Column="2" Margin="10 5 10 80" Content="Номенклатура" Checked="RadioButton_Checked"></RadioButton>
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="3" Margin="10 5 10 80" Content="Контрагенты" Checked="RadioButton_Checked"></RadioButton>
 
-        <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+        <WrapPanel x:Name="wrapPanelDocBtns" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Visibility="Hidden"  >
             <StackPanel Orientation="Horizontal" Margin="0 30 0 0 ">           
                 <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">Новая Расходная накладная</Button>
                 <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">Новая Приходная накладная</Button>
-                <Button x:Name="DelDocBtn" Height="20" Margin="5" >Удалить</Button>
+                <Button x:Name="DelDocBtn" Height="20" Margin="5" Click="DelDocBtn_Click" >Удалить</Button>
             </StackPanel>
 
         </WrapPanel>

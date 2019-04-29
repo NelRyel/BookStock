@@ -306,6 +306,7 @@ namespace WpfApp1
                 case "Номенклатура":
                     LoadBooks();
                     rbChose = check;
+                    wrapPanelDocBtns.Visibility = Visibility.Hidden;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
@@ -324,6 +325,7 @@ namespace WpfApp1
                 case "Контрагенты":
                     LoadCustumers();
                     rbChose = check;
+                    wrapPanelDocBtns.Visibility = Visibility.Hidden;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
@@ -342,6 +344,7 @@ namespace WpfApp1
                     LoadPurchaseDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
+                    wrapPanelDocBtns.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Visible;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
                     rbChose = check;
@@ -352,6 +355,7 @@ namespace WpfApp1
                     LoadSaleDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
+                    wrapPanelDocBtns.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Visible;
                     rbChose = check;
@@ -467,7 +471,7 @@ namespace WpfApp1
 
         }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
 
-        public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)//этот весь метод для того, что загрузить в область Полного Описания книги(или клиента)
         {
             //--------------------------------------------------------------------------------------------------------------------------------------
             string StringBookId = "";
@@ -622,6 +626,28 @@ namespace WpfApp1
                 MessageBox.Show("Error in edit book: " + ex);
             }
         }
+
+        private void DelDocBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            switch (rbChose)
+            {
+                case "Журнал Приходных":
+                    PurchaseDoc purchaseDoc = purchaseDocs.Find(i => i.Id == selectedId);
+
+
+                    break;
+                case "Журнал Расходных":
+                    break;
+                default:
+                    MessageBox.Show("wrong chose in DelDocBtn_Click");
+                    break;
+            }
+
+
+        }
+
+
 
         private void DataGridJournal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -796,7 +822,8 @@ namespace WpfApp1
             dialogSell.Show();
             
         }
-      
+
+       
     }
 
 }

@@ -31,6 +31,7 @@ namespace WebServer.Controllers
 
         [HttpPost]
         public void CreatePurchaseDoc([FromBody] string JsonPurchaseDoc)
+
         {
             PurchaseDoc purchaseDoc = JsonConvert.DeserializeObject<PurchaseDoc>(JsonPurchaseDoc);
             manager.CreatePurchaseDoc(purchaseDoc);

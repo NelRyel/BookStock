@@ -1,4 +1,5 @@
 ﻿using ManagerWpfLibrary;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 
 namespace WpfApp1.dialogs
 {
@@ -49,12 +52,16 @@ namespace WpfApp1.dialogs
         int _CountSum;
         int SelectedId;
         bool _isNew;
+        Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
         public DialogPurchaseDoc(Custumer custumer, PurchaseDoc purchaseDoc, List<Book> books, List<PurchaseDocRec> purchaseDocRecs, List<BookFullDescription> fullDescriptions, bool IsNew )
         {
             InitializeComponent();
             if (purchaseDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
             {
                 btnChangeCustumer.IsEnabled = false;
+                btnAddBook.IsEnabled = false;
+                btnDellBook.IsEnabled = false;
+                btnDiscount.IsEnabled = false;
             }
 
            _c = custumer;
@@ -391,14 +398,55 @@ namespace WpfApp1.dialogs
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            RefreshIt();
+            //btnOk.IsEnabled = false;
+            //decimal inCntsum = 0;
+            //decimal inCntCountSum = 0;
+            //_CountSum = 0;
+            //_sum = 0;
            
+            
+            //try
+            //{
+            //    for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
+            //    {
+            //        decimal x = (decimal.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+            //        decimal y = (decimal.Parse((dataGridPurchaseDoc.Columns[3].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+
+            //        _pdrs[i].Count = Convert.ToInt32(x);
+            //        _pdrs[i].PurchasePrice = y;
+            //        _pdrs[i].SumPrice = x * y;
+            //        inCntsum += (decimal.Parse((dataGridPurchaseDoc.Columns[5].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+            //        inCntCountSum += (int.Parse((dataGridPurchaseDoc.Columns[2].GetCellContent(dataGridPurchaseDoc.Items[i]) as TextBlock).Text));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("BtnRefresh_Click Error: " + ex);
+            //}
+
+            //LoadDatas();
+
+            //labelDocSum.Content = inCntsum.ToString();
+            //labelSumCount.Content = inCntCountSum.ToString();
+            //_pd.FullSum = inCntsum;
+
+            //_sum = inCntsum;
+            //_CountSum = Convert.ToInt32(inCntCountSum);
+
+
+
+        }
+
+        public void RefreshIt()
+        {
             btnOk.IsEnabled = false;
             decimal inCntsum = 0;
             decimal inCntCountSum = 0;
             _CountSum = 0;
             _sum = 0;
-           
-            
+
+
             try
             {
                 for (int i = 0; i < dataGridPurchaseDoc.Items.Count - 1; i++)
@@ -427,10 +475,7 @@ namespace WpfApp1.dialogs
             _sum = inCntsum;
             _CountSum = Convert.ToInt32(inCntCountSum);
 
-
-
         }
-
 
 
 
@@ -498,6 +543,125 @@ namespace WpfApp1.dialogs
         {
             MainWindow mw = new MainWindow();
             mw.LoadDatas();
+        }
+
+        private void BtnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshIt();
+            if (xlApp == null)
+            {
+                MessageBox.Show("Excel not found");
+                return;
+            }
+
+            object misValue = System.Reflection.Missing.Value;
+            var xlWorkBook = xlApp.Workbooks.Add(misValue);
+
+            var xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+           //____________________________________________________________________________________________________ОТРИСОВКА ГРАНИЦ В ЯЧЕЙКАХ_______________________
+            int LeftKray = 5;
+            int RightKray = 5;
+            for (int i=0;i<=_pdrs.Count; i++)
+            {
+               
+                var cells = xlWorkSheet.get_Range("A"+ LeftKray, "G"+ RightKray);
+
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideVertical].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // внутренние вертикальные
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideHorizontal].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // внутренние горизонтальные            
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeTop].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // верхняя внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeRight].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // правая внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeLeft].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // левая внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                LeftKray++;
+                RightKray++;
+            }
+            //____________________________________________________________________________________________________ОТРИСОВКА ГРАНИЦ В ЯЧЕЙКАХ_______________________
+
+
+
+           xlWorkSheet.Range[xlWorkSheet.Cells[3,2], xlWorkSheet.Cells[3, 4]].Merge();///объединение ячеек
+          
+            xlWorkSheet.Cells[1, 1] = "Клиент";
+            xlWorkSheet.Cells[1, 2] = _c.CustumerTitle;
+            xlWorkSheet.Cells[2, 1] = "Дата: ";
+            xlWorkSheet.Cells[2, 2] =_pd.DateCreate;
+            xlWorkSheet.Cells[3, 2] = "Приходная №" + _pd.Id;
+            int y = _pdrs.Count;
+
+            int rowCount = 5;
+
+           // Microsoft.Office.Interop.Excel.CellFormat Excelcells = xlWorkSheet.Range[xlWorkSheet.Cells[5, 1], xlWorkSheet.Cells[5, 7]].Select;
+        
+            
+
+            //  Y  X
+            xlWorkSheet.Cells[5, 1] = "№";
+            xlWorkSheet.Cells[5, 2] = "Наименование";
+            xlWorkSheet.Cells[5, 3]="кол-во";
+            xlWorkSheet.Cells[5, 4] = "Закупочная Цена";
+            xlWorkSheet.Cells[5, 5] = "Розничная Цена";
+            xlWorkSheet.Cells[5, 6] = "Сумма";
+            xlWorkSheet.Cells[5, 7] = "ID";
+
+            xlWorkSheet.Cells[LeftKray, 2] = "Общее Кол-во: ";
+            xlWorkSheet.Cells[LeftKray, 3] = _CountSum;
+            xlWorkSheet.Cells[LeftKray, 5] = "Сумма: ";
+            xlWorkSheet.Cells[LeftKray, 6] = _sum;
+
+
+
+
+            foreach (DataRow item in dt.Rows)
+            {
+                rowCount += 1;
+                for(int i = 0; i < dt.Columns.Count; i++)
+                {
+                    xlWorkSheet.Cells[rowCount, i + 1] = item[i];
+                }
+                
+            }
+
+
+            //for(int i = 0; i <= x; i++)
+            //{
+            //    for(int s = 0; s <= y; i++)
+            //    {
+
+            //        xlWorkSheet.Cells[i, s] = dt[i, s];
+            //    }
+            //}
+
+
+            //xlWorkSheet.Cells[1, 1] = "ID";
+            //xlWorkSheet.Cells[1, 2] = "NAME";
+            //xlWorkSheet.Cells[2, 1] = "1";
+            //xlWorkSheet.Cells[2, 2] = "One";
+            //xlWorkSheet.Cells[3, 1] = "2";
+            //xlWorkSheet.Cells[3, 2] = "two";
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel(*.xls)|*.xls|All files(*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == false)
+                {
+                    return;
+                }
+                string fileName = saveFileDialog.FileName;
+
+                xlWorkBook.SaveAs(fileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+
+                Marshal.ReleaseComObject(xlWorkSheet);
+                Marshal.ReleaseComObject(xlWorkBook);
+                Marshal.ReleaseComObject(xlApp);
+
+                MessageBox.Show("Excel done");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error on saving: " + ex);
+            }
         }
     }
 }

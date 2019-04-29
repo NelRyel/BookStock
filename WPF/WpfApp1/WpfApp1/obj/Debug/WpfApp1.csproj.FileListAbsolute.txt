@@ -45,3 +45,4 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogChangeCustomer.g.cs
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogChangeCustomer.baml
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogSellDoc.g.cs
 E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\dialogs\DialogSellDoc.baml
+E:\BookStock\WPF\WpfApp1\WpfApp1\obj\Debug\WpfApp1.csproj.ResolveComReference.cache
