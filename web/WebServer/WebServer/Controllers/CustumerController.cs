@@ -1,4 +1,5 @@
 ﻿using ManagerLibrary;
+using ManagerLibrary.UnitedModels;
 using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.CustumerEnt;
@@ -41,12 +42,12 @@ namespace WebServer.Controllers
             manager.EditCustumer(c.Id, c.CustumerTitle, c.BuyerTrue_SuplierFalse);
         }
 
-        [HttpDelete]
-        public void DeleteCustumer(int id)
-        {
-            Custumer custumer = manager.GetCustumerById(id);
-            manager.ChangeIsDelete(id, custumer.IsDelete);
-        }
+        //[HttpDelete]
+        //public void DeleteCustumer(int id)
+        //{
+        //    Custumer custumer = manager.GetCustumerById(id);
+        //    manager.ChangeIsDelete(id, custumer.IsDelete);
+        //}
 
     }
 
@@ -135,4 +136,17 @@ namespace WebServer.Controllers
         }
 
     }
+
+    public class CustumerDelController : ApiController
+    {
+        CustumerManager manager = new CustumerManager();
+        [HttpGet]
+        public ErrorsMessage DelCustumer(int id)
+        {
+            ErrorsMessage msg = manager.ChangeIsDelete(id);
+            return msg;
+        }
+    }
+
+
 }

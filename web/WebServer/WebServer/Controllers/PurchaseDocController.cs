@@ -75,6 +75,17 @@ namespace WebServer.Controllers
        
     }
 
+    public class PurchaseDocDelController: ApiController
+    {
+        PurchaseManager manager = new PurchaseManager();
+        [HttpGet]
+        public ErrorsMessage DelPurchaseDoc(int id)
+        {
+            ErrorsMessage msg = manager.ChangeIsDelete(id);
+            return msg;
+        }
+    }
+
 
     public class UnitedPurchaseDocController : ApiController
     {

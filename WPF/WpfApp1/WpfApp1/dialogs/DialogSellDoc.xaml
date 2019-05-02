@@ -38,7 +38,7 @@
             <WrapPanel DockPanel.Dock="Bottom" Margin="5">
                 <Button x:Name="btnOk" Margin="5" Height="25" Click="BtnOK_Click" IsEnabled="False">ОК</Button>
                 <Button x:Name="btnChec" Margin="5" Height="25" >Провести</Button>
-                <Button x:Name="btnPrint" Margin="5" Height="25">Печать</Button>
+                <Button x:Name="btnPrint" Margin="5" Height="25" Click="BtnPrint_Click">Печать</Button>
                 <Button x:Name="btnSave" Margin="5" Height="25" Click="BtnSave_Click">Сохранить</Button>
 
             </WrapPanel>

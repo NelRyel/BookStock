@@ -92,13 +92,13 @@ namespace WpfApp1.dialogs
 
             dt = new DataTable();
             dt.Columns.Add("ID");
-            dt.Columns.Add("Barcode");
-            dt.Columns.Add("BookTitle");
-            dt.Columns.Add("Retail Price");
-            dt.Columns.Add("auth");
-            dt.Columns.Add("serie");
-            dt.Columns.Add("Section");
-            dt.Columns.Add("count");
+            dt.Columns.Add("Штрихкод");
+            dt.Columns.Add("Наименование");
+            dt.Columns.Add("Цена");
+            dt.Columns.Add("Автор");
+            dt.Columns.Add("Серия");
+            dt.Columns.Add("Секция");
+            dt.Columns.Add("кол-во");
 
             var bd = bookAndDescs.Where(i => i.book.BarcodeISBN.Contains(barcode)).Where(q=>q.book.BookTitle.ToLower().Contains(title.ToLower())).Where(w=>w.bookFullDescription.Author.ToLower().Contains(author.ToLower())).Where(t=>t.bookFullDescription.Serie.ToLower().Contains(serie.ToLower())).Where(r=>r.bookFullDescription.Section.ToLower().Contains(section.ToLower())); 
 

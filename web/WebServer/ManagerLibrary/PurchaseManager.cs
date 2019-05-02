@@ -260,11 +260,16 @@ namespace ManagerLibrary
         }
 
 
-        public void ChangeIsDelete(int id, bool IsDelete)
+        public ErrorsMessage ChangeIsDelete(int id)
         {
+            ErrorsMessage message = new ErrorsMessage();
             PurchaseDoc purchaseDoc = stockDBcontext.PurchaseDocs.Find(id);
-            purchaseDoc.IsDelete = (IsDelete == true) ? purchaseDoc.IsDelete = false : purchaseDoc.IsDelete = true;
+            purchaseDoc.IsDelete = (purchaseDoc.IsDelete==true) ? purchaseDoc.IsDelete = false : purchaseDoc.IsDelete = true;
+           
             stockDBcontext.SaveChanges();
+            message.boolen = 1;
+            message.message = "OK";
+            return message;
         }
 
     }

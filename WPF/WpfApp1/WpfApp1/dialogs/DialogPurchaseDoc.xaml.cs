@@ -8,6 +8,7 @@ using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -71,6 +72,7 @@ namespace WpfApp1.dialogs
             _bookFullDescriptions = fullDescriptions;
             _isNew = IsNew;
             LoadDatas();
+            RefreshIt();
             btnOk.IsEnabled = false;
         }
 
@@ -220,6 +222,7 @@ namespace WpfApp1.dialogs
 
             labelDocSum.Content = sum.ToString();
             labelSumCount.Content = CountSum.ToString();
+            RefreshIt();
         }
 
         private void BtnAddBook_Click(object sender, RoutedEventArgs e)
@@ -248,6 +251,7 @@ namespace WpfApp1.dialogs
             purchaseDocRec.BookId = book.Id;
             _pdrs.Add(purchaseDocRec);
             LoadDatas();
+            RefreshIt();
         }
 
         private void BtnChangeCustumer_Click(object sender, RoutedEventArgs e)
@@ -269,6 +273,7 @@ namespace WpfApp1.dialogs
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            RefreshIt();
             _pd.CustumerId = _c.Id;
             unitedPurchaseDoc unitedPurchaseDoc = new unitedPurchaseDoc();
             unitedPurchaseDoc.custumer = _c;
@@ -336,6 +341,7 @@ namespace WpfApp1.dialogs
                 MessageBox.Show("Error select ID" + ex);
             }
 
+            RefreshIt();
 
         }
 
@@ -501,6 +507,7 @@ namespace WpfApp1.dialogs
             {
                 MessageBox.Show("Error select ID" + ex);
             }
+            RefreshIt();
         }
 
         private void BtnDellBook_Click_1(object sender, RoutedEventArgs e)
@@ -515,10 +522,12 @@ namespace WpfApp1.dialogs
                 }
             }
             LoadDatas();
+            RefreshIt();
         }
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
+            RefreshIt();
             MainWindow mw = new MainWindow();
             
 
@@ -580,7 +589,7 @@ namespace WpfApp1.dialogs
 
 
            xlWorkSheet.Range[xlWorkSheet.Cells[3,2], xlWorkSheet.Cells[3, 4]].Merge();///объединение ячеек
-          
+            
             xlWorkSheet.Cells[1, 1] = "Клиент";
             xlWorkSheet.Cells[1, 2] = _c.CustumerTitle;
             xlWorkSheet.Cells[2, 1] = "Дата: ";
@@ -590,9 +599,16 @@ namespace WpfApp1.dialogs
 
             int rowCount = 5;
 
-           // Microsoft.Office.Interop.Excel.CellFormat Excelcells = xlWorkSheet.Range[xlWorkSheet.Cells[5, 1], xlWorkSheet.Cells[5, 7]].Select;
-        
-            
+            // Microsoft.Office.Interop.Excel.CellFormat Excelcells = xlWorkSheet.Range[xlWorkSheet.Cells[5, 1], xlWorkSheet.Cells[5, 7]].Select;
+
+           
+            //xlWorkSheet.Cells[5, 1].AutoFit();
+            //xlWorkSheet.Cells[5, 2].AutoFit();
+            //xlWorkSheet.Cells[5, 3].AutoFit();
+            //xlWorkSheet.Cells[5, 4].AutoFit();
+            //xlWorkSheet.Cells[5, 5].AutoFit();
+            //xlWorkSheet.Cells[5, 6].AutoFit();
+            //xlWorkSheet.Cells[5, 7].AutoFit();
 
             //  Y  X
             xlWorkSheet.Cells[5, 1] = "№";
@@ -609,7 +625,7 @@ namespace WpfApp1.dialogs
             xlWorkSheet.Cells[LeftKray, 6] = _sum;
 
 
-
+            string fileName = "";
 
             foreach (DataRow item in dt.Rows)
             {
@@ -620,24 +636,7 @@ namespace WpfApp1.dialogs
                 }
                 
             }
-
-
-            //for(int i = 0; i <= x; i++)
-            //{
-            //    for(int s = 0; s <= y; i++)
-            //    {
-
-            //        xlWorkSheet.Cells[i, s] = dt[i, s];
-            //    }
-            //}
-
-
-            //xlWorkSheet.Cells[1, 1] = "ID";
-            //xlWorkSheet.Cells[1, 2] = "NAME";
-            //xlWorkSheet.Cells[2, 1] = "1";
-            //xlWorkSheet.Cells[2, 2] = "One";
-            //xlWorkSheet.Cells[3, 1] = "2";
-            //xlWorkSheet.Cells[3, 2] = "two";
+            
             try
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -646,7 +645,7 @@ namespace WpfApp1.dialogs
                 {
                     return;
                 }
-                string fileName = saveFileDialog.FileName;
+                fileName = saveFileDialog.FileName;
 
                 xlWorkBook.SaveAs(fileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 xlWorkBook.Close(true, misValue, misValue);
@@ -662,6 +661,20 @@ namespace WpfApp1.dialogs
             {
                 MessageBox.Show("Error on saving: " + ex);
             }
+
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("EXCEL.EXE"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            Process.Start(fileName);
+
         }
     }
 }

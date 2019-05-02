@@ -182,21 +182,17 @@ namespace ManagerLibrary
 
 
 
-        public void ChangeIsDelete(int id, bool IsDelete)
+        public ErrorsMessage ChangeIsDelete(int id)
         {
+            ErrorsMessage message = new ErrorsMessage();
             SaleDoc saleDoc = stockDBcontext.SaleDocs.Find(id);
 
-            saleDoc.IsDelete = (IsDelete == true) ? saleDoc.IsDelete = false : saleDoc.IsDelete = true;
-            //switch(IsDelete)
-            // {
-            //     case true:
-            //         saleDoc.IsDelete = false;
-            //         break;
-            //     case false:
-            //         saleDoc.IsDelete = true;
-            //         break;
-            // }
+            saleDoc.IsDelete = (saleDoc.IsDelete == true) ? saleDoc.IsDelete = false : saleDoc.IsDelete = true;
+        
             stockDBcontext.SaveChanges();
+            message.boolen = 1;
+            message.message = "OK";
+            return message;
         }
 
         public void SaveSaleDoc(unitedSaleDoc doc)

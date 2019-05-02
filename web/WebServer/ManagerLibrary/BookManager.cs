@@ -147,24 +147,25 @@ namespace ManagerLibrary
             stockDBcontext.SaveChanges();
         }
 
-        public void ChangeIsDelete(int id, bool IsDelete)
+        public ErrorsMessage ChangeIsDelete(int id)
         {
+            ErrorsMessage message = new ErrorsMessage();
             Book book = stockDBcontext.Books.Find(id);
+            try
+            {
+                book.IsDelete = (book.IsDelete == true) ? book.IsDelete = false : book.IsDelete = true;
 
-                book.IsDelete = (IsDelete == true) ? book.IsDelete = false : book.IsDelete = true;
-                //switch(IsDelete)
-                // {
-                //     case true:
-                //         book.IsDelete = false;
-                //         break;
-                //     case false:
-                //         book.IsDelete = true;
-                //         break;
-                // }
                 stockDBcontext.SaveChanges();
-           
+                message.boolen = 1;
+                message.message = "OK";
+            }
+            catch(Exception ex)
+            {
+                message.boolen = 0;
+                message.message = "False on delete Book: "+ex;
+                return message;
+            }
+            return message;
         }
-
-
     }
 }

@@ -31,7 +31,7 @@
         <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Hidden" IsReadOnly="True" SelectionChanged="DataGrid1_SelectionChanged">
         </DataGrid>
 
-        <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGrid1_SelectionChanged" MouseDoubleClick="DataGridJournal_MouseDoubleClick">
+        <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGridJpurnal_SelectionChanged" MouseDoubleClick="DataGridJournal_MouseDoubleClick">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Провести" Click="MenuItem_Click"></MenuItem>
@@ -41,7 +41,7 @@
             </DataGrid.ContextMenu>
         </DataGrid>
 
-        <DataGrid x:Name="dataGridSellJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGrid1_SelectionChanged" MouseDoubleClick="DataGridSellJournal_MouseDoubleClick" >
+        <DataGrid x:Name="dataGridSellJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGridSellJpurnal_SelectionChanged" MouseDoubleClick="DataGridSellJournal_MouseDoubleClick" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Провести" Click="MenuItemSell_Click"></MenuItem>
@@ -56,27 +56,47 @@
         <RadioButton x:Name="rbPriceList" GroupName="mainChose" Grid.Row="0" Grid.Column="2" Margin="10 5 10 80" Content="Номенклатура" Checked="RadioButton_Checked"></RadioButton>
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="3" Margin="10 5 10 80" Content="Контрагенты" Checked="RadioButton_Checked"></RadioButton>
 
-        <WrapPanel x:Name="wrapPanelDocBtns" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Visibility="Hidden"  >
-            <StackPanel Orientation="Horizontal" Margin="0 30 0 0 ">           
+        <WrapPanel x:Name="wrapPanelDocBtns" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
+            <StackPanel x:Name="stacDocBtns" Orientation="Horizontal" Margin="0 30 0 0 " Visibility="Hidden">           
                 <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">Новая Расходная накладная</Button>
                 <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">Новая Приходная накладная</Button>
                 <Button x:Name="DelDocBtn" Height="20" Margin="5" Click="DelDocBtn_Click" >Удалить</Button>
             </StackPanel>
-
+            <StackPanel x:Name="labelsStackPanelFilters" Orientation="Horizontal">
+                <Label Width="100" Height="23" Margin="1">штрихкод</Label>
+                <Label Width="100" Height="23" Margin="1">Наименование</Label>
+                <Label Width="100" Height="23" Margin="1">автор</Label>
+                <Label Width="100" Height="23" Margin="1">серия</Label>
+                <Label Width="100" Height="23" Margin="1">секция</Label>
+            </StackPanel>
+            <StackPanel x:Name="stackPanelFilters" Orientation="Horizontal">
+                <TextBox x:Name="tbBarcodeFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbTitleFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbAuthorFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbSerieFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+                <TextBox x:Name="tbSectionFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
+            </StackPanel>
         </WrapPanel>
-        
+        <WrapPanel x:Name="wrapPanelClientFilter" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Margin="109 59 0 0" >
+            <StackPanel x:Name="stacClientFilter" >
+                <Label Margin="1">имя</Label>
+                <TextBox x:Name="tbCustTitleFilter" Margin="1" Width="100" TextChanged="tbCustTitleFilter_TextChanged"></TextBox>
+            </StackPanel>
+           
+        </WrapPanel>
+
         <!--<Label x:Name="labelTest" Grid.Column="1" Margin="0 60 0 0">1</Label>-->
         <WrapPanel Grid.Column="3" Grid.ColumnSpan="2" Margin="0 30 0 0"> 
         <StackPanel x:Name="spBook" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button x:Name="AddBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="AddBookBtn_Click" >Добавить Книгу</Button>
             <Button x:Name="EditBookBtn" Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="EditBookBtn_Click" >Редактировать </Button>
-            <Button x:Name="DelBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5">Удалить</Button>
+            <Button x:Name="DelBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="DelBookBtn_Click">Удалить</Button>
         </StackPanel>
 
         <StackPanel x:Name="spCust" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="AddCustBtn"  Height="20" Margin="5" Click="AddCustBtn_Click">Добавить Клиента</Button>
                 <Button x:Name="EditCustBtn" Height="20" Margin="5" Click="EditCustBtn_Click" >Редактировать</Button>
-                <Button x:Name="DelCustBtn"  Height="20" Margin="5" >Удалить</Button>
+                <Button x:Name="DelCustBtn"  Height="20" Margin="5" Click="DelBookBtn_Click" >Удалить</Button>
         </StackPanel>
         </WrapPanel>
         <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>

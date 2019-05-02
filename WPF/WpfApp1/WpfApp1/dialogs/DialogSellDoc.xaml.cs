@@ -1,4 +1,5 @@
 ﻿using ManagerWpfLibrary;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using StockEntModelLibrary;
 using StockEntModelLibrary.BookEnt;
@@ -7,8 +8,11 @@ using StockEntModelLibrary.Document;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +44,7 @@ namespace WpfApp1.dialogs
         int _CountSum;
         int _SelectedId;
         bool _isNew;
+        Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
 
         public DialogSellDoc(Custumer custumer, SaleDoc saleDoc, List<SaleDocRec> saleDocRecs, List<Book> books, List<BookFullDescription> bookFulls, bool IsNew)
@@ -280,7 +285,46 @@ namespace WpfApp1.dialogs
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            RefreshIt();
 
+            //btnOk.IsEnabled = false;
+            //decimal inCntsum = 0;
+            //decimal inCntCountSum = 0;
+            //_CountSum = 0;
+            //_sum = 0;
+
+
+            //try
+            //{
+            //    for (int i = 0; i < dataGridSaleDoc.Items.Count - 1; i++)
+            //    {
+            //        decimal x = (decimal.Parse((dataGridSaleDoc.Columns[2].GetCellContent(dataGridSaleDoc.Items[i]) as TextBlock).Text));
+            //        decimal y = (decimal.Parse((dataGridSaleDoc.Columns[3].GetCellContent(dataGridSaleDoc.Items[i]) as TextBlock).Text));
+
+            //        _saleDocRecs[i].Count = Convert.ToInt32(x);
+            //        _saleDocRecs[i].RetailPrice = y;
+            //        _saleDocRecs[i].SumPrice = x * y;
+            //        inCntsum += (decimal.Parse((dataGridSaleDoc.Columns[4].GetCellContent(dataGridSaleDoc.Items[i]) as TextBlock).Text));
+            //        inCntCountSum += (int.Parse((dataGridSaleDoc.Columns[2].GetCellContent(dataGridSaleDoc.Items[i]) as TextBlock).Text));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("BtnRefresh_Click Error: " + ex);
+            //}
+
+            //LoadDatas();
+
+            //labelDocSum.Content = inCntsum.ToString();
+            //labelSumCount.Content = inCntCountSum.ToString();
+            //_sd.FullSum = inCntsum;
+
+            //_sum = inCntsum;
+            //_CountSum = Convert.ToInt32(inCntCountSum);
+        }
+
+        public void RefreshIt()
+        {
             btnOk.IsEnabled = false;
             decimal inCntsum = 0;
             decimal inCntCountSum = 0;
@@ -315,8 +359,9 @@ namespace WpfApp1.dialogs
 
             _sum = inCntsum;
             _CountSum = Convert.ToInt32(inCntCountSum);
-        }
 
+            
+        }
 
         private void BtnDellBook_Click_1(object sender, RoutedEventArgs e)
         {
@@ -398,5 +443,127 @@ namespace WpfApp1.dialogs
             }
         }
 
+        private void BtnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshIt();
+            if (xlApp == null)
+            {
+                MessageBox.Show("Excel not found");
+                return;
+            }
+
+            object misValue = System.Reflection.Missing.Value;
+            var xlWorkBook = xlApp.Workbooks.Add(misValue);
+
+            var xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            //____________________________________________________________________________________________________ОТРИСОВКА ГРАНИЦ В ЯЧЕЙКАХ_______________________
+            int LeftKray = 5;
+            int RightKray = 5;
+            for (int i = 0; i <= _saleDocRecs.Count; i++)
+            {
+
+                var cells = xlWorkSheet.get_Range("A" + LeftKray, "F" + RightKray);
+
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideVertical].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // внутренние вертикальные
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlInsideHorizontal].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // внутренние горизонтальные            
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeTop].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // верхняя внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeRight].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // правая внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeLeft].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous; // левая внешняя
+                cells.Borders[Microsoft.Office.Interop.Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                LeftKray++;
+                RightKray++;
+            }
+            //____________________________________________________________________________________________________ОТРИСОВКА ГРАНИЦ В ЯЧЕЙКАХ_______________________
+
+
+
+            xlWorkSheet.Range[xlWorkSheet.Cells[3, 2], xlWorkSheet.Cells[3, 4]].Merge();///объединение ячеек
+
+            xlWorkSheet.Cells[1, 1] = "Клиент";
+            xlWorkSheet.Cells[1, 2] = _c.CustumerTitle;
+            xlWorkSheet.Cells[2, 1] = "Дата: ";
+            xlWorkSheet.Cells[2, 2] = _sd.DateCreate;
+            xlWorkSheet.Cells[3, 2] = "Расходная №" + _sd.Id;
+            int y = _saleDocRecs.Count;
+
+            int rowCount = 5;
+
+
+
+            //  Y  X
+            xlWorkSheet.Cells[5, 1] = "№";
+            xlWorkSheet.Cells[5, 2] = "Наименование";
+            xlWorkSheet.Cells[5, 3] = "кол-во";
+            xlWorkSheet.Cells[5, 4] = "Цена";
+            xlWorkSheet.Cells[5, 5] = "Сумма";
+            xlWorkSheet.Cells[5, 6] = "ID";
+
+            xlWorkSheet.Cells[LeftKray, 2] = "Общее Кол-во: ";
+            xlWorkSheet.Cells[LeftKray, 3] = _CountSum;
+            xlWorkSheet.Cells[LeftKray, 5] = "Сумма: ";
+            xlWorkSheet.Cells[LeftKray, 6] = _sum;
+
+
+            string fileName = "";
+
+            foreach (DataRow item in dt.Rows)
+            {
+                rowCount += 1;
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    xlWorkSheet.Cells[rowCount, i + 1] = item[i];
+                }
+
+            }
+
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel(*.xls)|*.xls|All files(*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == false)
+                {
+                    return;
+                }
+                fileName = saveFileDialog.FileName;
+
+                xlWorkBook.SaveAs(fileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
+
+                Marshal.ReleaseComObject(xlWorkSheet);
+                Marshal.ReleaseComObject(xlWorkBook);
+                Marshal.ReleaseComObject(xlApp);
+                try
+                {
+                    foreach (Process proc in Process.GetProcessesByName("EXCEL.EXE"))
+                    {
+                        proc.Kill();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                MessageBox.Show("Excel done");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error on saving: " + ex);
+            }
+
+           
+
+
+            Process.Start(fileName);
+
+            // FileStream fs = File.Open(fileName, FileMode.Open, FileAccess.Read);
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            //if (openFileDialog.ShowDialog() == false)
+            //{
+            //    return;
+            //}
+
+        }
     }
 }

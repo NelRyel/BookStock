@@ -1,4 +1,5 @@
-﻿using StockEntModelLibrary;
+﻿using ManagerLibrary.UnitedModels;
+using StockEntModelLibrary;
 using StockEntModelLibrary.CustumerEnt;
 using System;
 using System.Collections.Generic;
@@ -171,21 +172,24 @@ namespace ManagerLibrary
 
         //}
 
-        public void ChangeIsDelete(int id, bool IsDelete)
+        public ErrorsMessage ChangeIsDelete(int id)
         {
             Custumer custumer = stockDBcontext.Custumers.Find(id);
-                custumer.IsDelete = (IsDelete == true) ? custumer.IsDelete = false : custumer.IsDelete = true;
-                //switch(IsDelete)
-                // {
-                //     case true:
-                //         custumer.IsDelete = false;
-                //         break;
-                //     case false:
-                //         custumer.IsDelete = true;
-                //         break;
-                // }
+            ErrorsMessage message = new ErrorsMessage();
+            try
+            {
+                custumer.IsDelete = (custumer.IsDelete == true) ? custumer.IsDelete = false : custumer.IsDelete = true;
                 stockDBcontext.SaveChanges();
-           
+                message.boolen = 1;
+                message.message = "OK";
+            }
+            catch(Exception ex)
+            {
+                message.boolen = 0;
+                message.message = "False on delete Customer: " + ex;
+                return message;
+            }
+            return message;
         }
 
     }

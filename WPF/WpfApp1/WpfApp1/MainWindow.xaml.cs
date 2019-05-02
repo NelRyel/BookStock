@@ -50,6 +50,7 @@ namespace WpfApp1
         BookManager BookManager = new BookManager();
         int selectedColumn;
         int selectedId;
+        int selectedIdJournal;
         string rbChose=""; //нужен для проверки какой РадиоБаттон выбран 
 
         public enum API_CON_TYPE //выбор АпиКонтроллера
@@ -67,7 +68,11 @@ namespace WpfApp1
             UnitedPurchaseDoc,
             PurchaseDocChange,
             UnitedSaleDoc,
-            SaleDocChange
+            SaleDocChange,
+            PurchaseDocDel,
+            SaleDocDel,
+            BookDel,
+            CustumerDel
 
 
         }
@@ -88,8 +93,10 @@ namespace WpfApp1
             //string API_CUSTUMER = "Custumer";
             CustPanel_ShowTrue_HideFalse(false);
             PricePanel_ShowTrue_HideFalse(false);
-
-
+            stackPanelFilters.Visibility = Visibility.Hidden;
+            labelsStackPanelFilters.Visibility = Visibility.Hidden;
+            wrapPanelClientFilter.Visibility = Visibility.Hidden;
+            Title = "Mega Great";
             //ТЕСТЫ ТЕСТЫ
             #region
             //StockDBcontext ctx = new StockDBcontext();
@@ -306,10 +313,14 @@ namespace WpfApp1
                 case "Номенклатура":
                     LoadBooks();
                     rbChose = check;
-                    wrapPanelDocBtns.Visibility = Visibility.Hidden;
+                    stacDocBtns.Visibility = Visibility.Hidden;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
+                    stackPanelFilters.Visibility = Visibility.Visible;
+                    labelsStackPanelFilters.Visibility = Visibility.Visible;
+                    wrapPanelClientFilter.Visibility = Visibility.Hidden;
+
                     //spBook.Visibility = Visibility.Visible;
                     //descStackPanel.Visibility = Visibility.Visible;
                     //tbDescription.Visibility = Visibility.Visible;
@@ -325,10 +336,14 @@ namespace WpfApp1
                 case "Контрагенты":
                     LoadCustumers();
                     rbChose = check;
-                    wrapPanelDocBtns.Visibility = Visibility.Hidden;
+                    stacDocBtns.Visibility = Visibility.Hidden;
                     dataGrid1.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
+                    stackPanelFilters.Visibility = Visibility.Hidden;
+                    labelsStackPanelFilters.Visibility = Visibility.Hidden;
+                    wrapPanelClientFilter.Visibility = Visibility.Visible;
+
                     //spBook.Visibility = Visibility.Hidden;
                     //descStackPanel.Visibility = Visibility.Hidden;
                     //tbDescription.Visibility = Visibility.Hidden;
@@ -344,9 +359,13 @@ namespace WpfApp1
                     LoadPurchaseDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
-                    wrapPanelDocBtns.Visibility = Visibility.Visible;
+                    stacDocBtns.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Visible;
                     dataGridSellJournal.Visibility = Visibility.Hidden;
+                    stackPanelFilters.Visibility = Visibility.Hidden;
+                    labelsStackPanelFilters.Visibility = Visibility.Hidden;
+                    wrapPanelClientFilter.Visibility = Visibility.Hidden;
+
                     rbChose = check;
                     dt = PurchaseDocsManager.LoadPurchaseDocsDataTable(purchaseDocs,custumers);
                     dataGridJournal.ItemsSource = dt.DefaultView;
@@ -355,9 +374,12 @@ namespace WpfApp1
                     LoadSaleDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
-                    wrapPanelDocBtns.Visibility = Visibility.Visible;
+                    stacDocBtns.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Visible;
+                    stackPanelFilters.Visibility = Visibility.Hidden;
+                    wrapPanelClientFilter.Visibility = Visibility.Hidden;
+
                     rbChose = check;
                     dt = SaleDocManager.LoadPurchaseDocsDataTable(saleDocs, custumers);
                     dataGridSellJournal.ItemsSource = dt.DefaultView;
@@ -508,6 +530,57 @@ namespace WpfApp1
             }
         }
 
+        public void DataGridJpurnal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string StringBookId = "";
+            try
+            {
+
+
+                selectedColumn = dataGridJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                    StringBookId = (cellContent as TextBlock).Text;
+                }
+                selectedIdJournal = Convert.ToInt32(StringBookId);
+                //---------------------------------------------------------------------------------------------------------------------------------------
+               
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void DataGridSellJpurnal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string StringBookId = "";
+            selectedIdJournal = 0;
+            try
+            {
+
+
+                selectedColumn = dataGridSellJournal.CurrentCell.Column.DisplayIndex;
+                var selectedCell = dataGridSellJournal.SelectedCells[0];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);    //эта вся махинация, чтобы получить ИД выбранной книги 
+                if (cellContent is TextBlock)
+                {
+                   
+                       StringBookId = (cellContent as TextBlock).Text;
+                }
+                selectedIdJournal = Convert.ToInt32(StringBookId);
+                //---------------------------------------------------------------------------------------------------------------------------------------
+
+            }
+            catch
+            {
+
+            }
+        }
+
+
         private void AddCustBtn_Click(object sender, RoutedEventArgs e) //создание нового Клиента, по факту, переводит в диалогове окно для создания, там уже вся логика
         {
             tbCustTitle.Text = "";
@@ -626,18 +699,88 @@ namespace WpfApp1
                 MessageBox.Show("Error in edit book: " + ex);
             }
         }
+        private void DelBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable dt = new DataTable();
+            switch (rbChose)
+            {
+                case "Номенклатура":
+                    Book b = books.Find(i => i.Id == selectedId);
+                    var json = JsonConvert.SerializeObject(b.Id);
+                    var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.BookDel.ToString() + "/" + b.Id).Result;
+                    var jsonResp = responce.Content.ReadAsStringAsync().Result;
+                    ErrorsMessage t = JsonConvert.DeserializeObject<ErrorsMessage>(jsonResp);
+                    if (t.boolen == 0)
+                    {
+                        MessageBox.Show(t.message);
+                    }
+                    LoadDatas();
+                    dt = BookManager.LoadBook(books, bookFullDescriptions);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    break;
+                case "Контрагенты":
+                    Custumer c = custumers.Find(i => i.Id == selectedId);
+                    var jsonC = JsonConvert.SerializeObject(c.Id);
+                    var responceC = client.GetAsync(APP_CONNECT + API_CON_TYPE.CustumerDel.ToString() + "/" + c.Id).Result;
+                    var jsonRespC = responceC.Content.ReadAsStringAsync().Result;
+                    ErrorsMessage tc = JsonConvert.DeserializeObject<ErrorsMessage>(jsonRespC);
+                    if (tc.boolen == 0)
+                    {
+                        MessageBox.Show(tc.message);
+                    }
+                    LoadDatas();
+                    dt = CustManager.LoadCustemer(custumers);
+                    dataGrid1.ItemsSource = dt.DefaultView;
+                    
+                    break;
+                default:
+                    MessageBox.Show("wrong");
+                    break;
+            }
+
+
+        }
+
 
         private void DelDocBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            
+            DataTable dt = new DataTable();
             switch (rbChose)
             {
                 case "Журнал Приходных":
-                    PurchaseDoc purchaseDoc = purchaseDocs.Find(i => i.Id == selectedId);
-
+                   
+                    PurchaseDoc purchaseDoc = purchaseDocs.Find(i => i.Id == selectedIdJournal);
+                    var json = JsonConvert.SerializeObject(purchaseDoc.Id);
+                    var responce = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocDel.ToString() + "/" + purchaseDoc.Id).Result;
+                    var jsonResp = responce.Content.ReadAsStringAsync().Result;
+                    ErrorsMessage t = JsonConvert.DeserializeObject<ErrorsMessage>(jsonResp);
+                    if (t.boolen == 0)
+                    {
+                        MessageBox.Show(t.message);
+                    }
+                    LoadDatas();
+                    dt = PurchaseDocsManager.LoadPurchaseDocsDataTable(purchaseDocs, custumers);
+                    dataGridJournal.ItemsSource = dt.DefaultView;
+                    //MessageBox.Show(purchaseDoc.Id.ToString());
 
                     break;
                 case "Журнал Расходных":
+                    SaleDoc saleDoc = saleDocs.Find(i => i.Id == selectedIdJournal);
+                    var jsonS = JsonConvert.SerializeObject(saleDoc.Id);
+                    var responceS = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocDel.ToString() + "/" + saleDoc.Id).Result;
+                    var jsonRespS = responceS.Content.ReadAsStringAsync().Result;
+                    ErrorsMessage ts = JsonConvert.DeserializeObject<ErrorsMessage>(jsonRespS);
+                    if (ts.boolen == 0)
+                    {
+                        MessageBox.Show(ts.message);
+                    }
+                    LoadDatas();
+                    dt = SaleDocManager.LoadPurchaseDocsDataTable(saleDocs, custumers);
+                    dataGridSellJournal.ItemsSource = dt.DefaultView;
+
+                    // MessageBox.Show(saleDoc.Id.ToString());
+
                     break;
                 default:
                     MessageBox.Show("wrong chose in DelDocBtn_Click");
@@ -652,6 +795,7 @@ namespace WpfApp1
         private void DataGridJournal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int sId=0;
+            DialogPurchaseDoc dialogPurchase;
             try
             {
                 string StringBookId = "";
@@ -669,13 +813,20 @@ namespace WpfApp1
                 MessageBox.Show("Error select ID" + ex);
             }
             PurchaseDoc purchaseDoc = purchaseDocs.Find(i => i.Id == sId);
-            Custumer custumer = custumers.Find(i => i.Id == purchaseDoc.CustumerId);
+            try
+            {
+                Custumer custumer = custumers.Find(i => i.Id == purchaseDoc.CustumerId);
 
-            var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocRec.ToString()+"/"+purchaseDoc.Id).Result;
-            var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
-            var purchaseRecs = JsonConvert.DeserializeObject<List<PurchaseDocRec>>(jsonRespDocRecsk);
-            
-            DialogPurchaseDoc dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions, false);
+                var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.PurchaseDocRec.ToString() + "/" + purchaseDoc.Id).Result;
+                var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
+                var purchaseRecs = JsonConvert.DeserializeObject<List<PurchaseDocRec>>(jsonRespDocRecsk);
+
+                dialogPurchase = new DialogPurchaseDoc(custumer, purchaseDoc, books, purchaseRecs, bookFullDescriptions, false);
+            }
+            catch
+            {
+                return;
+            }
             dialogPurchase.Show();
 
         }
@@ -795,6 +946,7 @@ namespace WpfApp1
         private void DataGridSellJournal_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int sId = 0;
+            DialogSellDoc dialogSell;
             try
             {
                 string StringBookId = "";
@@ -811,16 +963,97 @@ namespace WpfApp1
             {
                 MessageBox.Show("Error select ID" + ex);
             }
-            SaleDoc saleDoc = saleDocs.Find(i => i.Id == sId);
-            Custumer custumer = custumers.Find(i => i.Id == saleDoc.CustumerId);
+            try
+            {
+                SaleDoc saleDoc = saleDocs.Find(i => i.Id == sId);
+                Custumer custumer = custumers.Find(i => i.Id == saleDoc.CustumerId);
 
-            var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocRec.ToString() + "/" + saleDoc.Id).Result;
-            var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
-            var saleRecs = JsonConvert.DeserializeObject<List<SaleDocRec>>(jsonRespDocRecsk);
+                var respDocRecs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDocRec.ToString() + "/" + saleDoc.Id).Result;
+                var jsonRespDocRecsk = respDocRecs.Content.ReadAsStringAsync().Result;
+                var saleRecs = JsonConvert.DeserializeObject<List<SaleDocRec>>(jsonRespDocRecsk);
 
-            DialogSellDoc dialogSell = new DialogSellDoc(custumer, saleDoc, saleRecs, books, bookFullDescriptions, false);
+                dialogSell = new DialogSellDoc(custumer, saleDoc, saleRecs, books, bookFullDescriptions, false);
+            }
+            catch
+            {
+                return;
+            }
             dialogSell.Show();
             
+        }
+
+        private void TbBarcode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string barcode = tbBarcodeFilter.Text;
+            string title = tbTitleFilter.Text;
+            string author = tbAuthorFilter.Text;
+            string serie = tbSerieFilter.Text;
+            string section = tbSectionFilter.Text;
+            List<BookAndDesc> bookAndDescs = new List<BookAndDesc>();
+            foreach (var item in books)
+            {
+                var bnd = new BookAndDesc();
+                bnd.book = item;
+                foreach (var item1 in bookFullDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        bnd.bookFullDescription = item1;
+                    }
+                }
+                bookAndDescs.Add(bnd);
+            }
+
+           // var dt = new DataTable();
+
+            var dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("Штрихкод");
+            dt.Columns.Add("Наименование");
+            dt.Columns.Add("Цена");
+            dt.Columns.Add("Автор");
+            dt.Columns.Add("Серия");
+            dt.Columns.Add("Секция");
+            dt.Columns.Add("кол-во");
+
+            var bd = bookAndDescs.Where(i => i.book.BarcodeISBN.Contains(barcode)).Where(q => q.book.BookTitle.ToLower().Contains(title.ToLower())).Where(w => w.bookFullDescription.Author.ToLower().Contains(author.ToLower())).Where(t => t.bookFullDescription.Serie.ToLower().Contains(serie.ToLower())).Where(r => r.bookFullDescription.Section.ToLower().Contains(section.ToLower()));
+
+            foreach (var item in bd)
+            {
+                dt.Rows.Add(item.book.Id, item.book.BarcodeISBN, item.book.BookTitle, item.book.RetailPrice, item.bookFullDescription.Author, item.bookFullDescription.Serie, item.bookFullDescription.Section, item.book.Count);
+            }
+            dataGrid1.ItemsSource = dt.DefaultView;
+        }
+
+        private void tbCustTitleFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string title = tbCustTitleFilter.Text;
+            List<custAndDesc> custAndDescs = new List<custAndDesc>();
+            foreach (var item in custumers)
+            {
+                var cnd = new custAndDesc();
+                cnd.custumer = item;
+                foreach (var item1 in custumerDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        cnd.custumerDescription = item1;
+                    }
+                }
+                custAndDescs.Add(cnd);
+            }
+
+            var dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("Имя Клиента");
+
+            var cd = custAndDescs.Where(i => i.custumer.CustumerTitle.ToLower().Contains(title.ToLower()));
+
+            foreach (var item in cd)
+            {
+                dt.Rows.Add(item.custumer.Id, item.custumer.CustumerTitle);
+            }
+            dataGrid1.ItemsSource = dt.DefaultView;
         }
 
        

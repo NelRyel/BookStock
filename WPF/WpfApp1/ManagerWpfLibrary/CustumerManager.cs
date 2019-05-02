@@ -15,7 +15,7 @@ namespace ManagerWpfLibrary
         {
             var dt = new DataTable();
             dt.Columns.Add("ID");
-            dt.Columns.Add("Custumer Title");
+            dt.Columns.Add("Имя Клиента");
           
             foreach (var item in custumers)
             {

@@ -15,13 +15,13 @@ namespace ManagerWpfLibrary
             
             var dt = new DataTable();
             dt.Columns.Add("ID");
-            dt.Columns.Add("Barcode");
-            dt.Columns.Add("BookTitle");
-            dt.Columns.Add("Retail Price");
-            dt.Columns.Add("auth");
-            dt.Columns.Add("serie");
-            dt.Columns.Add("Section");
-            dt.Columns.Add("count");
+            dt.Columns.Add("Штрихкод");
+            dt.Columns.Add("Наименование");
+            dt.Columns.Add("Отпускная цена");
+            dt.Columns.Add("Автор");
+            dt.Columns.Add("Серия");
+            dt.Columns.Add("Секция");
+            dt.Columns.Add("количество на остатке");
             string auth=null;
             string section = null;
             string serie = null;
@@ -40,6 +40,30 @@ namespace ManagerWpfLibrary
             }
             return dt;
         }
+
+        public DataTable FilteredBook(List<BookAndDesc> bookAndDescs) 
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("Штрихкод");
+            dt.Columns.Add("Наименование");
+            dt.Columns.Add("Отпускная цена");
+            dt.Columns.Add("Автор");
+            dt.Columns.Add("Серия");
+            dt.Columns.Add("Секция");
+            dt.Columns.Add("количество на остатке");
+            string auth = null;
+            string section = null;
+            string serie = null;
+
+
+
+
+
+            return dt;
+
+        }
+
 
     }
 }

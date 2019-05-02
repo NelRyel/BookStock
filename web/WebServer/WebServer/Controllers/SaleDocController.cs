@@ -83,8 +83,6 @@ namespace WebServer.Controllers
     }
 
     public class SaleDocChangeController : ApiController
-
-
     {
         SaleManager manager = new SaleManager();
 
@@ -95,6 +93,17 @@ namespace WebServer.Controllers
             return msg;
         }
 
+    }
+
+    public class SaleDocDelController : ApiController
+    {
+        SaleManager manager = new SaleManager();
+        [HttpGet]
+        public ErrorsMessage DelSaleDoc(int id)
+        {
+            ErrorsMessage msg = manager.ChangeIsDelete(id);
+            return msg;
+        }
     }
 
 }

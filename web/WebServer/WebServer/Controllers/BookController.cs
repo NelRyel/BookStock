@@ -47,14 +47,26 @@ namespace WebServer.Controllers
             manager.EditBook(id, bookAndDesc);
         }
 
-        [HttpDelete]
-        public void DeleteBook(int id)
-        {
-            Book book = manager.GetBookById(id);
-            manager.ChangeIsDelete(id, book.IsDelete);
-        }
+        //[HttpDelete]
+        //public void DeleteBook(int id)
+        //{
+        //    Book book = manager.GetBookById(id);
+        //    manager.ChangeIsDelete(id, book.IsDelete);
+        //}
 
     }
+
+    public class BookDelController : ApiController
+    {
+        BookManager manager = new BookManager();
+        [HttpGet]
+        public ErrorsMessage DelBook(int id)
+        {
+            ErrorsMessage msg = manager.ChangeIsDelete(id);
+            return msg;
+        }
+    }
+
 
     public class BookDescriptionController: ApiController
     {
