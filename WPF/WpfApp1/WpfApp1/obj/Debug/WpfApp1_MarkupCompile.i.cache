@@ -16,5 +16,5 @@ E:\BookStock\WPF\WpfApp1\WpfApp1\App.xaml
 231079942938
 dialogs\DialCreateBook.xaml;dialogs\DialogAddBookToDoc.xaml;dialogs\DialogChangeCustomer.xaml;dialogs\DialogCreateCustomer.xaml;dialogs\DialogEditBook.xaml;dialogs\DialogEditCust.xaml;dialogs\DialogPurchaseDoc.xaml;dialogs\DialogSellDoc.xaml;MainWindow.xaml;
 
-True
+False
 

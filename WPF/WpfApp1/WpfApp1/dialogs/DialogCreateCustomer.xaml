@@ -8,19 +8,19 @@
         Title="DialogCreateCustomer" Height="500" Width="300">
     <Grid>
         <StackPanel x:Name="CustDescStackPanel" Visibility="Visible" Margin="5">
-            <Label Margin="5">Customer Title</Label>
+            <Label Margin="5">Наименование клиента</Label>
             <TextBox x:Name="tbCustTitle" Margin="5"></TextBox>
-            <Label Margin="5">Full name</Label>
+            <Label Margin="5">Полное имя</Label>
             <TextBox x:Name="tbCustFullName" Margin="5"></TextBox>
-            <Label Margin="5">Addres</Label>
+            <Label Margin="5">Адрес</Label>
             <TextBox x:Name="tbCustAddress" Margin="5"></TextBox>
-            <Label Margin="5">Phone</Label>
+            <Label Margin="5">Телефон</Label>
             <TextBox x:Name="tbCustPhone" Margin="5"></TextBox>
             <Label Margin="5">Email</Label>
             <TextBox x:Name="tbCustEmail" Margin="5"></TextBox>
             <Label x:Name="labelCustType" Content="type: " Margin="5"></Label>
-            <RadioButton x:Name="rbBuyer" GroupName="rbBuyerSuplier" Margin="5" IsChecked="True" >Buyer</RadioButton>
-            <RadioButton x:Name="rbSup" GroupName="rbBuyerSuplier" Margin="5">Suplier</RadioButton>
+            <RadioButton x:Name="rbBuyer" GroupName="rbBuyerSuplier" Margin="5" IsChecked="True" >Покупатель</RadioButton>
+            <RadioButton x:Name="rbSup" GroupName="rbBuyerSuplier" Margin="5">Поставщик</RadioButton>
             <Button x:Name="btnAddCust" BorderThickness="2" Margin="5" Click="BtnAddCust_Click">Добавить</Button>
         </StackPanel>
 

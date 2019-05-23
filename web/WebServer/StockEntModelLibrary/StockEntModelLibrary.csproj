@@ -67,29 +67,13 @@
     <Compile Include="BookEnt\BookFullDescription.cs" />
     <Compile Include="BookEnt\BookGenre.cs" />
     <Compile Include="DefaultInit.cs" />
-    <Compile Include="Migrations\201903171720425_InitialCreate.cs" />
-    <Compile Include="Migrations\201903171720425_InitialCreate.Designer.cs">
-      <DependentUpon>201903171720425_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201905201849151_unique.cs" />
+    <Compile Include="Migrations\201905201849151_unique.Designer.cs">
+      <DependentUpon>201905201849151_unique.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903171726572_mudakl11.cs" />
-    <Compile Include="Migrations\201903171726572_mudakl11.Designer.cs">
-      <DependentUpon>201903171726572_mudakl11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903171729070_neMudak.cs" />
-    <Compile Include="Migrations\201903171729070_neMudak.Designer.cs">
-      <DependentUpon>201903171729070_neMudak.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903211605499_changeDocs.cs" />
-    <Compile Include="Migrations\201903211605499_changeDocs.Designer.cs">
-      <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903241408269_fullID.cs" />
-    <Compile Include="Migrations\201903241408269_fullID.Designer.cs">
-      <DependentUpon>201903241408269_fullID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903241420154_fullID1.cs" />
-    <Compile Include="Migrations\201903241420154_fullID1.Designer.cs">
-      <DependentUpon>201903241420154_fullID1.cs</DependentUpon>
+    <Compile Include="Migrations\201905201901091_fckit.cs" />
+    <Compile Include="Migrations\201905201901091_fckit.Designer.cs">
+      <DependentUpon>201905201901091_fckit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StaticDatas.cs" />
@@ -130,23 +114,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903171720425_InitialCreate.resx">
-      <DependentUpon>201903171720425_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905201849151_unique.resx">
+      <DependentUpon>201905201849151_unique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903171726572_mudakl11.resx">
-      <DependentUpon>201903171726572_mudakl11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903171729070_neMudak.resx">
-      <DependentUpon>201903171729070_neMudak.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903211605499_changeDocs.resx">
-      <DependentUpon>201903211605499_changeDocs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903241408269_fullID.resx">
-      <DependentUpon>201903241408269_fullID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903241420154_fullID1.resx">
-      <DependentUpon>201903241420154_fullID1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905201901091_fckit.resx">
+      <DependentUpon>201905201901091_fckit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

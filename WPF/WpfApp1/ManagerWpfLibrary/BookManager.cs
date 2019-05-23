@@ -40,30 +40,5 @@ namespace ManagerWpfLibrary
             }
             return dt;
         }
-
-        public DataTable FilteredBook(List<BookAndDesc> bookAndDescs) 
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID");
-            dt.Columns.Add("Штрихкод");
-            dt.Columns.Add("Наименование");
-            dt.Columns.Add("Отпускная цена");
-            dt.Columns.Add("Автор");
-            dt.Columns.Add("Серия");
-            dt.Columns.Add("Секция");
-            dt.Columns.Add("количество на остатке");
-            string auth = null;
-            string section = null;
-            string serie = null;
-
-
-
-
-
-            return dt;
-
-        }
-
-
     }
 }

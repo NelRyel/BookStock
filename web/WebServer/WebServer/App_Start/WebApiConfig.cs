@@ -25,16 +25,6 @@ namespace WebServer
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            //config.Routes.MapHttpRoute(
-            //    "API Route 1",
-            //    "api/{controller}/{action}"
-            //    );
-
-            //config.Routes.MapHttpRoute(
-            //    "API Route 2",
-            //    "api/{action}",
-            //    new {controller = "Custumer" }
-            //    );
         }
     }
 }

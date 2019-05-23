@@ -13,12 +13,13 @@ namespace StockEntModelLibrary.CustumerEnt
         [Key]
         [ForeignKey("Custumer")]
         public int Id { get; set; }
-        
-        public Custumer Custumer { get; set; }
+       
         public string FullName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+
+        public Custumer Custumer { get; set; }
 
     }
 }

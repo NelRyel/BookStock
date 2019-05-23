@@ -29,6 +29,7 @@ namespace WpfApp1
         public DialogEditCust(int id)
         {
             InitializeComponent();
+            Title = "Редактирование клиента";
             try
             {
                 var responceById = client.GetAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Custumer.ToString() + "/" + id).Result;//конектимся и получаем по ид кастомера

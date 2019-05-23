@@ -10,7 +10,6 @@ namespace StockEntModelLibrary.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "StockEntModelLibrary.StockDBcontext";
         }
 
         protected override void Seed(StockEntModelLibrary.StockDBcontext context)

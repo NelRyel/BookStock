@@ -141,6 +141,8 @@ namespace ManagerLibrary
 
                 }
             }
+
+
             else if (saleDoc.Status == StaticDatas.DocStatuses.Проведен.ToString())
             {
                 IEnumerable<SaleDocRec> saleDocRecs = stockDBcontext.SaleDocRecs.Where(i => i.SaleDocId == saleDoc.Id).ToList();
@@ -170,6 +172,9 @@ namespace ManagerLibrary
                 }
 
             }
+
+
+
             else
             {
                 msg.boolen = 0;

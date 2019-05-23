@@ -35,7 +35,7 @@ namespace StockEntModelLibrary
             //string status = ds.ToString();
 
             //return status;
-            return "shit";
+            return "wrong";
 
         }
 

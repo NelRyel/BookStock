@@ -52,7 +52,8 @@ namespace WpfApp1
         int selectedId;
         int selectedIdJournal;
         string rbChose=""; //нужен для проверки какой РадиоБаттон выбран 
-
+        List<BookAndDesc> bookAndDescs = new List<BookAndDesc>();
+        List<custAndDesc> custAndDescs = new List<custAndDesc>();
         public enum API_CON_TYPE //выбор АпиКонтроллера
         {
             Custumer,
@@ -96,7 +97,7 @@ namespace WpfApp1
             stackPanelFilters.Visibility = Visibility.Hidden;
             labelsStackPanelFilters.Visibility = Visibility.Hidden;
             wrapPanelClientFilter.Visibility = Visibility.Hidden;
-            Title = "Mega Great";
+            Title = "Book Storage";
             //ТЕСТЫ ТЕСТЫ
             #region
             //StockDBcontext ctx = new StockDBcontext();
@@ -163,6 +164,22 @@ namespace WpfApp1
             {
 
             }
+            custAndDescs.Clear();
+            foreach (var item in custumers)
+            {
+                var cnd = new custAndDesc();
+                cnd.custumer = item;
+                foreach (var item1 in custumerDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        cnd.custumerDescription = item1;
+                    }
+                }
+                custAndDescs.Add(cnd);
+            }
+
+
         }
         public void LoadPurchaseDocs()
         {
@@ -177,19 +194,24 @@ namespace WpfApp1
                 MessageBox.Show("Error load Purchase Docs: " + ex);
             }
         }
+
+
+
         public void LoadSaleDocs()
         {
             try
             {
-                var respPurchaseDocs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDoc.ToString()).Result;
-                var jsonRespPDocs = respPurchaseDocs.Content.ReadAsStringAsync().Result;
-                saleDocs = JsonConvert.DeserializeObject<List<SaleDoc>>(jsonRespPDocs);
+                var respSaleDocs = client.GetAsync(APP_CONNECT + API_CON_TYPE.SaleDoc.ToString()).Result;
+                var jsonRespSDocs = respSaleDocs.Content.ReadAsStringAsync().Result;
+                saleDocs = JsonConvert.DeserializeObject<List<SaleDoc>>(jsonRespSDocs);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error load Purchase Docs: " + ex);
+                MessageBox.Show("Error load sale Docs: " + ex);
             }
         }
+
+
         public void LoadBooks()
         {
             try
@@ -213,8 +235,26 @@ namespace WpfApp1
             {
                 MessageBox.Show("Error load Book desc: " + ex);
             }
+            bookAndDescs.Clear();
+            foreach (var item in books)
+            {
+                var bnd = new BookAndDesc();
+                bnd.book = item;
+                foreach (var item1 in bookFullDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        bnd.bookFullDescription = item1;
+                    }
+                }
+                bookAndDescs.Add(bnd);
+            }
+
         }
         // для обновления отдельных данных
+
+
+
 
 
 
@@ -283,7 +323,37 @@ namespace WpfApp1
             {
 
             }
-           
+            bookAndDescs.Clear();
+            foreach (var item in books)
+            {
+                var bnd = new BookAndDesc();
+                bnd.book = item;
+                foreach (var item1 in bookFullDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        bnd.bookFullDescription = item1;
+                    }
+                }
+                bookAndDescs.Add(bnd);
+            }
+            custAndDescs.Clear();
+            foreach (var item in custumers)
+            {
+                var cnd = new custAndDesc();
+                cnd.custumer = item;
+                foreach (var item1 in custumerDescriptions)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        cnd.custumerDescription = item1;
+                    }
+                }
+                custAndDescs.Add(cnd);
+            }
+
+
+
         }
 
 
@@ -365,7 +435,8 @@ namespace WpfApp1
                     stackPanelFilters.Visibility = Visibility.Hidden;
                     labelsStackPanelFilters.Visibility = Visibility.Hidden;
                     wrapPanelClientFilter.Visibility = Visibility.Hidden;
-
+                    AddPurDocBtn.Visibility = Visibility.Visible;
+                    AddSelDocBtn.Visibility = Visibility.Hidden;
                     rbChose = check;
                     dt = PurchaseDocsManager.LoadPurchaseDocsDataTable(purchaseDocs,custumers);
                     dataGridJournal.ItemsSource = dt.DefaultView;
@@ -374,14 +445,16 @@ namespace WpfApp1
                     LoadSaleDocs();
                     PricePanel_ShowTrue_HideFalse(false);
                     CustPanel_ShowTrue_HideFalse(false);
+                    AddSelDocBtn.Visibility = Visibility.Visible;
+                    AddPurDocBtn.Visibility = Visibility.Hidden;
                     stacDocBtns.Visibility = Visibility.Visible;
                     dataGridJournal.Visibility = Visibility.Hidden;
                     dataGridSellJournal.Visibility = Visibility.Visible;
                     stackPanelFilters.Visibility = Visibility.Hidden;
                     wrapPanelClientFilter.Visibility = Visibility.Hidden;
-
+                    labelsStackPanelFilters.Visibility = Visibility.Hidden;
                     rbChose = check;
-                    dt = SaleDocManager.LoadPurchaseDocsDataTable(saleDocs, custumers);
+                    dt = SaleDocManager.LoadSaleDocsDataTable(saleDocs, custumers);
                     dataGridSellJournal.ItemsSource = dt.DefaultView;
                     break;
                 default: MessageBox.Show("wrong select");
@@ -400,7 +473,6 @@ namespace WpfApp1
         public void DGLoadBookDesc(List<Book> books, List<BookFullDescription> bookFullDescriptions, int BookId)
         {
             descStackPanel.Visibility = Visibility.Visible;
-
             tbBookTitle.Text = "";
             tbBarcode.Text = "";
             tbFirstYear.Text = "";
@@ -420,11 +492,7 @@ namespace WpfApp1
                 foreach (var item in books)
                 {
                     if (item.Id == BookId)
-                    {
-                        book = item;
-
-
-                    }
+                    { book = item; }
                 }
                 foreach (var item in bookFullDescriptions)
                 {
@@ -442,18 +510,24 @@ namespace WpfApp1
                 tbPurchasePrice.Text = book.PurchasePrice.ToString();
                 tbRetailPrice.Text = book.RetailPrice.ToString();
                 tbDescription.Text = bookFull.Description;
-
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(bookFull.ImageUrl, UriKind.RelativeOrAbsolute));
                 imgDesc.Background = ib;
-
             }
             catch (Exception e)
             {
                 MessageBox.Show("LoadBookDesc Error: " + e.ToString());
             }
-        }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
+        }
         
+        
+        
+        
+        
+        
+        //это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
+        
+
         public void DGLoadCustDesc(List<Custumer> custumers, List<CustumerDescription> custumerDescriptions, int CustId)
         {
             tbCustTitle.Text = "";
@@ -489,9 +563,10 @@ namespace WpfApp1
             {
                 MessageBox.Show("DGLoadCustDesc Error: " + e.ToString());
             }
-
-
-        }//это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
+        }
+        
+        
+        //это штука загружает Полное Описание в выделенные секции. Вызывается из ивента на DataGrid по клику на поле
 
         public void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)//этот весь метод для того, что загрузить в область Полного Описания книги(или клиента)
         {
@@ -592,22 +667,15 @@ namespace WpfApp1
             labelCustType.Content = "";
             LoadCustumers();
             int id = custumers.Select(p => p.Id).Max();
-
-
             DialogCreateCustomer createCustomer = new DialogCreateCustomer(id);
-            
-            //createCustomer.Owner = this;
-            // createCustomer.Show();
             if (createCustomer.ShowDialog() == true)
             {
                 LoadCustumers();
                 DataTable dt;
                 dt = CustManager.LoadCustemer(custumers);
                 dataGrid1.ItemsSource = dt.DefaultView;
-                //MessageBox.Show("if ");
             }
-
-
+            
         }
 
         //public void EditCust(int idCust)
@@ -699,7 +767,7 @@ namespace WpfApp1
                 MessageBox.Show("Error in edit book: " + ex);
             }
         }
-        private void DelBookBtn_Click(object sender, RoutedEventArgs e)
+        private void DelBtn_Click(object sender, RoutedEventArgs e)
         {
             DataTable dt = new DataTable();
             switch (rbChose)
@@ -776,7 +844,7 @@ namespace WpfApp1
                         MessageBox.Show(ts.message);
                     }
                     LoadDatas();
-                    dt = SaleDocManager.LoadPurchaseDocsDataTable(saleDocs, custumers);
+                    dt = SaleDocManager.LoadSaleDocsDataTable(saleDocs, custumers);
                     dataGridSellJournal.ItemsSource = dt.DefaultView;
 
                     // MessageBox.Show(saleDoc.Id.ToString());
@@ -895,6 +963,7 @@ namespace WpfApp1
             {
                 MessageBox.Show(t.message);
             }
+            
 
 
             LoadSaleDocs();
@@ -982,29 +1051,16 @@ namespace WpfApp1
             
         }
 
+
         private void TbBarcode_TextChanged(object sender, TextChangedEventArgs e)
         {
+            dataGrid1.ItemsSource = null;
+            dataGrid1.Items.Clear();
             string barcode = tbBarcodeFilter.Text;
             string title = tbTitleFilter.Text;
             string author = tbAuthorFilter.Text;
             string serie = tbSerieFilter.Text;
             string section = tbSectionFilter.Text;
-            List<BookAndDesc> bookAndDescs = new List<BookAndDesc>();
-            foreach (var item in books)
-            {
-                var bnd = new BookAndDesc();
-                bnd.book = item;
-                foreach (var item1 in bookFullDescriptions)
-                {
-                    if (item.Id == item1.Id)
-                    {
-                        bnd.bookFullDescription = item1;
-                    }
-                }
-                bookAndDescs.Add(bnd);
-            }
-
-           // var dt = new DataTable();
 
             var dt = new DataTable();
             dt.Columns.Add("ID");
@@ -1016,39 +1072,31 @@ namespace WpfApp1
             dt.Columns.Add("Секция");
             dt.Columns.Add("кол-во");
 
-            var bd = bookAndDescs.Where(i => i.book.BarcodeISBN.Contains(barcode)).Where(q => q.book.BookTitle.ToLower().Contains(title.ToLower())).Where(w => w.bookFullDescription.Author.ToLower().Contains(author.ToLower())).Where(t => t.bookFullDescription.Serie.ToLower().Contains(serie.ToLower())).Where(r => r.bookFullDescription.Section.ToLower().Contains(section.ToLower()));
+            var bd = bookAndDescs.Where(i => i.book.BarcodeISBN.Contains(barcode)).Where(q => 
+            q.book.BookTitle.ToLower().Contains(title.ToLower())).Where(w => 
+            w.bookFullDescription.Author.ToLower().Contains(author.ToLower())).Where(t => 
+            t.bookFullDescription.Serie.ToLower().Contains(serie.ToLower())).Where(r => 
+            r.bookFullDescription.Section.ToLower().Contains(section.ToLower()));
 
             foreach (var item in bd)
             {
-                dt.Rows.Add(item.book.Id, item.book.BarcodeISBN, item.book.BookTitle, item.book.RetailPrice, item.bookFullDescription.Author, item.bookFullDescription.Serie, item.bookFullDescription.Section, item.book.Count);
+                dt.Rows.Add(item.book.Id, item.book.BarcodeISBN, item.book.BookTitle, item.book.RetailPrice, 
+                    item.bookFullDescription.Author, item.bookFullDescription.Serie, 
+                    item.bookFullDescription.Section, item.book.Count);
             }
             dataGrid1.ItemsSource = dt.DefaultView;
         }
 
+
+
+
         private void tbCustTitleFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             string title = tbCustTitleFilter.Text;
-            List<custAndDesc> custAndDescs = new List<custAndDesc>();
-            foreach (var item in custumers)
-            {
-                var cnd = new custAndDesc();
-                cnd.custumer = item;
-                foreach (var item1 in custumerDescriptions)
-                {
-                    if (item.Id == item1.Id)
-                    {
-                        cnd.custumerDescription = item1;
-                    }
-                }
-                custAndDescs.Add(cnd);
-            }
-
             var dt = new DataTable();
             dt.Columns.Add("ID");
             dt.Columns.Add("Имя Клиента");
-
             var cd = custAndDescs.Where(i => i.custumer.CustumerTitle.ToLower().Contains(title.ToLower()));
-
             foreach (var item in cd)
             {
                 dt.Rows.Add(item.custumer.Id, item.custumer.CustumerTitle);
@@ -1056,7 +1104,8 @@ namespace WpfApp1
             dataGrid1.ItemsSource = dt.DefaultView;
         }
 
-       
+
+
     }
 
 }

@@ -11,7 +11,7 @@ namespace ManagerWpfLibrary
 {
     public class SaleDocManager
     {
-        public DataTable LoadPurchaseDocsDataTable(List<SaleDoc> saleDocs, List<Custumer> custumers)
+        public DataTable LoadSaleDocsDataTable(List<SaleDoc> saleDocs, List<Custumer> custumers)
         {
             var dt = new DataTable();
             dt.Columns.Add("№");

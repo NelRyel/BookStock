@@ -30,6 +30,7 @@ namespace WpfApp1
         {
             IdFromMain = id + 1;
             InitializeComponent();
+            Title = "Добавить книгу";
         }
 
         private void TbPurchasePrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -39,6 +40,8 @@ namespace WpfApp1
             decimal RetailPrice = x * Pprice;
             tbRetailPrice.Text = RetailPrice.ToString();
         }
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -53,11 +56,6 @@ namespace WpfApp1
                 book.Count = 0;
                 book.PurchasePrice = Convert.ToDecimal( tbPurchasePrice.Text);
                 book.RetailPrice = Convert.ToDecimal( tbRetailPrice.Text);
-
-                //var jsonBook = JsonConvert.SerializeObject(book);
-                //client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString(), jsonBook);
-                //Thread.Sleep(1000);
-
                 bookFullDescription.Id = IdFromMain;
                 bookFullDescription.YearBookPublishing = tbYearFirstPubl.Text;
                 bookFullDescription.FirstYearBookPublishing = tbYearFirstPubl.Text;
@@ -67,15 +65,10 @@ namespace WpfApp1
                 bookFullDescription.Author = tbAuthor.Text;
                 bookFullDescription.Publisher = tbPublisher.Text;
                 bookFullDescription.ImageUrl = tbUrlImg.Text;
-
-                //var jsonDesc = JsonConvert.SerializeObject(bookFullDescription);
-                //client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.BookDescription.ToString(), jsonDesc);
-
                 bookAndDesc.book = book;
                 bookAndDesc.bookFullDescription = bookFullDescription;
                 var jsonBookAndDes = JsonConvert.SerializeObject(bookAndDesc);
                 client.PostAsJsonAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString(), jsonBookAndDes);
-
                 DialogResult = true;
                 Close();
             }
@@ -83,9 +76,8 @@ namespace WpfApp1
             {
                 MessageBox.Show("Error create Book: " + ex);
             }
-
-
         }
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

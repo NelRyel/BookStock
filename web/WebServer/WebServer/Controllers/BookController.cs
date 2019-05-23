@@ -30,19 +30,15 @@ namespace WebServer.Controllers
         }
 
         [HttpPost]
-        public void CreateBook([FromBody] string JsonBookSpecial)
+        public void CreateBook([FromBody] string JsonbookAndDesc)
         {
-            BookAndDesc bookAndDesc = JsonConvert.DeserializeObject<BookAndDesc>(JsonBookSpecial);
-            manager.SpecialCreateBook(bookAndDesc);
-
-            //Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
-            //manager.CreateBook(book);
+            BookAndDesc bookAndDesc = JsonConvert.DeserializeObject<BookAndDesc>(JsonbookAndDesc);
+            manager.CreateBook(bookAndDesc);
         }
 
         [HttpPut]
         public void EditBook(int id, [FromBody] string jsonBookAndDesc)//редактировать черезе Пут
         {
-            //Book book = JsonConvert.DeserializeObject<Book>(JsonBook);
             BookAndDesc bookAndDesc = JsonConvert.DeserializeObject<BookAndDesc>(jsonBookAndDesc);
             manager.EditBook(id, bookAndDesc);
         }
@@ -84,19 +80,19 @@ namespace WebServer.Controllers
             return manager.GetBookFullDescriptionById(id);
         }
 
-        [HttpPost]
-        public void CreateBookDescription([FromBody] string JsonBookDesc)
-        {
-            BookFullDescription fullDescription = JsonConvert.DeserializeObject<BookFullDescription>(JsonBookDesc);
-            manager.CreateBookDescription(fullDescription);
-        }
+        //[HttpPost]
+        //public void CreateBookDescription([FromBody] string JsonBookDesc)
+        //{
+        //    BookFullDescription fullDescription = JsonConvert.DeserializeObject<BookFullDescription>(JsonBookDesc);
+        //    manager.CreateBookDescription(fullDescription);
+        //}
 
-        [HttpPut]
-        public void EditBookFullDesc(int id, [FromBody] string JsonBookDesc)
-        {
-            BookFullDescription bfd = JsonConvert.DeserializeObject<BookFullDescription>(JsonBookDesc);
-            manager.EditBookDesc(bfd.Id, bfd.Section, bfd.YearBookPublishing, bfd.FirstYearBookPublishing, bfd.Serie, bfd.Description, bfd.Author, bfd.Publisher, bfd.ImageUrl);
-        }
+        //[HttpPut]
+        //public void EditBookFullDesc(int id, [FromBody] string JsonBookDesc)
+        //{
+        //    BookFullDescription bfd = JsonConvert.DeserializeObject<BookFullDescription>(JsonBookDesc);
+        //    manager.EditBookDesc(bfd.Id, bfd.Section, bfd.YearBookPublishing, bfd.FirstYearBookPublishing, bfd.Serie, bfd.Description, bfd.Author, bfd.Publisher, bfd.ImageUrl);
+        //}
 
     }
 }

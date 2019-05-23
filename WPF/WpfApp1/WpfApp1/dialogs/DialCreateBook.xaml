@@ -15,17 +15,17 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Label Margin="5">Book Title</Label>
+            <Label Margin="5">Наименование</Label>
             <TextBox x:Name="tbBookTitle" Margin="5"></TextBox>
-            <Label Margin="5">Barcode</Label>
+            <Label Margin="5">Штрихкод</Label>
             <TextBox x:Name="tbBarcode" Margin="5"></TextBox>
-            <Label Margin="5">Purchase Price</Label>
+            <Label Margin="5">Закупочная цена</Label>
             <TextBox x:Name="tbPurchasePrice" Margin="5" TextChanged="TbPurchasePrice_TextChanged"></TextBox>
-            <Label Margin="5">Retail Price</Label>
+            <Label Margin="5">Розничная цена</Label>
             <TextBox x:Name="tbRetailPrice" Margin="5"></TextBox>
-            <Label Margin="5">Year Firs Publishing</Label>
+            <Label Margin="5">Год первого издания</Label>
             <TextBox x:Name="tbYearFirstPubl" Margin="5"></TextBox>
-            <Label Margin="5">Year Last Publishing</Label>
+            <Label Margin="5">Год последнего издания</Label>
             <TextBox x:Name="tbYearLastPubl" Margin="5"></TextBox>
             <!--<Label Margin="5">Serie</Label>
             <TextBox x:Name="tbSerie" Margin="5"></TextBox>
@@ -38,7 +38,7 @@
             <Label Margin="5">URL to img</Label>
             <TextBox x:Name="tbUrlImg" Margin="5"></TextBox>
             <button margin="5">create</button>-->
-            <Button Margin="5 250 5 5" VerticalAlignment="Bottom" Click="Button_Click" >Save</Button>
+            <Button Margin="5 250 5 5" VerticalAlignment="Bottom" Click="Button_Click" >Сохранить</Button>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <!--<Label Margin="5">Book Title</Label>
@@ -53,24 +53,24 @@
             <TextBox x:Name="tbYearFirstPubl" Margin="5"></TextBox>
             <Label Margin="5">Year Last Publishing</Label>
             <TextBox x:Name="tbYearLastPubl" Margin="5"></TextBox>-->
-            <Label Margin="5">Serie</Label>
+            <Label Margin="5">Серия</Label>
             <TextBox x:Name="tbSerie" Margin="5"></TextBox>
-            <Label Margin="5">Section</Label>
+            <Label Margin="5">Секция</Label>
             <TextBox x:Name="tbSection" Margin="5"></TextBox>
-            <Label Margin="5">Author</Label>
+            <Label Margin="5">Автор</Label>
             <TextBox x:Name="tbAuthor" Margin="5"></TextBox>
-            <Label Margin="5">Publisher</Label>
+            <Label Margin="5">Издательство</Label>
             <TextBox x:Name="tbPublisher" Margin="5"></TextBox>
-            <Label Margin="5">URL to img</Label>
+            <Label Margin="5">Ссылка на изображение</Label>
             <TextBox x:Name="tbUrlImg" Margin="5"></TextBox>
-            <Label>Description</Label>
+            <Label>Описание</Label>
             <TextBox x:Name="tbDesc" Height="250" TextWrapping="Wrap" Margin="5 5 5 5" VerticalAlignment="Bottom"></TextBox>
             <!--<Button Margin="5">Create</Button>-->
         </StackPanel>
         <WrapPanel VerticalAlignment="Bottom" Margin="5">
             <Label Margin="5">множитель розничной цены</Label>
             <TextBox x:Name="tbSum" Margin="5" Width="30" TextAlignment="Center">2</TextBox>
-            <Button Margin="5" Click="Button_Click_1">посчитать</Button>
+            <Button Margin="5" Click="Button_Click_1">пересчитать</Button>
         </WrapPanel>
     </Grid>
 </Window>

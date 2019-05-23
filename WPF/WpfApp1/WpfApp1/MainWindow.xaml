@@ -14,7 +14,7 @@
 
         </Style>
     </Window.Resources>
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="10*">
@@ -28,7 +28,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Hidden" IsReadOnly="True" SelectionChanged="DataGrid1_SelectionChanged">
+        <DataGrid x:Name="dataGrid1" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Hidden" IsReadOnly="True" SelectionChanged="DataGrid1_SelectionChanged" SelectionMode="Single">
         </DataGrid>
 
         <DataGrid x:Name="dataGridJournal" Grid.Row="1" Grid.ColumnSpan="5" IsReadOnly="True" Visibility="Hidden" SelectionChanged="DataGridJpurnal_SelectionChanged" MouseDoubleClick="DataGridJournal_MouseDoubleClick">
@@ -46,7 +46,7 @@
                 <ContextMenu>
                     <MenuItem Header="Провести" Click="MenuItemSell_Click"></MenuItem>
                     <MenuItem Header="Сделать не проведённым" Click="MenuItemSell_Click"></MenuItem>
-                    <MenuItem Header="Удалить"></MenuItem>
+                    <!--<MenuItem Header="Удалить"></MenuItem>-->
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
@@ -56,7 +56,7 @@
         <RadioButton x:Name="rbPriceList" GroupName="mainChose" Grid.Row="0" Grid.Column="2" Margin="10 5 10 80" Content="Номенклатура" Checked="RadioButton_Checked"></RadioButton>
         <RadioButton GroupName="mainChose" Grid.Row="0" Grid.Column="3" Margin="10 5 10 80" Content="Контрагенты" Checked="RadioButton_Checked"></RadioButton>
 
-        <WrapPanel x:Name="wrapPanelDocBtns" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
+        <WrapPanel x:Name="wrapPanelDocBtns" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" >
             <StackPanel x:Name="stacDocBtns" Orientation="Horizontal" Margin="0 30 0 0 " Visibility="Hidden">           
                 <Button x:Name="AddSelDocBtn"   Height="20" Margin="5" Click="AddSelDocBtn_Click">Новая Расходная накладная</Button>
                 <Button x:Name="AddPurDocBtn" Height="20" Margin="5" Click="AddPurDocBtn_Click">Новая Приходная накладная</Button>
@@ -77,7 +77,7 @@
                 <TextBox x:Name="tbSectionFilter" Width="100" Margin="3" TextChanged="TbBarcode_TextChanged"></TextBox>
             </StackPanel>
         </WrapPanel>
-        <WrapPanel x:Name="wrapPanelClientFilter" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Margin="109 59 0 0" >
+        <WrapPanel x:Name="wrapPanelClientFilter" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="109 59 0 0" >
             <StackPanel x:Name="stacClientFilter" >
                 <Label Margin="1">имя</Label>
                 <TextBox x:Name="tbCustTitleFilter" Margin="1" Width="100" TextChanged="tbCustTitleFilter_TextChanged"></TextBox>
@@ -90,56 +90,56 @@
         <StackPanel x:Name="spBook" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button x:Name="AddBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="AddBookBtn_Click" >Добавить Книгу</Button>
             <Button x:Name="EditBookBtn" Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="EditBookBtn_Click" >Редактировать </Button>
-            <Button x:Name="DelBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="DelBookBtn_Click">Удалить</Button>
+                <Button x:Name="DelBookBtn"  Height="20" Grid.Row="0" Grid.Column="2" Margin="5" Click="DelBtn_Click">Удалить</Button>
         </StackPanel>
 
         <StackPanel x:Name="spCust" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="AddCustBtn"  Height="20" Margin="5" Click="AddCustBtn_Click">Добавить Клиента</Button>
                 <Button x:Name="EditCustBtn" Height="20" Margin="5" Click="EditCustBtn_Click" >Редактировать</Button>
-                <Button x:Name="DelCustBtn"  Height="20" Margin="5" Click="DelBookBtn_Click" >Удалить</Button>
+                <Button x:Name="DelCustBtn"  Height="20" Margin="5" Click="DelBtn_Click" >Удалить</Button>
         </StackPanel>
         </WrapPanel>
         <Canvas x:Name="imgDesc" Grid.Row="1" Grid.Column="4" Height="300" Width="150" Margin="25,20,25,310"></Canvas>
         <StackPanel x:Name="descStackPanel" Visibility="Hidden" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Margin="5">
-            <Label>Book Title</Label>
+            <Label>Наименование</Label>
             <TextBox x:Name="tbBookTitle" TextWrapping="Wrap" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Barcode</Label>
+            <Label>Штрихкод</Label>
             <TextBox x:Name="tbBarcode" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>First Publishing</Label>
+            <Label>Год первого издания</Label>
             <TextBox x:Name="tbFirstYear" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Last Publishing</Label>
+            <Label>Год последнего издания</Label>
             <TextBox x:Name="tbLastYear" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Seria</Label>
+            <Label>Серия</Label>
             <TextBox x:Name="tbSeria" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Section</Label>
+            <Label>Секция</Label>
             <TextBox x:Name="tbSection" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Author</Label>
+            <Label>Автор</Label>
             <TextBox x:Name="tbAuthor" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Publisher</Label>
+            <Label>Издатель</Label>
             <TextBox x:Name="tbPublisher" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>PurchasePrice</Label>
+            <Label>Закупочная цена</Label>
             <TextBox x:Name="tbPurchasePrice" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>RetailPrice</Label>
+            <Label>Розничная цена</Label>
             <TextBox x:Name="tbRetailPrice" IsReadOnly="True" Margin="2" Width="200" HorizontalAlignment="Left"></TextBox>
-            <Label>Description</Label>
+            <Label>Описание</Label>
             <TextBox x:Name="tbDescription" VerticalScrollBarVisibility="Visible"  TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True" Width="auto" ></TextBox>
 
             <!--<TextBox x:Name="tbDescription" IsReadOnly="True" Width="auto" Height="auto"></TextBox>-->
         </StackPanel>
         <StackPanel x:Name="CustDescStackPanel" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Hidden">
-            <Label>Customer Title</Label>
-            <TextBox x:Name="tbCustTitle" IsReadOnly="True"></TextBox>
-            <Label>Full name</Label>
-            <TextBox x:Name="tbCustFullName" IsReadOnly="True"></TextBox>
-            <Label>Addres</Label>
-            <TextBox x:Name="tbCustAddress" IsReadOnly="True"></TextBox>
-            <Label>Phone</Label>
-            <TextBox x:Name="tbCustPhone" IsReadOnly="True"></TextBox>
-            <Label>Email</Label>
-            <TextBox x:Name="tbCustEmail" IsReadOnly="True"></TextBox>
+            <Label>Наименование Клиента</Label>
+            <TextBox x:Name="tbCustTitle" IsReadOnly="True" Margin="10 2 10 2"></TextBox>
+            <Label>Полное имя</Label>
+            <TextBox x:Name="tbCustFullName" IsReadOnly="True" Margin="10 2 10 2"></TextBox>
+            <Label>Адресс</Label>
+            <TextBox x:Name="tbCustAddress" IsReadOnly="True" Margin="10 2 10 2"></TextBox>
+            <Label>Телефон</Label>
+            <TextBox x:Name="tbCustPhone" IsReadOnly="True" Margin="10 2 10 2"></TextBox>
+            <Label>Электронный адрес</Label>
+            <TextBox x:Name="tbCustEmail" IsReadOnly="True" Margin="10 2 10 2"></TextBox>
             <Label x:Name="labelCustType"></Label>
-            <Label>Balance</Label>
-            <TextBox x:Name="tbCustBalance" IsReadOnly="True"> </TextBox>
+            <Label>Баланс</Label>
+            <TextBox x:Name="tbCustBalance" IsReadOnly="True" Margin="10 2 10 2"> </TextBox>
         </StackPanel>
         <!--<Label VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Margin="0,450,0,151">Description</Label>-->
     </Grid>

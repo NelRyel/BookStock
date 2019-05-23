@@ -29,7 +29,9 @@ namespace WpfApp1.dialogs
 
         public DialogEditBook(int id)
         {
+
             InitializeComponent();
+            Title = "Редактирование книги";
             try
             {
                 var respById = client.GetAsync(mw.APP_CONNECT + MainWindow.API_CON_TYPE.Book.ToString() + "/" + id).Result;

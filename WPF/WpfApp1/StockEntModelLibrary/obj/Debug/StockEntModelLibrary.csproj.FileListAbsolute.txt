@@ -34,3 +34,17 @@ E:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.dll
 E:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.pdb
 E:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\BookDB.mdf
 E:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\BookDB_log.ldf
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\BookDB.mdf
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\BookDB_log.ldf
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\StockEntModelLibrary.dll.config
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\StockEntModelLibrary.dll
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\StockEntModelLibrary.pdb
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\EntityFramework.dll
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\EntityFramework.SqlServer.dll
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\EntityFramework.xml
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\bin\Debug\EntityFramework.SqlServer.xml
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.csprojAssemblyReference.cache
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.csproj.CoreCompileInputs.cache
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.csproj.CopyComplete
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.dll
+G:\BookStock\WPF\WpfApp1\StockEntModelLibrary\obj\Debug\StockEntModelLibrary.pdb

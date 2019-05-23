@@ -93,10 +93,21 @@ namespace StockEntModelLibrary
                 
             };
 
+            Book book4 = new Book() {
+                BookTitle= "Мастер и Маргарита",
+                BarcodeISBN= "9785968002624",
+                Count=2,
+                PurchasePrice=2800,
+                RetailPrice=2800*2,
+                fullDescriptionId=4
+
+            };
+
 
             context.Books.Add(book1);
             context.Books.Add(book2);
             context.Books.Add(book3);
+            context.Books.Add(book4);
             context.SaveChanges();
             BookFullDescription bookFullDescription1 = new BookFullDescription()
             {
@@ -150,9 +161,24 @@ namespace StockEntModelLibrary
 
             };
 
+            BookFullDescription bookFullDescription4 = new BookFullDescription() {
+                Id=book4.Id,
+                FirstYearBookPublishing="2017",
+                YearBookPublishing="2017",
+                Serie="Классика",
+                Section="Фантастика",
+                Description= @"Этот роман - одно из наиболее известных произведений русской литературы. При жизни автор так и не увидел его опубликованным. Прошли десятилетия, и книга стала выходить огромными тиражами, стала бестселлером мировой литературы века. Каждое новое поколение читателей по-своему воспринимает героев Булгакова. В настоящем издании свое неповторимое видение булгаковских образов представил замечательный художник Евгений Гритчин. Его иллюстрации наполнены драматизмом и ощущением далеких от нас эпох.",
+                 Author= "Булгаков М.",
+                 Publisher= "Пан пресс",
+                 ImageUrl= "https://img-gorod.ru/web/258/2581536/jpg/2581536_detail.jpg"
+            };
+
+
             context.BookFullDescriptions.Add(bookFullDescription1);
             context.BookFullDescriptions.Add(bookFullDescription2);
             context.BookFullDescriptions.Add(bookFullDescription3);
+            context.BookFullDescriptions.Add(bookFullDescription4);
+
             PurchaseDoc purchaseDoc1 = new PurchaseDoc()
             {
                 //Id = custumerDefaultSuplier.Id,
